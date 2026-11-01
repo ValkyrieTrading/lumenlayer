@@ -105,7 +105,7 @@ Phones install the app from a web address, so the files need to be online. **Git
 
 1. In this repository open **Settings → Pages**. On iPhone, use Safari and tap **aA → Request Desktop Website** to see Settings.
 2. Under **Build and deployment**, set **Source** to *Deploy from a branch*, choose **main** and **/ (root)**, and click **Save**.
-3. After a minute or two the address appears at the top of that page, for example `https://valkyrietrading.github.io/Nutition-app/`.
+3. After a minute or two the address appears at the top of that page, for example `https://valkyrietrading.github.io/lumenlayer/`.
 
 GitHub Pages is free for **public** repositories. For a private repository it needs a paid GitHub plan, so either make the repository public (**Settings → General → Danger Zone → Change visibility**) or host the files elsewhere. Netlify and Cloudflare Pages also host it for free: upload the repository folder.
 
