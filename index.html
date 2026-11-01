@@ -244,7 +244,7 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
 .lrow .ln{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lrow .ls{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--faint);white-space:nowrap;overflow:hidden}
 .mchip{font-size:9px;text-transform:uppercase;letter-spacing:.08em;padding:0 4px;border-radius:3px;border:1px solid currentColor}
-.mchip.sky{color:var(--sky)}.mchip.subject{color:var(--subject)}.mchip.brush{color:var(--brush)}
+.mchip.sky{color:var(--sky)}.mchip.subject{color:var(--subject)}.mchip.brush{color:var(--brush)}.mchip.background{color:#b78cff}.mchip.linear,.mchip.radial{color:#6fe39b}.mchip.color{color:#ffd35c}.mchip.luminance{color:#e6e6e6}
 .lrow.base .ln{color:var(--muted)}
 .lprops{padding:8px 12px 12px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:7px}
 .lprops .pr{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -412,6 +412,46 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
 }
 .inststeps{margin:0;padding:16px 18px 18px 38px;display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.5;color:var(--muted)}
 .inststeps b{color:var(--text)}
+/* gradient handles, effects panel, colour swatch */
+.mhandles{position:absolute;inset:0;z-index:4;pointer-events:none}
+.mhandles svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.mhandles path{fill:none;stroke:rgba(255,255,255,.9);stroke-width:1.5;stroke-dasharray:5 4;filter:drop-shadow(0 0 2px rgba(0,0,0,.8))}
+.mhandles i{position:absolute;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:#fff;border:2px solid #1b1f24;box-shadow:0 0 0 1px rgba(255,255,255,.6),0 2px 6px rgba(0,0,0,.6);pointer-events:auto;cursor:grab;touch-action:none}
+.mhandles i.end{background:#1b1f24;border-color:#fff}
+.mhandles i.mid{width:12px;height:12px;margin:-6px 0 0 -6px;background:var(--accent)}
+@media (pointer:coarse){.mhandles i{width:26px;height:26px;margin:-13px 0 0 -13px}}
+.fxpanel{left:12px;right:auto;width:min(360px,calc(100% - 24px))}
+.fxgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fxcard{display:flex;flex-direction:column;gap:2px;padding:0 0 6px;border-radius:6px;border:1px solid var(--line);background:var(--well);overflow:hidden;cursor:pointer;text-align:left}
+.fxcard:hover,.fxcard:focus-visible{border-color:var(--accent)}
+.fxcard canvas{width:100%;height:auto;aspect-ratio:3/2;display:block;background:#000}
+.fxcard b{padding:0 7px;font-size:11.5px;font-weight:500}
+.fxcard small{padding:0 7px;font-size:10px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fxcard.dim{opacity:.45}
+.lact button.ai.fx{border-color:rgba(255,211,92,.45);color:#ffe7a8;background:rgba(255,211,92,.08)}
+.cswatch{width:22px;height:22px;border-radius:5px;border:1px solid var(--line-2)}
+.mparams{display:flex;flex-direction:column;gap:2px;padding-left:64px}
+/* search palette */
+.dlg.cmdk{place-items:start center;padding-top:max(9vh,16px)}
+.cmdcard{width:min(640px,100%);background:var(--panel);border:1px solid var(--line-2);border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.6);overflow:hidden}
+.cmdin{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line)}
+.cmdin svg{width:18px;height:18px;color:var(--muted);flex:0 0 auto}
+.cmdin input{flex:1;min-width:0;height:30px;border:0;background:transparent;font-size:16px;outline:none}
+.cmdlist{max-height:min(420px,60vh);overflow:auto;padding:6px}
+.cmdhead{padding:6px 10px 4px;font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--faint)}
+.cmdrow{display:grid;grid-template-columns:78px minmax(0,1fr) auto;align-items:center;gap:10px;width:100%;padding:8px 10px;border-radius:7px;border:0;background:transparent;text-align:left;cursor:pointer}
+.cmdrow.on{background:rgba(242,163,58,.13)}
+.cmdtype{font-size:9.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--faint)}
+.cmdtype.t-effect,.cmdtype.t-action{color:var(--accent-2)}.cmdtype.t-slider{color:var(--sky)}.cmdtype.t-preset{color:#b78cff}.cmdtype.t-photo{color:var(--ok)}
+.cmdlabel{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cmdhint{font-family:var(--f-mono);font-size:10.5px;color:var(--faint);white-space:nowrap}
+.cmdempty{padding:18px 12px;color:var(--muted);font-size:12.5px}
+.cmdfoot{padding:8px 14px;border-top:1px solid var(--line);font-size:11px;color:var(--faint)}
+.tb.search{color:var(--muted)}
+.srow.found{animation:found 1.6s ease}
+@keyframes found{0%,60%{background:rgba(242,163,58,.18);box-shadow:0 0 0 1px rgba(242,163,58,.5)}100%{background:transparent;box-shadow:none}}
+.srow{border-radius:5px}
+@media (max-width:640px){.tb.search span,.tb.search kbd{display:none}}
 /* stacked layout for narrow screens */
 @media (max-width:1100px){
   body{overflow:auto}
@@ -445,6 +485,7 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
       <button class="tb" id="btnOpen" type="button" title="Import one or many photos (or drop them on the canvas)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5V18a2 2 0 002 2h14a2 2 0 002-2V9.5a2 2 0 00-2-2h-7L10 5H5a2 2 0 00-2 2.5z"/><path d="M12 11v6M9 14l3 3 3-3"/></svg>Import photos
       </button>
+      <button class="tb search" id="btnSearch" type="button" title="Find any tool, slider, preset, effect or photo (Ctrl/⌘ K)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><span>Search</span><kbd>Ctrl K</kbd></button>
       <input type="file" id="fileIn" accept="image/*,.cr2,.cr3,.crw,.nef,.nrw,.arw,.srf,.sr2,.dng,.raf,.orf,.rw2,.rwl,.pef,.srw,.3fr,.iiq,.erf,.kdc,.mrw,.mos,.x3f" multiple hidden>
     </div>
     <div class="tbg">
@@ -511,6 +552,12 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
       <div class="hud" id="hud" aria-live="polite"></div>
       <div class="drop" id="drop" hidden>Drop photos or folders to import</div>
       <div class="busy" id="busy" hidden>Developing…</div>
+      <div class="mhandles" id="mHandles" hidden><svg aria-hidden="true"><path d=""/></svg><i data-h="a" title="Full effect"></i><i data-h="b" class="end" title="No effect"></i><i data-h="mid" class="mid" title="Move"></i><i data-h="c" title="Move"></i><i data-h="e" class="end" title="Width"></i><i data-h="n" class="end" title="Height"></i></div>
+      <div class="aipanel fxpanel" id="fxPanel" hidden role="dialog" aria-labelledby="fxTitle">
+        <div class="aph"><b id="fxTitle">Mask effects</b><span>One-click local edits, previewed on your photo</span><button type="button" id="fxClose" aria-label="Close">✕</button></div>
+        <div class="pcats" id="fxCats" style="padding:0"></div>
+        <div class="fxgrid" id="fxGrid"></div>
+      </div>
       <div class="cropbox" id="cropBox" hidden><div class="grid"></div><i data-h="nw"></i><i data-h="n"></i><i data-h="ne"></i><i data-h="e"></i><i data-h="se"></i><i data-h="s"></i><i data-h="sw"></i><i data-h="w"></i><span class="cropdims" id="cropDims"></span></div>
       <div class="vtag mono" id="vtag"></div>
     </section>
@@ -551,6 +598,7 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
           <button type="button" class="ai subj" id="aiSubj"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-3.8 3.6-6 7-6s6.2 2.2 7 6"/></svg>Select Subject</button>
           <button type="button" id="addSmart" title="Smart Object: its own develop sliders"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8v8M8 12h8"/></svg>Smart</button>
           <button type="button" id="addPaint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>Paint</button>
+          <button type="button" class="ai fx" id="addFx" title="One-click masked effects (M)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg>Effects</button>
           <button type="button" id="addFill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>Fill</button>
         </div>
         <div class="lscroll">
@@ -661,6 +709,15 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
   </div>
 </div>
 
+<!-- ===== Search ===== -->
+<div class="dlg cmdk" id="cmdDlg" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="cmdcard">
+    <div class="cmdin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="cmdInput" type="text" placeholder="Search tools, sliders, presets, effects, photos…" autocomplete="off" spellcheck="false" aria-label="Search" aria-controls="cmdList"><kbd>Esc</kbd></div>
+    <div class="cmdlist" id="cmdList" role="listbox"></div>
+    <div class="cmdfoot">↑ ↓ to move · Enter to use · try “blur background”, “warmer”, “noise”, “4:5”</div>
+  </div>
+</div>
+
 <!-- ===== Shortcut sheet ===== -->
 <div class="dlg" id="keysDlg" hidden role="dialog" aria-modal="true" aria-labelledby="kTitle">
   <div class="dcard" style="width:min(620px,100%)">
@@ -674,7 +731,7 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
       <div>Erase while brushing <kbd>Alt</kbd></div><div>Mask overlay <kbd>O</kbd></div>
       <div>Crop &amp; Rotate <kbd>C</kbd> / <kbd>R</kbd></div><div>Apply / cancel crop <kbd>Enter</kbd> <kbd>Esc</kbd></div>
       <div>Mark Keep / Reject <kbd>P</kbd> <kbd>X</kbd></div><div>Clear manual flag <kbd>U</kbd></div>
-      <div>Previous / next photo <kbd>←</kbd> <kbd>→</kbd></div><div>Export all keepers <kbd>Ctrl/⌘ ⇧ S</kbd></div><div>Enhance &amp; AI edit panel <kbd>E</kbd></div><div>Pick neutral (white balance) <kbd>W</kbd></div><div>Select for HDR merge <kbd>Ctrl/⌘ click</kbd></div><div>Copy edits to keepers <kbd>⇧ C</kbd></div><div>Paste copied edits here <kbd>⇧ V</kbd></div><div>Import photos <kbd>Ctrl/⌘ O</kbd></div>
+      <div>Previous / next photo <kbd>←</kbd> <kbd>→</kbd></div><div>Export all keepers <kbd>Ctrl/⌘ ⇧ S</kbd></div><div>Search everything <kbd>Ctrl/⌘ K</kbd> <kbd>/</kbd></div><div>Mask effects <kbd>M</kbd></div><div>Enhance &amp; AI edit panel <kbd>E</kbd></div><div>Pick neutral (white balance) <kbd>W</kbd></div><div>Select for HDR merge <kbd>Ctrl/⌘ click</kbd></div><div>Copy edits to keepers <kbd>⇧ C</kbd></div><div>Paste copied edits here <kbd>⇧ V</kbd></div><div>Import photos <kbd>Ctrl/⌘ O</kbd></div>
       <div>Fit to screen <kbd>Ctrl/⌘ 0</kbd></div><div>Zoom <kbd>Ctrl/⌘ +</kbd> <kbd>−</kbd> or wheel</div>
     </div>
   </div>
@@ -739,13 +796,13 @@ const HSL_CENTERS = [0, 30, 60, 120, 180, 240, 270, 300];
 const BLEND = { normal: 'source-over', multiply: 'multiply', screen: 'screen', overlay: 'overlay', 'soft-light': 'soft-light', color: 'color', luminosity: 'luminosity', darken: 'darken', lighten: 'lighten' };
 const BLEND_LABEL = { normal: 'Normal', multiply: 'Multiply', screen: 'Screen', overlay: 'Overlay', 'soft-light': 'Soft Light', color: 'Color', luminosity: 'Luminosity', darken: 'Darken', lighten: 'Lighten' };
 const TYPE_LABEL = { smart: 'Smart Object', paint: 'Pixel', fill: 'Fill' };
-const MASK_COLOR = { sky: '#47d3ff', subject: '#ff5cb4', brush: '#ffb347' };
+const MASK_COLOR = { sky: '#47d3ff', subject: '#ff5cb4', background: '#b78cff', brush: '#ffb347', linear: '#6fe39b', radial: '#6fe39b', color: '#ffd35c', luminance: '#e6e6e6' };
 
 function defaultDev() {
   return {
     exposure: 0, contrast: 0, highlights: 0, shadows: 0, whites: 0, blacks: 0,
     temp: 0, tint: 0, vibrance: 0, saturation: 0, dehaze: 0, profile: 'none', profileAmt: 100,
-    clarity: 0, sharpen: 0, nrLuma: 0, nrColor: 0, hdr: 0,
+    clarity: 0, sharpen: 0, nrLuma: 0, nrColor: 0, hdr: 0, blur: 0,
     curve: { m: [[0, 0], [1, 1]], r: [[0, 0], [1, 1]], g: [[0, 0], [1, 1]], b: [[0, 0], [1, 1]] },
     grade: { sh: { h: 210, s: 0, l: 0 }, mid: { h: 40, s: 0, l: 0 }, hi: { h: 40, s: 0, l: 0 }, blend: 50, balance: 0 },
     hsl: { h: [0, 0, 0, 0, 0, 0, 0, 0], s: [0, 0, 0, 0, 0, 0, 0, 0], l: [0, 0, 0, 0, 0, 0, 0, 0] }
@@ -955,7 +1012,7 @@ function develop(src, dv) {
     if (pMono) { const y = pMono[0] * r + pMono[1] * gg + pMono[2] * b, k = Math.min(1, pa); r += (y - r) * k; gg += (y - gg) * k; b += (y - b) * k; }
     o[i] = r * 255 + .5; o[i + 1] = gg * 255 + .5; o[i + 2] = b * 255 + .5; o[i + 3] = s[i + 3];
   }
-  if (dv.clarity || dv.sharpen || dv.nrLuma || dv.nrColor || dv.hdr) detailStage(o, w, h, dv);
+  if (dv.clarity || dv.sharpen || dv.nrLuma || dv.nrColor || dv.hdr || dv.blur) detailStage(o, w, h, dv);
   return out;
 }
 
@@ -1019,6 +1076,9 @@ function detailStage(o, w, h, dv) {
       const ratio = Math.pow(Math.min(2, Math.max(.5, (y + .03) / (Yv[i] + .03))), .5); U[i] *= ratio; V[i] *= ratio; Yv[i] = y;
     }
   }
+  if (dv.blur > 0) { // lens blur: soften everything, colour included (used on Background masks for a portrait look)
+    const r = Math.max(1, Math.round(dv.blur / 100 * 26 * s)); Yv = blurLarge(Yv, w, h, r); const Ub = blurLarge(U, w, h, r), Vb = blurLarge(V, w, h, r); U.set(Ub); V.set(Vb);
+  }
   if (cl) { const b = blurLarge(Yv, w, h, Math.max(2, Math.round(16 * s))); for (let i = 0; i < N; i++) { const y = Yv[i]; Yv[i] = y + cl * .9 * (y - b[i]) * Math.max(0, 4 * y * (1 - y)); } }
   if (sh > 0) { // unsharp mask with a noise threshold
     const b = boxBlur(Yv, w, h, Math.max(1, Math.round(s))), k = sh * 1.6, th = .006 + .02 * nrL;
@@ -1063,9 +1123,61 @@ function freshGlobal(res, dv) { const data = develop(res.srcData, dv), c = mkCan
    3. STAGE B — LAYER COMPOSITOR
    ===================================================================== */
 let skyMask = null, subjectMask = null, skyCover = 0, subjCover = 0, subjC = null;
+/* ---- Mask engine: every mask kind becomes one cached alpha canvas at working resolution ---- */
+const MASK_KINDS = [['none', 'None'], ['sky', 'Sky'], ['subject', 'Subject'], ['background', 'Background'], ['brush', 'Brush'], ['linear', 'Linear gradient'], ['radial', 'Radial gradient'], ['color', 'Color range'], ['luminance', 'Luminance range']];
+const PARAM_DEFAULTS = { linear: { x0: .5, y0: 0, x1: .5, y1: .5 }, radial: { cx: .5, cy: .5, rx: .3, ry: .36 }, color: { r: 200, g: 70, b: 55, range: 35 }, luminance: { lo: 70, hi: 100, soft: 12 } };
+const maskCaches = new WeakMap(), canvasIds = new WeakMap(); let canvasSeq = 0;
+const canvasId = c => { if (!canvasIds.has(c)) canvasIds.set(c, ++canvasSeq); return canvasIds.get(c); };
+const maskParams = m => ({ ...(PARAM_DEFAULTS[m.kind] || {}), ...(m.paramsKind === m.kind || !m.paramsKind ? (m.params || {}) : {}) });
 function maskSource(L) {
-  const m = L.mask; if (!m) return null;
-  if (m.kind === 'sky') return skyMask; if (m.kind === 'subject') return subjectMask; if (m.kind === 'brush') return m.brush; return null;
+  const m = L.mask; if (!m || m.kind === 'none' || !RES.full) return null;
+  const feather = ['linear', 'radial'].includes(m.kind) ? 0 : (m.feather || 0);
+  if (m.kind === 'sky' && !feather) return skyMask;
+  if (m.kind === 'subject' && !feather) return subjectMask;
+  if (m.kind === 'brush') { if (!m.brush) return null; if (!feather || (action && action.type === 'stroke' && action.layer === L)) return m.brush; }
+  let cache = maskCaches.get(RES.full); if (!cache) { cache = new Map(); maskCaches.set(RES.full, cache); }
+  const key = m.kind + '|' + feather + '|' + (m.kind === 'radial' ? (m.feather ?? 50) : '') + '|' + JSON.stringify(maskParams(m)) + '|' + (m.kind === 'brush' ? canvasId(m.brush) : '');
+  const e = cache.get(L.id); if (e && e.key === key) return e.canvas;
+  const c = buildMask(m); if (!c) return null;
+  if (feather) featherMask(c, feather);
+  cache.set(L.id, { key, canvas: c }); return c;
+}
+function buildMask(m) {
+  const W = workW, H = workH, c = mkCanvas(W, H), x = c.getContext('2d'), p = maskParams(m);
+  if (m.kind === 'sky' || m.kind === 'subject') x.drawImage(m.kind === 'sky' ? skyMask : subjectMask, 0, 0, W, H);
+  else if (m.kind === 'background') { x.fillStyle = '#fff'; x.fillRect(0, 0, W, H); x.globalCompositeOperation = 'destination-out'; x.drawImage(subjectMask, 0, 0, W, H); x.globalCompositeOperation = 'source-over'; }
+  else if (m.kind === 'brush') x.drawImage(m.brush, 0, 0, W, H);
+  else if (m.kind === 'linear') { const g = x.createLinearGradient(p.x0 * W, p.y0 * H, p.x1 * W, p.y1 * H); g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(1, 'rgba(255,255,255,0)'); x.fillStyle = g; x.fillRect(0, 0, W, H); }
+  else if (m.kind === 'radial') {
+    const f = clamp((m.feather ?? 50) / 100, 0, .98); x.save(); x.translate(p.cx * W, p.cy * H); x.scale(Math.max(1, p.rx * W), Math.max(1, p.ry * H));
+    const g = x.createRadialGradient(0, 0, 0, 0, 0, 1); g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(1 - f, 'rgba(255,255,255,1)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+    x.fillStyle = g; x.beginPath(); x.arc(0, 0, 1, 0, 6.2832); x.fill(); x.restore();
+  } else if (m.kind === 'color' || m.kind === 'luminance') {
+    const s = RES.full.srcData.data, id = x.createImageData(W, H), o = id.data;
+    if (m.kind === 'color') { // distance to the picked colour in a luma/chroma space; brightness counts less than hue
+      const tY = .299 * p.r + .587 * p.g + .114 * p.b, tU = p.b - tY, tV = p.r - tY, t1 = 12 + p.range * 1.1, t0 = t1 * .45;
+      for (let i = 0; i < o.length; i += 4) { const y = .299 * s[i] + .587 * s[i + 1] + .114 * s[i + 2], du = s[i + 2] - y - tU, dv = s[i] - y - tV, dy = y - tY, d = Math.sqrt(.35 * dy * dy + du * du + dv * dv); o[i] = o[i + 1] = o[i + 2] = 255; o[i + 3] = d <= t0 ? 255 : d >= t1 ? 0 : (1 - smooth(t0, t1, d)) * 255; }
+    } else {
+      const lo = p.lo, hi = p.hi, sf = Math.max(1, p.soft);
+      for (let i = 0; i < o.length; i += 4) { const l = (.2126 * s[i] + .7152 * s[i + 1] + .0722 * s[i + 2]) / 2.55; const a = (lo <= 0 ? 1 : smooth(lo - sf, lo, l)) * (hi >= 100 ? 1 : 1 - smooth(hi, hi + sf, l)); o[i] = o[i + 1] = o[i + 2] = 255; o[i + 3] = a * 255; }
+    }
+    x.putImageData(id, 0, 0);
+  }
+  return c;
+}
+/** Soft edges: blur the mask's alpha. */
+function featherMask(c, f) {
+  const W = c.width, H = c.height, x = c.getContext('2d'), id = x.getImageData(0, 0, W, H), d = id.data, a = new Float32Array(W * H);
+  for (let i = 0; i < a.length; i++) a[i] = d[i * 4 + 3] / 255;
+  const b = blurLarge(a, W, H, Math.max(1, Math.round(f / 100 * 40 * W / 1280)));
+  for (let i = 0; i < a.length; i++) { d[i * 4] = d[i * 4 + 1] = d[i * 4 + 2] = 255; d[i * 4 + 3] = b[i] * 255; }
+  x.putImageData(id, 0, 0);
+}
+/** Average colour of the subject, weighted towards its most colourful pixels (for Color Splash). */
+function subjectMainColor() {
+  const s = RES.full.srcData.data, m = subjectMask.getContext('2d').getImageData(0, 0, subjectMask.width, subjectMask.height).data; let r = 0, g = 0, b = 0, w = 0;
+  for (let i = 0; i < s.length; i += 16) { const a = m[i + 3] / 255; if (a < .5) continue; const mx = Math.max(s[i], s[i + 1], s[i + 2]), mn = Math.min(s[i], s[i + 1], s[i + 2]), k = a * Math.pow((mx - mn) / 255, 2); r += s[i] * k; g += s[i + 1] * k; b += s[i + 2] * k; w += k; }
+  return w > 1e-3 ? { r: Math.round(r / w), g: Math.round(g / w), b: Math.round(b / w) } : { r: 200, g: 70, b: 55 };
 }
 /** Mask as an alpha canvas at W×H, inversion applied. */
 function maskFor(L, W, H, slot) {
@@ -1582,7 +1694,7 @@ function layoutStage(fit = true) {
 function applyTransform() {
   stage.style.transform = `translate(${V.tx}px,${V.ty}px) scale(${V.z})`;
   if (ORIG) $('#sZoom').textContent = Math.round(V.baseW * V.z / (V.dispW * ORIG.width / workW) * 100) + '%';
-  placeSplit(); updateRingSize(); placeCrop();
+  placeSplit(); updateRingSize(); placeCrop(); placeMaskHandles();
 }
 
 /* ---------------- crop & rotate ---------------- */
@@ -1682,9 +1794,10 @@ let action = null;
 vp.addEventListener('pointerenter', () => { pointerInVp = true; updateCursorClass(); });
 vp.addEventListener('pointerleave', () => { pointerInVp = false; updateCursorClass(); });
 vp.addEventListener('pointerdown', e => {
-  if (!RES.full || e.target.closest('#knob') || e.target.closest('#aiPanel')) return;
+  if (!RES.full || e.target.closest('#knob') || e.target.closest('#aiPanel') || e.target.closest('#fxPanel') || e.target.closest('#mHandles i')) return;
   if (e.button !== 0 && e.button !== 1) return;
   if (wbPick && e.button === 0) { e.preventDefault(); doWBPick(toImg(e)); return; }
+  if (maskPick && e.button === 0) { e.preventDefault(); doMaskPick(toImg(e)); return; }
   const t = e.button === 1 ? 'hand' : effTool();
   vp.setPointerCapture(e.pointerId); e.preventDefault();
   if (t === 'hand') { action = { type: 'pan', sx: e.clientX, sy: e.clientY, tx: V.tx, ty: V.ty }; vp.classList.add('panning'); return; }
@@ -1719,7 +1832,7 @@ const endAction = () => {
   }
 };
 vp.addEventListener('pointerup', endAction); vp.addEventListener('pointercancel', endAction);
-vp.addEventListener('wheel', e => { if (!RES.full || e.target.closest('#aiPanel')) return; e.preventDefault(); const r = vp.getBoundingClientRect(); zoomAt(Math.exp(-e.deltaY * .0016), e.clientX - r.left, e.clientY - r.top); }, { passive: false });
+vp.addEventListener('wheel', e => { if (!RES.full || e.target.closest('#aiPanel') || e.target.closest('#fxPanel')) return; e.preventDefault(); const r = vp.getBoundingClientRect(); zoomAt(Math.exp(-e.deltaY * .0016), e.clientX - r.left, e.clientY - r.top); }, { passive: false });
 vp.addEventListener('dblclick', () => { if (effTool() === 'hand') layoutStage(true); });
 
 /* strokes: spaced dabs along the pointer path */
@@ -1800,11 +1913,11 @@ function beginMaskStroke(p, e) {
   }
   const m = L.mask, prevMask = { ...L.mask };
   if (m.kind === 'none') { m.kind = 'brush'; m.brush = mkCanvas(workW, workH); m.invert = false; m.label = 'Brush'; toast('Brush mask started · paint where this layer should apply'); }
-  else if (m.kind === 'sky' || m.kind === 'subject') {
-    const c = mkCanvas(workW, workH), cx = c.getContext('2d');
+  else if (m.kind !== 'brush') { // turn any other mask into an editable brush mask
+    const src = maskSource(L), c = mkCanvas(workW, workH), cx = c.getContext('2d');
     if (m.invert) { cx.fillStyle = '#fff'; cx.fillRect(0, 0, workW, workH); cx.globalCompositeOperation = 'destination-out'; }
-    cx.drawImage(m.kind === 'sky' ? skyMask : subjectMask, 0, 0, workW, workH);
-    m.label = (m.kind === 'sky' ? 'Sky' : 'Subject') + ' + Brush'; m.kind = 'brush'; m.invert = false; m.brush = c;
+    if (src) cx.drawImage(src, 0, 0, workW, workH);
+    m.label = maskLabel(L) + ' + Brush'; m.kind = 'brush'; m.invert = false; m.brush = c; m.feather = 0;
   } else m.brush = cloneCanvas(m.brush);
   const B = brush.mask, erase = e.altKey || B.erase, mctx = m.brush.getContext('2d');
   action = { type: 'stroke', tool: 'mask', layer: L, undo: () => { L.mask = prevMask; }, last: p, count: 1, erase, spacing: Math.max(1, B.size * .1), dab: q => softDab(mctx, q.x, q.y, B.size, B.hard, '#ffffff', B.flow / 100 * .5, erase) };
@@ -1894,12 +2007,13 @@ function buildDevelop() {
   makeSlider(color, pF('saturation', 'Saturation', -100, 100, { track: 'linear-gradient(90deg,#808080,#c9a27a 50%,#ff7a2f 75%,#ff2f6a)' }));
   const fx = section('Effects', d => d.dehaze = 0);
   makeSlider(fx, pF('dehaze', 'Dehaze', -100, 100));
-  const det = section('Detail & HDR', d => ['hdr', 'clarity', 'sharpen', 'nrLuma', 'nrColor'].forEach(k => d[k] = 0));
+  const det = section('Detail & HDR', d => ['hdr', 'clarity', 'sharpen', 'nrLuma', 'nrColor', 'blur'].forEach(k => d[k] = 0));
   makeSlider(det, pF('hdr', 'HDR', 0, 100, { track: 'linear-gradient(90deg,var(--line-2),#ffd08e 60%,#ff8a3d)' }));
   makeSlider(det, pF('clarity', 'Clarity', -100, 100));
   makeSlider(det, pF('sharpen', 'Sharpening', 0, 100));
   makeSlider(det, pF('nrLuma', 'Noise reduction', 0, 100));
   makeSlider(det, pF('nrColor', 'Color noise', 0, 100));
+  makeSlider(det, pF('blur', 'Lens blur', 0, 100));
   buildCurve(section('Tone Curve', d => d.curve[curveCh] = [[0, 0], [1, 1]]));
   buildWheels(section('Color Grading', d => d.grade = defaultDev().grade));
   buildHSL(section('HSL Mixer', d => d.hsl = defaultDev().hsl));
@@ -2024,7 +2138,7 @@ function updateTargetBanner() {
     tt.innerHTML = `Editing <b>Global Develop</b> · Layer 0${L ? ' · “' + esc(L.name) + '” has no sliders' : ''}`; back.hidden = true;
   }
 }
-const maskLabel = L => L.mask.kind === 'brush' ? (L.mask.label || 'Brush') : L.mask.kind === 'sky' ? 'Sky' : L.mask.kind === 'subject' ? 'Subject' : 'None';
+const maskLabel = L => L.mask.kind === 'brush' ? (L.mask.label || 'Brush') : ({ none: 'None', sky: 'Sky', subject: 'Subject', background: 'Background', linear: 'Gradient', radial: 'Radial', color: 'Color', luminance: 'Luminance' })[L.mask.kind] || 'None';
 function autoTone() {
   const d = RES.proxy.srcData.data, h = new Uint32Array(256); let n = 0, sum = 0;
   for (let i = 0; i < d.length; i += 16) { const l = (.2126 * d[i] + .7152 * d[i + 1] + .0722 * d[i + 2]) | 0; h[l]++; n++; sum += l; }
@@ -2116,7 +2230,7 @@ function renderLayers() {
   [...doc.layers].reverse().forEach(L => list.appendChild(layerRow(L)));
   list.appendChild(baseRow());
   $('#lcount').textContent = `${doc.layers.length + 1} layer${doc.layers.length ? 's' : ''}`;
-  renderLayerProps(); if (RES.full) updateLayerThumbs(); updateTargetBanner();
+  renderLayerProps(); if (RES.full) updateLayerThumbs(); updateTargetBanner(); placeMaskHandles();
 }
 function renderLayerProps() {
   const P = $('#lprops'); P.innerHTML = ''; const L = activeLayer();
@@ -2131,18 +2245,13 @@ function renderLayerProps() {
   bs.addEventListener('change', () => { L.blend = bs.value; renderLayers(); requestRender(false); commit(`Blend ${BLEND_LABEL[L.blend]} · ${L.name}`); }); bl.appendChild(bs);
   const op = document.createElement('div'); P.appendChild(op);
   makeSlider(op, { label: 'Opacity', min: 0, max: 100, def: 100, zero: 0, get: () => L.opacity, set: v => L.opacity = v, fmt: v => v + '%', live: () => requestRender(false), commit: v => { renderLayers(); commit(`Opacity ${v}% · ${L.name}`); } }, false);
-  const mr = row('Mask'), seg = document.createElement('div'); seg.className = 'seg';
-  const kinds = [['none', 'None'], ['sky', 'Sky'], ['subject', 'Subject'], ['brush', 'Brush']];
-  seg.innerHTML = kinds.map(([k, l]) => `<button type="button" data-k="${k}" aria-pressed="${L.mask.kind === k}">${l}</button>`).join('');
-  seg.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
-    const k = b.dataset.k; if (k === L.mask.kind) return;
-    if (k === 'brush') { if (!L.mask.brush) L.mask.brush = mkCanvas(workW, workH); L.mask.label = L.mask.label || 'Brush'; setTool('mask', false); toast('Brush mask · paint where this layer should apply (K)'); }
-    L.mask.kind = k; renderLayers(); requestRender(false); if (k !== 'none') flashMask(L, k !== 'brush'); commit(`Mask ${maskLabel(L)} · ${L.name}`);
-  }));
-  mr.appendChild(seg);
+  const mr = row('Mask'), ms = document.createElement('select'); ms.id = 'lpMask';
+  ms.innerHTML = MASK_KINDS.map(([k, l]) => `<option value="${k}" ${L.mask.kind === k ? 'selected' : ''}>${l}</option>`).join('');
+  ms.addEventListener('change', () => setMaskKind(L, ms.value)); mr.appendChild(ms);
+  const pbox = document.createElement('div'); pbox.className = 'mparams'; P.appendChild(pbox); buildMaskParams(L, pbox);
   const mr2 = row(''); mr2.style.paddingLeft = '64px';
   const inv = document.createElement('label'); inv.className = 'chk'; inv.innerHTML = `<input type="checkbox" id="lpInv" ${L.mask.invert ? 'checked' : ''} ${L.mask.kind === 'none' ? 'disabled' : ''}> Invert`;
-  inv.querySelector('input').addEventListener('change', e => { L.mask.invert = e.target.checked; renderLayers(); requestRender(false); flashMask(L, false); commit(`${L.mask.invert ? 'Invert' : 'Un-invert'} mask · ${L.name}`); });
+  inv.querySelector('input').addEventListener('change', e => { L.mask = { ...L.mask, invert: e.target.checked }; renderLayers(); requestRender(false); flashMask(L, false); commit(`${L.mask.invert ? 'Invert' : 'Un-invert'} mask · ${L.name}`); });
   const ov = document.createElement('label'); ov.className = 'chk'; ov.innerHTML = `<input type="checkbox" id="lpOv" ${showMaskPinned ? 'checked' : ''}> Overlay <kbd>O</kbd>`;
   ov.querySelector('input').addEventListener('change', e => { showMaskPinned = e.target.checked; drawOverlay(); });
   mr2.appendChild(inv); mr2.appendChild(ov);
@@ -2265,7 +2374,7 @@ function presetLayer(s, onAsync) {
   const L = makeLayer(s.type, { name: s.name, blend: s.blend || 'normal', opacity: s.opacity ?? 100, visible: s.visible !== false, fromPreset: true, src: s.src || 'dev' });
   if (s.type === 'smart') L.dev = mergeDev(s.dev);
   if (s.type === 'fill') L.fill = Object.assign({ type: 'solid', c1: '#ffffff', c2: '#000000' }, s.fill);
-  if (s.mask) { L.mask = { kind: s.mask.kind || 'none', invert: !!s.mask.invert, brush: null, label: s.mask.label || '' }; if (s.mask.brushData) { L.mask.kind = 'brush'; L.mask.brush = mkCanvas(workW, workH); loadInto(L.mask.brush, s.mask.brushData, onAsync); } }
+  if (s.mask) { L.mask = { kind: s.mask.kind || 'none', invert: !!s.mask.invert, brush: null, label: s.mask.label || '', feather: s.mask.feather || 0, params: s.mask.params ? { ...s.mask.params } : undefined, paramsKind: s.mask.params ? s.mask.kind : undefined }; if (s.mask.brushData) { L.mask.kind = 'brush'; L.mask.brush = mkCanvas(workW, workH); loadInto(L.mask.brush, s.mask.brushData, onAsync); } }
   return L;
 }
 function presetDoc(p, onAsync) { return { dev: presetDev(p), geo: structuredClone(doc.geo), layers: [...(p.layers || []).map(s => presetLayer(s, onAsync)), ...doc.layers.filter(l => !l.fromPreset)], active: 'base' }; }
@@ -2318,7 +2427,7 @@ $('#psave').addEventListener('submit', e => {
   if (!name) { msg.textContent = 'Name the preset first.'; msg.style.color = 'var(--warn)'; $('#pname').focus(); return; }
   const adapt = $('#pAdapt').checked, dev = structuredClone(doc.dev);
   if (adapt) { const base = deviceRec('natural', getMeasure()).values; ['exposure', 'tone', 'wb'].forEach(g => AUTO_GROUPS[g].forEach(k => dev[k] = Math.round((doc.dev[k] - base[k]) * 100) / 100)); }
-  const p = { name, tag: `Saved ${new Date().toLocaleDateString()}`, auto: adapt ? ['exposure', 'tone', 'wb'] : undefined, dev, layers: doc.layers.filter(l => l.type !== 'paint').map(l => ({ type: l.type, name: l.name, blend: l.blend, opacity: l.opacity, visible: l.visible, src: l.src, dev: l.dev ? structuredClone(l.dev) : undefined, fill: l.fill ? { ...l.fill } : undefined, mask: { kind: l.mask.kind, invert: l.mask.invert, label: l.mask.label, brushData: l.mask.kind === 'brush' && l.mask.brush ? smallDataURL(l.mask.brush) : undefined } })) };
+  const p = { name, tag: `Saved ${new Date().toLocaleDateString()}`, auto: adapt ? ['exposure', 'tone', 'wb'] : undefined, dev, layers: doc.layers.filter(l => l.type !== 'paint').map(l => ({ type: l.type, name: l.name, blend: l.blend, opacity: l.opacity, visible: l.visible, src: l.src, dev: l.dev ? structuredClone(l.dev) : undefined, fill: l.fill ? { ...l.fill } : undefined, mask: { kind: l.mask.kind, invert: l.mask.invert, label: l.mask.label, feather: l.mask.feather, params: l.mask.params, brushData: l.mask.kind === 'brush' && l.mask.brush ? smallDataURL(l.mask.brush) : undefined } })) };
   const i = customPresets.findIndex(x => x.name.toLowerCase() === name.toLowerCase()); const replaced = i >= 0;
   if (replaced) customPresets[i] = p; else customPresets.push(p);
   const ok = saveCustom(customPresets); msg.style.color = ok ? 'var(--ok)' : 'var(--warn)';
@@ -2713,12 +2822,12 @@ const SYNC_PARTS = [
   { k: 'light', label: 'Light', keys: ['exposure', 'contrast', 'highlights', 'shadows', 'whites', 'blacks'] },
   { k: 'color', label: 'White balance & color', keys: ['temp', 'tint', 'vibrance', 'saturation'] },
   { k: 'effects', label: 'Dehaze', keys: ['dehaze'] },
-  { k: 'detail', label: 'Detail, noise & HDR', keys: ['hdr', 'clarity', 'sharpen', 'nrLuma', 'nrColor'] },
+  { k: 'detail', label: 'Detail, noise & HDR', keys: ['hdr', 'clarity', 'sharpen', 'nrLuma', 'nrColor', 'blur'] },
   { k: 'profile', label: 'Camera profile', keys: ['profile', 'profileAmt'] },
   { k: 'curve', label: 'Tone curve' }, { k: 'grade', label: 'Color grading' }, { k: 'hsl', label: 'HSL mixer' },
   { k: 'layers', label: 'Sky, Subject & adjustment layers' }, { k: 'brush', label: 'Brush-masked layers' }, { k: 'geo', label: 'Crop & rotate' }
 ];
-const NICE = { exposure: 'Exposure', contrast: 'Contrast', highlights: 'Highlights', shadows: 'Shadows', whites: 'Whites', blacks: 'Blacks', temp: 'Temp', tint: 'Tint', vibrance: 'Vibrance', saturation: 'Saturation', dehaze: 'Dehaze', hdr: 'HDR', clarity: 'Clarity', sharpen: 'Sharpening', nrLuma: 'Noise reduction', nrColor: 'Color noise' };
+const NICE = { exposure: 'Exposure', contrast: 'Contrast', highlights: 'Highlights', shadows: 'Shadows', whites: 'Whites', blacks: 'Blacks', temp: 'Temp', tint: 'Tint', vibrance: 'Vibrance', saturation: 'Saturation', dehaze: 'Dehaze', hdr: 'HDR', clarity: 'Clarity', sharpen: 'Sharpening', nrLuma: 'Noise reduction', nrColor: 'Color noise', blur: 'Lens blur' };
 let clip = null, syncSel = null, syncTarget = 'keep';
 /** What each group would copy from document d, in words; empty string = nothing changed. */
 function partSummary(p, d) {
@@ -2858,6 +2967,157 @@ $('#syAll').addEventListener('click', () => { SYNC_PARTS.forEach(p => syncSel[p.
 $('#syNone').addEventListener('click', () => { SYNC_PARTS.forEach(p => syncSel[p.k] = false); syncRefresh(); });
 $('#syCopyOnly').addEventListener('click', () => { clip = makeClip(syncSel); $('#syMsg').style.color = 'var(--ok)'; $('#syMsg').textContent = 'Copied. Open any photo and press Shift+V to paste.'; toast(`Copied edits from “${clip.from}” · Shift+V pastes`); });
 $('#syGo').addEventListener('click', pasteToTargets);
+function setMaskKind(L, k) {
+  if (k === L.mask.kind) return;
+  const m = { ...L.mask, kind: k };
+  if (k === 'brush') { if (!m.brush) m.brush = mkCanvas(workW, workH); m.label = m.label || 'Brush'; }
+  if (PARAM_DEFAULTS[k] && m.paramsKind !== k) { m.params = { ...PARAM_DEFAULTS[k] }; m.paramsKind = k; }
+  if (k === 'color' && L.mask.paramsKind !== 'color' && subjCover > .003) m.params = { ...m.params, ...subjectMainColor() };
+  if (k === 'radial' && L.mask.kind !== 'radial') m.feather = 50; // radial feather is its edge falloff
+  else if (L.mask.kind === 'radial') m.feather = 0;
+  if ((k === 'sky' && skyCover < .003) || ((k === 'subject' || k === 'background') && subjCover < .003)) toast(`No clear ${k === 'sky' ? 'sky' : 'subject'} found in this photo · try a gradient or the brush`, 'warn');
+  L.mask = m; renderLayers(); requestRender(false);
+  if (k !== 'none') flashMask(L, ['sky', 'subject', 'background'].includes(k));
+  if (k === 'brush') { setTool('mask', false); toast('Brush mask · paint where this layer should apply (K)'); }
+  if (k === 'linear' || k === 'radial') toast('Drag the handles on the photo to place the gradient');
+  if (k === 'color') toast('Tap ◎ Pick color, then click the colour you want in the photo');
+  commit(`Mask ${maskLabel(L)} · ${L.name}`);
+}
+function buildMaskParams(L, box) {
+  const m = L.mask, k = m.kind; if (k === 'none') return;
+  const setP = (key, v) => { L.mask = { ...L.mask, params: { ...maskParams(L.mask), [key]: v }, paramsKind: L.mask.kind }; };
+  const live = () => { requestRender(true); clearTimeout(fullTimer); fullTimer = setTimeout(() => requestRender(false), 170); if (flashState && flashState.id === L.id) flashState.start = performance.now(); else flashMask(L, false); placeMaskHandles(); };
+  const done = what => () => { renderLayers(); commit(`${what} · ${L.name}`); };
+  if (k === 'color') {
+    const p = maskParams(m), row = document.createElement('div'); row.className = 'pr';
+    row.innerHTML = `<label class="pl">Color</label><span class="cswatch" style="background:rgb(${p.r},${p.g},${p.b})"></span><button type="button" class="iconbtn" id="lpPick">◎ Pick color</button>`;
+    row.querySelector('#lpPick').addEventListener('click', () => startMaskPick(L)); box.appendChild(row);
+    makeSlider(box, { label: 'Range', min: 0, max: 100, zero: 0, get: () => maskParams(L.mask).range, set: v => setP('range', v), fmt: v => String(v), live, commit: done('Color range') }, false);
+  }
+  if (k === 'luminance') {
+    makeSlider(box, { label: 'Darkest tone', min: 0, max: 100, zero: 0, get: () => maskParams(L.mask).lo, set: v => setP('lo', v), fmt: v => String(v), live, commit: done('Luminance range') }, false);
+    makeSlider(box, { label: 'Brightest tone', min: 0, max: 100, zero: 0, get: () => maskParams(L.mask).hi, set: v => setP('hi', v), fmt: v => String(v), live, commit: done('Luminance range') }, false);
+    makeSlider(box, { label: 'Smoothness', min: 1, max: 50, zero: 1, get: () => maskParams(L.mask).soft, set: v => setP('soft', v), fmt: v => String(v), live, commit: done('Luminance range') }, false);
+  }
+  if (k === 'linear') { const n = document.createElement('div'); n.className = 'note'; n.textContent = 'Full effect at the ● handle, fading to none at the ○ handle. Drag the line to move it.'; box.appendChild(n); }
+  if (k === 'radial') { const n = document.createElement('div'); n.className = 'note'; n.textContent = 'Drag the centre to move the oval, and the edge handles to resize it.'; box.appendChild(n); }
+  if (k !== 'linear') makeSlider(box, { label: k === 'radial' ? 'Feather' : 'Soften edges', min: 0, max: 100, zero: 0, def: k === 'radial' ? 50 : 0, get: () => L.mask.feather ?? (k === 'radial' ? 50 : 0), set: v => { L.mask = { ...L.mask, feather: v }; }, fmt: v => String(v), live, commit: done('Mask feather') }, false);
+}
+/* ---- on-photo handles for gradient masks ---- */
+function workToScreen(x, y) { const di = dispInfo(), p = di.M.transformPoint(new DOMPoint(x, y)), sr = stage.getBoundingClientRect(), vr = vp.getBoundingClientRect(); return { x: sr.left - vr.left + p.x / di.w * sr.width, y: sr.top - vr.top + p.y / di.h * sr.height }; }
+function placeMaskHandles() {
+  const box = $('#mHandles'), L = activeLayer();
+  if (!RES.full || !L || !['linear', 'radial'].includes(L.mask.kind) || cropMode || ['heal', 'paint'].includes(tool)) { box.hidden = true; return; }
+  box.hidden = false; const p = maskParams(L.mask), S = (nx, ny) => workToScreen(nx * workW, ny * workH), pos = {};
+  let d = '';
+  if (L.mask.kind === 'linear') {
+    const a = S(p.x0, p.y0), b = S(p.x1, p.y1), dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy) || 1, nx = -dy / len * 70, ny = dx / len * 70;
+    d = `M${a.x - nx},${a.y - ny}L${a.x + nx},${a.y + ny}M${b.x - nx},${b.y - ny}L${b.x + nx},${b.y + ny}M${a.x},${a.y}L${b.x},${b.y}`;
+    pos.a = a; pos.b = b; pos.mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+  } else {
+    const f = 1 - clamp((L.mask.feather ?? 50) / 100, 0, .98), ring = s => { let r = ''; for (let i = 0; i <= 48; i++) { const t = i / 48 * 6.2832, q = S(p.cx + p.rx * s * Math.cos(t), p.cy + p.ry * s * Math.sin(t)); r += (i ? 'L' : 'M') + q.x + ',' + q.y; } return r; };
+    d = ring(1) + ring(f); pos.c = S(p.cx, p.cy); pos.e = S(p.cx + p.rx, p.cy); pos.n = S(p.cx, p.cy - p.ry);
+  }
+  box.querySelector('path').setAttribute('d', d);
+  box.querySelectorAll('i').forEach(h => { const q = pos[h.dataset.h]; h.hidden = !q; if (q) { h.style.left = q.x + 'px'; h.style.top = q.y + 'px'; } });
+}
+$('#mHandles').addEventListener('pointerdown', e => {
+  const h = e.target.dataset && e.target.dataset.h, L = activeLayer(); if (!h || !L) return;
+  e.stopPropagation(); e.preventDefault(); flashMask(L, false);
+  const start = toImg(e), p0 = maskParams(L.mask), kind = L.mask.kind;
+  const mv = ev => {
+    const q = toImg(ev), nx = q.x / workW, ny = q.y / workH, dx = (q.x - start.x) / workW, dy = (q.y - start.y) / workH, p = { ...p0 };
+    if (h === 'a') { p.x0 = nx; p.y0 = ny; } else if (h === 'b') { p.x1 = nx; p.y1 = ny; } else if (h === 'mid') { p.x0 += dx; p.y0 += dy; p.x1 += dx; p.y1 += dy; }
+    else if (h === 'c') { p.cx = p0.cx + dx; p.cy = p0.cy + dy; } else if (h === 'e') p.rx = Math.max(.01, Math.abs(nx - p0.cx)); else if (h === 'n') p.ry = Math.max(.01, Math.abs(ny - p0.cy));
+    L.mask = { ...L.mask, params: p, paramsKind: kind }; if (flashState) flashState.start = performance.now();
+    requestRender(true); placeMaskHandles(); drawOverlay();
+  };
+  const up = () => { window.removeEventListener('pointermove', mv); window.removeEventListener('pointerup', up); window.removeEventListener('pointercancel', up); requestRender(false); renderLayers(); commit(`Adjust ${maskLabel(L)} · ${L.name}`); };
+  window.addEventListener('pointermove', mv); window.addEventListener('pointerup', up); window.addEventListener('pointercancel', up);
+});
+/* ---- pick a colour for a Color range mask ---- */
+let maskPick = null;
+function startMaskPick(L) { if (!RES.full) return; maskPick = L.id; vp.classList.add('t-pick'); hud(IC.mask, 'Pick a color', 'Click the colour this layer should affect · Esc cancels', ''); }
+function doMaskPick(p) {
+  const L = doc.layers.find(l => l.id === maskPick); maskPick = null; vp.classList.remove('t-pick'); if (!L) return;
+  const d = RES.full.srcData.data, W = workW, H = workH, cx = Math.round(p.x), cy = Math.round(p.y);
+  if (cx < 0 || cy < 0 || cx >= W || cy >= H) { toast('Click inside the photo', 'warn'); return; }
+  let r = 0, g = 0, b = 0, n = 0; for (let y = cy - 3; y <= cy + 3; y++) for (let x = cx - 3; x <= cx + 3; x++) { const i = (clamp(y, 0, H - 1) * W + clamp(x, 0, W - 1)) * 4; r += d[i]; g += d[i + 1]; b += d[i + 2]; n++; }
+  L.mask = { ...L.mask, kind: 'color', paramsKind: 'color', params: { ...maskParams({ kind: 'color', params: L.mask.paramsKind === 'color' ? L.mask.params : {} }), r: Math.round(r / n), g: Math.round(g / n), b: Math.round(b / n) } };
+  renderLayers(); requestRender(false); flashMask(L, false); commit(`Pick color · ${L.name}`);
+}
+/* ---- one-click mask effects ---- */
+const MASK_EFFECTS = [
+  { cat: 'Sky', name: 'Blue Sky', desc: 'Clear, deep blue', layers: [{ mask: { kind: 'sky' }, dev: { temp: -14, saturation: 18, highlights: -25, dehaze: 12 } }] },
+  { cat: 'Sky', name: 'Dramatic Sky', desc: 'Dark, detailed clouds', layers: [{ mask: { kind: 'sky' }, dev: { exposure: -.45, contrast: 30, highlights: -55, dehaze: 40, clarity: 20 } }] },
+  { cat: 'Sky', name: 'Sunset Sky', desc: 'Warm golden glow', layers: [{ mask: { kind: 'sky' }, dev: { temp: 30, tint: 12, saturation: 20, exposure: -.15, grade: { hi: { h: 30, s: .35 } } } }] },
+  { cat: 'Sky', name: 'Graduated ND', desc: 'Darkens the top, like a lens filter', layers: [{ mask: { kind: 'linear', params: { x0: .5, y0: 0, x1: .5, y1: .55 } }, dev: { exposure: -.7, highlights: -30, dehaze: 10 } }] },
+  { cat: 'Subject', name: 'Pop Subject', desc: 'Brighter, crisper subject', layers: [{ mask: { kind: 'subject' }, dev: { exposure: .25, contrast: 12, clarity: 18, vibrance: 20 } }] },
+  { cat: 'Subject', name: 'Brighten Subject', desc: 'Lifts a dark subject', layers: [{ mask: { kind: 'subject', feather: 10 }, dev: { exposure: .45, shadows: 25 } }] },
+  { cat: 'Subject', name: 'Warm Subject', desc: 'Warmer, glowing tones', layers: [{ mask: { kind: 'subject', feather: 10 }, dev: { temp: 15, vibrance: 10 } }] },
+  { cat: 'Subject', name: 'Soften Skin', desc: 'Smooths texture on the subject', layers: [{ mask: { kind: 'subject', feather: 20 }, dev: { clarity: -45, nrLuma: 25 } }] },
+  { cat: 'Background', name: 'Blur Background', desc: 'Portrait-mode lens blur', layers: [{ mask: { kind: 'background', feather: 25 }, dev: { blur: 55 } }] },
+  { cat: 'Background', name: 'Darken Background', desc: 'Makes the subject stand out', layers: [{ mask: { kind: 'background', feather: 20 }, dev: { exposure: -.6, saturation: -15 } }] },
+  { cat: 'Background', name: 'Mono Background', desc: 'Colour subject, grey surroundings', layers: [{ mask: { kind: 'background', feather: 15 }, dev: { saturation: -100 } }] },
+  { cat: 'Light', name: 'Spotlight', desc: 'Light on the centre, darker edges', layers: [{ name: 'Spotlight', mask: { kind: 'radial', feather: 60, params: { cx: .5, cy: .5, rx: .3, ry: .36 } }, dev: { exposure: .35 } }, { name: 'Spotlight surround', mask: { kind: 'radial', invert: true, feather: 60, params: { cx: .5, cy: .5, rx: .3, ry: .36 } }, dev: { exposure: -.55 } }] },
+  { cat: 'Light', name: 'Vignette', desc: 'Darker, softer corners', layers: [{ mask: { kind: 'radial', invert: true, feather: 75, params: { cx: .5, cy: .5, rx: .48, ry: .52 } }, dev: { exposure: -.7, saturation: -10 } }] },
+  { cat: 'Light', name: 'Recover Highlights', desc: 'Brings back bright detail', layers: [{ mask: { kind: 'luminance', params: { lo: 70, hi: 100, soft: 15 } }, dev: { highlights: -50, exposure: -.3 } }] },
+  { cat: 'Light', name: 'Lift Shadows', desc: 'Opens dark areas, cleans grain', layers: [{ mask: { kind: 'luminance', params: { lo: 0, hi: 30, soft: 15 } }, dev: { exposure: .45, shadows: 30, nrLuma: 15 } }] },
+  { cat: 'Color', name: 'Color Splash', desc: "Keeps the subject's colour, greys the rest", layers: [{ mask: { kind: 'color', invert: true, feather: 8, params: { auto: 'subject', range: 32 } }, dev: { saturation: -100 } }] },
+  { cat: 'Color', name: 'Richer Greens', desc: 'Lush foliage and grass', layers: [{ mask: { kind: 'color', feather: 8, params: { r: 80, g: 130, b: 55, range: 45 } }, dev: { saturation: 22, vibrance: 10, exposure: .1 } }] },
+  { cat: 'Color', name: 'Bluer Water', desc: 'Clear blue sea and lakes', layers: [{ mask: { kind: 'color', feather: 8, params: { r: 50, g: 105, b: 150, range: 45 } }, dev: { saturation: 22, temp: -10, dehaze: 10 } }] },
+];
+const FX_CATS = ['All', 'Sky', 'Subject', 'Background', 'Light', 'Color'];
+let fxCat = 'All';
+const fxNeeds = fx => fx.layers.some(s => s.mask.kind === 'sky') ? 'sky' : fx.layers.some(s => ['subject', 'background'].includes(s.mask.kind) || (s.mask.params && s.mask.params.auto)) ? 'subject' : '';
+function fxLayers(fx) {
+  return fx.layers.map(s => {
+    const L = makeLayer('smart', { name: s.name || fx.name, fromEffect: true }); L.dev = mergeDev(s.dev);
+    let params = s.mask.params ? { ...s.mask.params } : undefined;
+    if (params && params.auto === 'subject') { const { auto, ...rest } = params; params = { ...PARAM_DEFAULTS.color, ...rest, ...subjectMainColor() }; }
+    L.mask = { kind: s.mask.kind, invert: !!s.mask.invert, brush: null, label: '', feather: s.mask.feather ?? (s.mask.kind === 'radial' ? 50 : 0), params, paramsKind: params ? s.mask.kind : undefined };
+    return L;
+  });
+}
+function applyMaskEffect(fx) {
+  if (!RES.full) return;
+  const need = fxNeeds(fx);
+  if (need === 'sky' && skyCover < .003) { toast('No sky found in this photo · try Graduated ND instead', 'warn'); return; }
+  if (need === 'subject' && subjCover < .003) { toast('No clear subject found in this photo · try Spotlight or a brush mask', 'warn'); return; }
+  previewDoc = null; const made = fxLayers(fx);
+  doc.layers.push(...made); doc.active = made[0].id; renderLayers(); syncDevelopUI(); requestRender(false); flashMask(made[0], true); commit('Effect · ' + fx.name);
+  toast(`${fx.name} added · fine-tune it with the Develop sliders${['linear', 'radial'].includes(made[0].mask.kind) ? ' or the handles on the photo' : ''}`);
+}
+function openEffects() { if (!RES.full) return; $('#fxPanel').hidden = false; renderEffects(); }
+function closeEffects() { $('#fxPanel').hidden = true; if (previewDoc) { previewDoc = null; liveChange(); } }
+function renderEffects() {
+  const cats = $('#fxCats'); cats.innerHTML = FX_CATS.map(c => `<button type="button" aria-pressed="${c === fxCat}">${c}</button>`).join('');
+  cats.querySelectorAll('button').forEach(b => b.addEventListener('click', () => { fxCat = b.textContent; renderEffects(); }));
+  const g = $('#fxGrid'); g.innerHTML = '';
+  MASK_EFFECTS.filter(fx => fxCat === 'All' || fx.cat === fxCat).forEach(fx => {
+    const need = fxNeeds(fx), missing = (need === 'sky' && skyCover < .003) || (need === 'subject' && subjCover < .003);
+    const c = document.createElement('button'); c.type = 'button'; c.className = 'fxcard' + (missing ? ' dim' : '');
+    c.innerHTML = `<canvas width="160" height="107"></canvas><b></b><small></small>`; c.querySelector('b').textContent = fx.name; c.querySelector('small').textContent = missing ? `Needs a ${need} · none found` : fx.desc;
+    c.addEventListener('click', () => { applyMaskEffect(fx); closeEffects(); });
+    c.addEventListener('mouseenter', () => { if (missing) return; previewDoc = { ...doc, layers: [...doc.layers, ...fxLayers(fx)] }; liveChange(); });
+    c.addEventListener('mouseleave', () => { if (previewDoc) { previewDoc = null; liveChange(); } });
+    g.appendChild(c);
+    setTimeout(() => { // small preview of the effect on this photo
+      if ($('#fxPanel').hidden || missing) return;
+      const res = RES.thumb, tmp = mkCanvas(res.w, res.h); composite(tmp.getContext('2d'), res, { dev: doc.dev, layers: [...doc.layers.filter(l => l.type !== 'paint'), ...fxLayers(fx)], geo: doc.geo }, false);
+      const cv = c.querySelector('canvas'), x = cv.getContext('2d'), s = Math.max(cv.width / res.w, cv.height / res.h); x.drawImage(tmp, (cv.width - res.w * s) / 2, (cv.height - res.h * s) / 2, res.w * s, res.h * s);
+    }, 10);
+  });
+}
+$('#fxClose').addEventListener('click', closeEffects);
+$('#addFx').addEventListener('click', () => $('#fxPanel').hidden ? openEffects() : closeEffects());
+function newMaskLayer(kind) {
+  if (!RES.full) return; const L = makeLayer('smart', { name: MASK_KINDS.find(k => k[0] === kind)[1] + ' adjustment' });
+  L.mask = { kind, invert: false, brush: null, label: '', feather: kind === 'radial' ? 50 : 0, params: PARAM_DEFAULTS[kind] ? { ...PARAM_DEFAULTS[kind] } : undefined, paramsKind: PARAM_DEFAULTS[kind] ? kind : undefined };
+  if (kind === 'color' && subjCover > .003) L.mask.params = { ...L.mask.params, ...subjectMainColor() };
+  doc.layers.push(L); doc.active = L.id; renderLayers(); syncDevelopUI(); requestRender(false); flashMask(L, true); commit('New ' + MASK_KINDS.find(k => k[0] === kind)[1] + ' mask');
+  toast(kind === 'color' ? 'Color range mask added · Pick color in Layers, then use the Develop sliders' : 'Mask added · the Develop sliders now edit only this area');
+}
 $('#libSync').addEventListener('click', openSync);
 /** Apply a preset to every keeper; adaptive presets re-measure each photo so one look fits different light. */
 async function applyPresetToKeepers(p) {
@@ -3120,7 +3380,7 @@ const MAX_EDGE = IS_MOBILE ? 8192 : 16384, MAX_PIXELS = IS_MOBILE ? 16e6 : 100e6
 const EX = { mode: 'one', fmt: 'jpeg', q: 92, scale: 1, edge: 0, ig: '', igFull: false };
 let downloads = null, exBusy = null;
 (async () => { try { if (window.claude && window.claude.use) downloads = await window.claude.use('downloads'); } catch (_) { downloads = null; } })();
-const dlgOpen = () => !$('#exportDlg').hidden || !$('#keysDlg').hidden || !$('#syncDlg').hidden || !$('#aiDlg').hidden || !$('#blockDlg').hidden;
+const dlgOpen = () => !$('#exportDlg').hidden || !$('#keysDlg').hidden || !$('#syncDlg').hidden || !$('#aiDlg').hidden || !$('#blockDlg').hidden || !$('#cmdDlg').hidden;
 const keepers = () => library.filter(it => it.status === 'done' && verdictOf(it) === 'keep');
 /**
  * Fit an Instagram ratio inside the photo's own crop, centred on the detected subject when there is one.
@@ -3401,8 +3661,11 @@ window.addEventListener('keydown', e => {
   const t = e.target, tag = t && t.tagName;
   const typing = (tag === 'INPUT' && !['range', 'checkbox', 'radio', 'button', 'color'].includes(t.type)) || tag === 'TEXTAREA' || tag === 'SELECT' || (t && t.isContentEditable);
   const mod = e.ctrlKey || e.metaKey, k = e.key.toLowerCase();
-  if (mod && k === 's') { e.preventDefault(); openExport(e.shiftKey ? 'keepers' : 'one'); return; }           // intercept native save
+  if (mod && k === 's') { e.preventDefault(); openExport(e.shiftKey ? 'keepers' : 'one'); return; }
+  if (mod && k === 'k') { e.preventDefault(); $('#cmdDlg').hidden ? openCmd() : closeCmd(); return; }           // intercept native save
   if (e.key === 'Escape' && wbPick) { endWBPick(); toast('Neutral pick cancelled'); return; }
+  if (e.key === 'Escape' && maskPick) { maskPick = null; vp.classList.remove('t-pick'); toast('Color pick cancelled'); return; }
+  if (e.key === 'Escape' && !$('#fxPanel').hidden && !dlgOpen()) { closeEffects(); return; }
   if (e.key === 'Escape' && enh && !dlgOpen()) { closeEnhance(false); return; }
   if (e.key === 'Escape' && dlgOpen()) { closeExport(); closeSync(); $('#keysDlg').hidden = true; $('#aiDlg').hidden = true; return; }
   if (mod && k === 'o' && !dlgOpen()) { e.preventDefault(); $('#fileIn').click(); return; }
@@ -3432,6 +3695,8 @@ window.addEventListener('keydown', e => {
     case 'c': case 'r': setTool(tool === 'crop' ? 'move' : 'crop', true); break;
     case 'e': enh ? closeEnhance(false) : openEnhance(); break;
     case 'w': startWBPick(); break;
+    case '/': e.preventDefault(); openCmd(); break;
+    case 'm': $('#fxPanel').hidden ? openEffects() : closeEffects(); break;
     case 'p': if (currentItem) setManual(currentItem, 'keep'); break;
     case 'x': if (currentItem) setManual(currentItem, 'reject'); break;
     case 'u': if (currentItem && currentItem.manual) setManual(currentItem, currentItem.manual); break;
@@ -3502,6 +3767,111 @@ if (pwaEnabled() && 'serviceWorker' in navigator) navigator.serviceWorker.regist
     if (files.length) setTimeout(() => importFiles(files), 800);
   } catch (_) { }
 })();
+/* =====================================================================
+   19. SEARCH (Ctrl/⌘ K or /) — jump to any slider, tool, preset, effect, mask, crop or photo
+   ===================================================================== */
+const SYN = {
+  Exposure: 'brighter brightness brighten darker darken lighter lighten bright dark light underexposed overexposed', Contrast: 'punch flat pop', Highlights: 'bright areas recover sky blown', Shadows: 'dark areas lift open',
+  Whites: 'white point', Blacks: 'black point crush', Temp: 'white balance warm warmer cool cooler yellow blue orange', Tint: 'green magenta pink',
+  Vibrance: 'color colour boost', Saturation: 'color colour intensity desaturate black white', Dehaze: 'haze fog mist', HDR: 'high dynamic range tone mapping',
+  Clarity: 'texture detail midtone', Sharpening: 'sharp crisp sharpen detail', 'Noise reduction': 'noise grain denoise smooth', 'Color noise': 'noise speckle chroma',
+  'Lens blur': 'blur bokeh portrait mode depth soft', Amount: 'profile strength', Lum: 'luminance brightness', Blending: 'grade', Balance: 'grade'
+};
+let cmdItems = [], cmdSel = 0, cmdShown = [];
+const CMD_RECENT = 'lumenlayer.recent.v1';
+function cmdIndex() {
+  const items = [], add = (type, label, run, kw = '', hint = '', weak = '') => items.push({ type, label, run, hint, hay: (label + ' ' + kw).toLowerCase(), weak: (weak + ' ' + type).toLowerCase() });
+  sliders.forEach(en => {
+    const sec = en.row.closest('details'), secName = sec ? sec.querySelector('.st').textContent : '';
+    add('Slider', `${en.o.label} · ${secName}`, () => focusSlider(en), (SYN[en.o.label] || '') + ' ' + secName, en.out.textContent);
+  });
+  const TK = { move: 'select pointer click', hand: 'pan move drag', crop: 'rotate straighten flip ratio aspect level horizon', heal: 'remove dust spot blemish clone heal fix retouch', paint: 'draw color brush', mask: 'local adjustment paint mask brush' };
+  Object.entries(TOOLS).forEach(([k, t]) => add('Tool', t.name, () => setTool(k, true), TK[k], t.key));
+  const A = (label, run, kw, hint = '') => add('Action', label, run, kw, hint);
+  A('Undo', undo, 'back revert', 'Ctrl Z'); A('Redo', redo, 'forward', 'Ctrl ⇧ Z');
+  A('Export photo', () => openExport('one'), 'save download jpeg png webp share instagram watermark', 'Ctrl S');
+  A('Export keepers', () => openExport('keepers'), 'zip batch all save', 'Ctrl ⇧ S');
+  A('Import photos', () => $('#fileIn').click(), 'open add folder files load', 'Ctrl O');
+  A('Enhance', openEnhance, 'auto fix improve best exposure one click', 'E');
+  A('AI edit', () => { openEnhance(); setTimeout(aiEditEnhance, 50); }, 'ai artificial intelligence claude openai gemini ollama smart');
+  A('AI review', runAIReview, 'cull keepers judge ai rate');
+  A('AI settings', () => openAISettings(), 'provider api key ollama openai gemini local model connect');
+  A('Auto white balance', autoWB, 'color cast fix wb neutral');
+  A('Pick neutral point', startWBPick, 'white balance eyedropper grey gray', 'W');
+  A('Before / After', () => setCompare(!compareOn, true), 'compare original split', '\\');
+  A('Select sky', () => aiSelect('sky'), 'mask sky clouds'); A('Select subject', () => aiSelect('subject'), 'mask person people subject object');
+  A('Mask effects', openEffects, 'effects local one click', 'M');
+  [['linear', 'graduated filter nd gradient sky darken top'], ['radial', 'spotlight vignette circle oval ellipse'], ['color', 'select colour hue range'], ['luminance', 'bright dark tones range highlights shadows']].forEach(([k, kw]) => A(`New ${MASK_KINDS.find(m => m[0] === k)[1].toLowerCase()} mask`, () => newMaskLayer(k), kw + ' mask'));
+  A('Copy edits to keepers', openSync, 'sync paste batch apply all', '⇧ C'); A('Merge to HDR', mergeHDR, 'bracket exposure fusion');
+  A('Fit to screen', () => layoutStage(true), 'zoom fit', 'Ctrl 0'); A('Remove rejects', () => $('#libClear').click(), 'delete bad photos');
+  A('Keyboard shortcuts', () => { $('#keysDlg').hidden = false; }, 'keys help');
+  [['1:1', 'square'], ['4:5', 'portrait'], ['3:2', 'landscape'], ['16:9', 'wide video']].concat(Object.entries(IG).map(([k, v]) => ['ig-' + k, 'instagram ' + v.label])).forEach(([a, kw]) => {
+    const label = a.startsWith('ig-') ? `Crop · Instagram ${IG[a.slice(3)].label}` : `Crop · ${a}`;
+    add('Crop', label, () => { setTool('crop', true); doc.geo.aspect = a; fitAspect(); buildOptbar(); }, kw + ' ratio aspect crop ' + a);
+  });
+  [...BUILTIN, ...customPresets].forEach(p => add('Preset', p.name, () => applyPreset(p), p.cat || 'saved', p.cat || 'Saved', `${p.tag || ''} look style filter`));
+  Object.entries(PROFILES).forEach(([k, v]) => add('Profile', v.label, () => { editDev().profile = k; syncDevelopUI(); liveChange(); commit(`Profile · ${v.label}${targetSuffix()}`); }, 'profile', v.g, `${v.g} camera film look`));
+  MASK_EFFECTS.forEach(fx => add('Effect', fx.name, () => applyMaskEffect(fx), 'effect', fx.cat, `${fx.cat} ${fx.desc} mask local`));
+  library.forEach(it => add('Photo', it.name, () => openItem(it), '', VERDICT_LABEL[verdictOf(it)], verdictOf(it) + ' photo picture image'));
+  return items;
+}
+function focusSlider(en) {
+  const sec = en.row.closest('details'); if (sec) sec.open = true;
+  const tab = [...document.querySelectorAll('#devHost .tabs button[data-t]')].find(b => hslPanes[b.dataset.t] && hslPanes[b.dataset.t].contains(en.row)); if (tab) tab.click();
+  document.querySelector('.layers').classList.add('collapsed');
+  en.row.scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  en.inp.focus({ preventScroll: true }); en.row.classList.remove('found'); void en.row.offsetWidth; en.row.classList.add('found');
+}
+const stem = t => t.replace(/(ness|ing|er|en|ed|est|ly|s)$/, ''); // brighter, brighten, brightness → bright
+const fuzzy = (s, t) => { let i = 0; for (const ch of s) if (ch === t[i]) i++; return i === t.length; };
+function cmdSearch(q) {
+  const toks = q.toLowerCase().trim().split(/\s+/).filter(Boolean);
+  if (!toks.length) { // suggestions: recent first, then the most useful actions
+    let recent = []; try { recent = JSON.parse(localStorage.getItem(CMD_RECENT) || '[]'); } catch (_) { }
+    const pick = l => cmdItems.find(i => i.label === l);
+    return [...recent.map(pick), ...['Enhance', 'Mask effects', 'Select subject', 'Select sky', 'Blur Background', 'Auto white balance', 'Export photo', 'AI edit'].map(pick)].filter((x, i, a) => x && a.indexOf(x) === i).slice(0, 10);
+  }
+  const boost = { Action: 3, Effect: 2, Slider: 2, Tool: 2, Preset: 1, Crop: 1, Profile: 0, Photo: 0 }, out = [];
+  for (const it of cmdItems) {
+    const lab = it.label.toLowerCase(); let sc = 0, ok = true;
+    for (const t of toks) {
+      const li = lab.indexOf(t);
+      if (li === 0) sc += 12; else if (li > 0) sc += /[\s·(/-]/.test(lab[li - 1]) ? 9 : 5; else if (it.hay.includes(t)) sc += 6; else if (stem(t).length > 3 && it.hay.includes(stem(t))) sc += 5; else if (it.weak.includes(t)) sc += 3; else if (t.length > 2 && fuzzy(lab, t)) sc += 1; else { ok = false; break; }
+    }
+    if (ok) out.push({ it, sc: sc + (boost[it.type] || 0) - lab.length * .01 });
+  }
+  return out.sort((a, b) => b.sc - a.sc).slice(0, 14).map(r => r.it);
+}
+function renderCmd() {
+  const list = $('#cmdList'), q = $('#cmdInput').value; cmdShown = cmdSearch(q); cmdSel = clamp(cmdSel, 0, Math.max(0, cmdShown.length - 1));
+  list.innerHTML = '';
+  if (!cmdShown.length) { const e = document.createElement('div'); e.className = 'cmdempty'; e.textContent = `Nothing matches “${q}”. Try words like warmer, blur, noise, sky, crop or a photo name.`; list.appendChild(e); return; }
+  if (!q.trim()) { const h = document.createElement('div'); h.className = 'cmdhead'; h.textContent = 'Suggestions'; list.appendChild(h); }
+  cmdShown.forEach((it, i) => {
+    const r = document.createElement('button'); r.type = 'button'; r.className = 'cmdrow' + (i === cmdSel ? ' on' : ''); r.setAttribute('role', 'option'); r.setAttribute('aria-selected', i === cmdSel);
+    r.innerHTML = `<span class="cmdtype t-${it.type.toLowerCase()}"></span><span class="cmdlabel"></span><span class="cmdhint"></span>`;
+    r.querySelector('.cmdtype').textContent = it.type; r.querySelector('.cmdlabel').textContent = it.label; r.querySelector('.cmdhint').textContent = it.hint || '';
+    r.addEventListener('click', () => runCmd(it)); r.addEventListener('mousemove', () => { if (cmdSel !== i) { cmdSel = i; renderCmdSel(); } });
+    list.appendChild(r);
+  });
+}
+function renderCmdSel() { $('#cmdList').querySelectorAll('.cmdrow').forEach((r, i) => { r.classList.toggle('on', i === cmdSel); r.setAttribute('aria-selected', i === cmdSel); if (i === cmdSel) r.scrollIntoView({ block: 'nearest' }); }); }
+function openCmd() { if (!RES.full) return; cmdItems = cmdIndex(); cmdSel = 0; $('#cmdInput').value = ''; $('#cmdDlg').hidden = false; renderCmd(); setTimeout(() => $('#cmdInput').focus(), 10); }
+function closeCmd() { $('#cmdDlg').hidden = true; }
+function runCmd(it) {
+  closeCmd();
+  try { let r = JSON.parse(localStorage.getItem(CMD_RECENT) || '[]'); r = [it.label, ...r.filter(x => x !== it.label)].slice(0, 5); localStorage.setItem(CMD_RECENT, JSON.stringify(r)); } catch (_) { }
+  setTimeout(() => it.run(), 0);
+}
+$('#cmdInput').addEventListener('input', () => { cmdSel = 0; renderCmd(); });
+$('#cmdInput').addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown') { e.preventDefault(); cmdSel = Math.min(cmdShown.length - 1, cmdSel + 1); renderCmdSel(); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); cmdSel = Math.max(0, cmdSel - 1); renderCmdSel(); }
+  else if (e.key === 'Enter') { e.preventDefault(); if (cmdShown[cmdSel]) runCmd(cmdShown[cmdSel]); }
+  else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); closeCmd(); }
+});
+$('#cmdDlg').addEventListener('click', e => { if (e.target.id === 'cmdDlg') closeCmd(); });
+$('#btnSearch').addEventListener('click', openCmd);
 $('#btnUndo').addEventListener('click', undo); $('#btnRedo').addEventListener('click', redo);
 $('#btnCompare').addEventListener('click', () => setCompare(!compareOn, false));
 $('#btnAuto').addEventListener('click', () => enh ? closeEnhance(false) : openEnhance());

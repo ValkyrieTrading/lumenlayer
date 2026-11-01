@@ -112,6 +112,43 @@ In the **Color** section:
 3. Press `K` for the **Masking brush** to paint your own area. `Alt` erases, and `O` keeps the overlay visible.
 4. Each layer has a blend mode, opacity, mask (None / Sky / Subject / Brush) and Invert. Drag layers to reorder them.
 
+### More mask types
+In the Layers panel, a layer's **Mask** menu has:
+
+| Mask | What it selects | How to adjust |
+|---|---|---|
+| Sky / Subject | Detected automatically | **Soften edges** |
+| Background | Everything except the subject | **Soften edges** |
+| Brush | What you paint (`K`) | Paint, `Alt` to erase |
+| Linear gradient | Full effect at ● fading to none at ○, like a graduated filter | Drag the handles on the photo |
+| Radial gradient | An oval: inside the oval, or outside it with **Invert** | Drag the centre and edge handles, plus **Feather** |
+| Color range | One colour wherever it appears | **◎ Pick color** on the photo, then **Range** |
+| Luminance range | Only bright or only dark tones | **Darkest / Brightest tone**, **Smoothness** |
+
+Painting with the masking brush on any mask turns it into an editable brush mask.
+
+### Mask effects (`M`)
+Click **✦ Effects** in the Layers panel or press `M`. Each card shows the effect on your photo, and hovering previews it full size. One click adds it as a masked layer you can fine-tune:
+- **Sky:** Blue Sky, Dramatic Sky, Sunset Sky, Graduated ND
+- **Subject:** Pop Subject, Brighten Subject, Warm Subject, Soften Skin
+- **Background:** Blur Background (portrait mode), Darken Background, Mono Background
+- **Light:** Spotlight, Vignette, Recover Highlights, Lift Shadows
+- **Color:** Color Splash (keeps the subject's colour, greys the rest), Richer Greens, Bluer Water
+
+### Find anything fast (`Ctrl/⌘ K` or `/`)
+Press `Ctrl+K` (or `/`), or click **Search** in the top bar, and type what you want in everyday words. Arrow keys move through the results and **Enter** runs one. Examples:
+
+| Type | You get |
+|---|---|
+| `warmer`, `brighter`, `noise`, `bokeh` | Jumps to that slider and highlights it |
+| `blur background`, `vignette`, `sky` | Applies the mask effect or selection |
+| `4:5`, `instagram story` | Opens Crop with that ratio |
+| `teal`, `film`, `portrait` | Presets and profiles |
+| `dust`, `straighten` | The right tool |
+| A photo's name | Opens that photo |
+
+Your most recent choices appear first when the search box is empty.
+
 ### Retouch, crop and compare
 - **Spot Healing** (`B`): paint over dust or blemishes. Press `B` again for the Paint brush, and use `[` / `]` to change brush size.
 - **Crop & rotate** (`C`): choose a ratio or an **Instagram** size, drag the frame, and use **Straighten** to level the horizon. Press **Enter** to apply or **Esc** to cancel.
@@ -201,6 +238,8 @@ Exported files contain **no metadata**: no GPS location, no camera data and no A
 | `B` | Spot Healing (press again for Paint) |
 | `K` | Masking brush on / off |
 | `E` | Enhance & AI edit panel |
+| `Ctrl+K` or `/` | Search everything |
+| `M` | Mask effects |
 | `W` | Pick neutral point (white balance) |
 | `[` / `]` | Smaller / larger brush |
 | `Alt` while painting | Erase |

@@ -47,7 +47,9 @@ Read **[HOW-TO-USE.md](HOW-TO-USE.md)** for the step-by-step guide and all keybo
 | **Detail & HDR** | HDR tone mapping, clarity, sharpening, and luminance and color noise reduction |
 | **Tone & color tools** | Point tone curve (RGB, R, G, B), 3-way color grading wheels, 8-color HSL mixer, live histogram |
 | **Enhance** | One click sets exposure, color, noise and detail for the photo, in a Natural, Vivid, Bright, Moody or HDR style, with a written reason for every change |
-| **Local edits** | One-click **Select Sky** and **Select Subject**, a masking brush, and Smart Object layers with their own sliders |
+| **Local edits** | Masks for Sky, Subject, Background, Brush, **Linear** and **Radial gradients** (with handles on the photo), **Color range** and **Luminance range**, with soft edges. Each masked layer has its own sliders |
+| **Mask effects** | 18 one-click local edits, previewed on your photo: Blur Background (portrait mode), Blue/Dramatic/Sunset Sky, Graduated ND, Pop Subject, Soften Skin, Spotlight, Vignette, Color Splash and more |
+| **Search** | `Ctrl/⌘ K`: type everyday words ("warmer", "bokeh", "4:5", "dust") to jump to any slider, tool, preset, effect, crop or photo |
 | **Retouching** | Spot Healing brush, paint brush, blend modes, fill and vignette layers |
 | **Crop & rotate** | Free or fixed ratios, every Instagram size, straighten, 90° rotation and flips |
 
