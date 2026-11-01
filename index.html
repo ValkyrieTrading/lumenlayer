@@ -3,6 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Photo editor with camera profiles, adaptive presets, AI edit, HDR, RAW import, culling and batch export.">
+<meta name="theme-color" content="#121418">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="pwa/icon-192.png">
+<link rel="apple-touch-icon" href="pwa/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Lumen Layer">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
 <title>Lumen Layer Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +43,7 @@ kbd{font-family:var(--f-mono);font-size:10px;padding:1px 5px;border-radius:4px;b
 .mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 
 /* ---------- Shell ---------- */
-.app{height:100%;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;background:var(--shell);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.app{height:100%;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr) auto;background:var(--shell);border:1px solid var(--line);border-radius:10px;overflow:hidden}
 .topbar{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--line);flex-wrap:wrap}
 .brand{display:flex;align-items:baseline;gap:8px;margin-right:6px}
 .brand .mark{width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 35%,var(--accent-2),var(--accent) 55%,#7a4a10);box-shadow:0 0 12px rgba(242,163,58,.45);align-self:center}
@@ -385,15 +395,33 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
   .lcard{flex-basis:112px}
   .libbar{padding:5px 12px 3px}
 }
+/* touch screens: no hover, bigger handles */
+@media (hover:none){
+  .lflags,.pcard .pkeep{opacity:1}
+}
+@media (hover:none) and (pointer:coarse){
+  .tb kbd,.optbar .tname kbd,#btnKeys,.rail button .k{display:none}
+}
+@media (pointer:coarse){
+  input[type=range].sl{height:30px}
+  input[type=range].sl::-webkit-slider-thumb{width:22px;height:22px;margin-top:-9.5px}
+  input[type=range].sl.grad::-webkit-slider-thumb{margin-top:-8.5px}
+  input[type=range].sl::-moz-range-thumb{width:18px;height:18px}
+  .rail button{width:42px;height:42px}
+  .split .knob{width:44px;height:44px;left:-22px;margin-top:-22px}
+}
+.inststeps{margin:0;padding:16px 18px 18px 38px;display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.5;color:var(--muted)}
+.inststeps b{color:var(--text)}
 /* stacked layout for narrow screens */
 @media (max-width:1100px){
   body{overflow:auto}
   .app{height:auto}
   .main{grid-template-columns:minmax(0,1fr)}
+  .rail{order:0}.center{order:1}.rightp{order:2}.leftp{order:3}
   .center{display:block}
   .rail{flex-direction:row;justify-content:center;border-right:0;border-bottom:1px solid var(--line);padding:6px}
   .rail .sep{width:1px;height:24px;margin:0 4px}
-  .vp{height:62vh;min-height:320px}
+  .vp{height:min(62vh,108vw);min-height:300px}
   .leftp,.rightp{border:0;border-top:1px solid var(--line)}
   .presets{max-height:none}
   .layers{max-height:none}
@@ -428,6 +456,7 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
     <button class="tb" id="btnCompare" type="button" aria-pressed="false" title="Before / After split (\)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M12 3v18"/><path d="M3 5h9v14H3z" fill="currentColor" opacity=".3" stroke="none"/></svg>Before / After <kbd>\</kbd>
     </button>
+    <button class="tb" id="btnInstall" type="button" hidden title="Install as an app on this device">Install app</button>
     <button class="tb" id="btnKeys" type="button">Shortcuts</button>
     <button class="tb primary" id="btnExport" type="button">Export <kbd>Ctrl S</kbd></button>
   </header>
@@ -583,7 +612,7 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
         <div class="exsum" id="exSum"></div>
       </div>
     </div>
-    <div class="dfoot"><span class="msg" id="exMsg"></span><button class="tb" type="button" id="exCancel">Close</button><button class="tb primary" type="button" id="exGo">Export</button></div>
+    <div class="dfoot"><span class="msg" id="exMsg"></span><button class="tb" type="button" id="exCancel">Close</button><button class="tb primary" type="button" id="exGo">Export</button><button class="tb primary" type="button" id="exShare" hidden>Save to Photos</button></div>
   </div>
 </div>
 
@@ -619,6 +648,18 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
 
 <!-- ===== Progress (blocks input while the engine works on other photos) ===== -->
 <div class="dlg" id="blockDlg" hidden role="dialog" aria-modal="true" aria-labelledby="blockTitle"><div class="dcard" style="width:min(440px,100%)"><div class="dhead"><h3 id="blockTitle">Working</h3></div><div style="padding:16px 18px;font-size:12.5px;color:var(--muted)" id="blockTxt" role="status"></div><div class="dfoot"><button class="tb" type="button" id="blockStop">Stop</button></div></div></div>
+
+<!-- ===== Install on iPhone / iPad ===== -->
+<div class="dlg" id="installDlg" hidden role="dialog" aria-modal="true" aria-labelledby="instTitle">
+  <div class="dcard" style="width:min(460px,100%)">
+    <div class="dhead"><h3 id="instTitle">Install on iPhone</h3><span>Adds Lumen Layer to your home screen.</span><button type="button" id="installClose" aria-label="Close">✕</button></div>
+    <ol class="inststeps">
+      <li>Tap the <b>Share</b> button in Safari: the square with an arrow pointing up.</li>
+      <li>Scroll down and tap <b>Add to Home Screen</b>.</li>
+      <li>Tap <b>Add</b>. Open Lumen Layer from your home screen: it runs full screen and works offline.</li>
+    </ol>
+  </div>
+</div>
 
 <!-- ===== Shortcut sheet ===== -->
 <div class="dlg" id="keysDlg" hidden role="dialog" aria-modal="true" aria-labelledby="kTitle">
@@ -987,7 +1028,11 @@ function detailStage(o, w, h, dv) {
 }
 
 /* ---------------- resolutions & caches ---------------- */
-const WORK_MAX = 1280, PROXY_MAX = 640, THUMB_MAX = 180, ORIG_MAX = 12000, ORIG_MAX_PX = 64e6; // keep native resolution for export
+const IS_IOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
+const IS_MOBILE = IS_IOS || /Android/i.test(navigator.userAgent);
+const CAN_HEIC = /Safari/.test(navigator.userAgent) && !/Chrome|Chromium|CriOS|Edg|Android|Firefox|FxiOS/.test(navigator.userAgent); // Safari decodes iPhone HEIC photos
+// Phones cap a single canvas at about 16.7 MP, so mobile keeps photos within that; computers keep up to 64 MP.
+const WORK_MAX = 1280, PROXY_MAX = 640, THUMB_MAX = 180, ORIG_MAX = IS_MOBILE ? 8192 : 12000, ORIG_MAX_PX = IS_MOBILE ? 16e6 : 64e6;
 let ORIG = null, imageName = 'untitled';
 const RES = {};
 /** High-quality stepped downscale (halving) for large sources. */
@@ -1401,7 +1446,7 @@ function renderHistoryUI() {
   });
   $('#hcount').textContent = `${hist.idx + 1} / ${hist.entries.length} states`;
   $('#btnUndo').disabled = hist.idx <= 0; $('#btnRedo').disabled = hist.idx >= hist.entries.length - 1;
-  const cur = list.querySelector('.cur'); if (cur) cur.scrollIntoView({ block: 'nearest' });
+  const cur = list.querySelector('.cur'); if (cur) { const t = cur.offsetTop - list.offsetTop, b = t + cur.offsetHeight; if (t < list.scrollTop) list.scrollTop = t; else if (b > list.scrollTop + list.clientHeight) list.scrollTop = b - list.clientHeight; }
 }
 
 /* =====================================================================
@@ -1697,13 +1742,13 @@ function beginPaintStroke(t, p, e) {
     if (!L) { L = makeLayer('paint', { name: t === 'heal' ? 'Spot Heal' : 'Paint' }); doc.layers.push(L); toast(`New pixel layer “${L.name}” keeps your ${t === 'heal' ? 'retouching' : 'paint'} non-destructive`); }
     doc.active = L.id; renderLayers(); syncDevelopUI();
   }
-  L.paint = cloneCanvas(L.paint); const pctx = L.paint.getContext('2d');
+  const prevPaint = L.paint; L.paint = cloneCanvas(L.paint); const pctx = L.paint.getContext('2d');
   const B = brush[t], erase = t === 'paint' && (e.altKey || B.erase);
   if (t === 'heal') {
     if (!healSrc || healSrc.width !== workW || healSrc.height !== workH) { healSrc = mkCanvas(workW, workH); healCtx = healSrc.getContext('2d', { willReadFrequently: true }); }
     composite(healCtx, RES.full, doc, true); sampleData = healCtx.getImageData(0, 0, workW, workH);
   }
-  action = { type: 'stroke', tool: t, layer: L, last: p, count: 1, erase, spacing: Math.max(1, B.size * (t === 'heal' ? .35 : .12)),
+  action = { type: 'stroke', tool: t, layer: L, undo: () => { L.paint = prevPaint; }, last: p, count: 1, erase, spacing: Math.max(1, B.size * (t === 'heal' ? .35 : .12)),
     dab: q => t === 'heal' ? healDab(pctx, q.x, q.y, B.size / 2, B.hard) : softDab(pctx, q.x, q.y, B.size, B.hard, B.color, B.flow / 100 * .6, erase) };
   action.dab(p); requestRender(false);
 }
@@ -1753,7 +1798,7 @@ function beginMaskStroke(p, e) {
     doc.layers.push(L); doc.active = L.id; renderLayers(); syncDevelopUI();
     toast('New Brush Adjustment (+0.50 EV) · fine-tune it in Develop');
   }
-  const m = L.mask;
+  const m = L.mask, prevMask = { ...L.mask };
   if (m.kind === 'none') { m.kind = 'brush'; m.brush = mkCanvas(workW, workH); m.invert = false; m.label = 'Brush'; toast('Brush mask started · paint where this layer should apply'); }
   else if (m.kind === 'sky' || m.kind === 'subject') {
     const c = mkCanvas(workW, workH), cx = c.getContext('2d');
@@ -1762,7 +1807,7 @@ function beginMaskStroke(p, e) {
     m.label = (m.kind === 'sky' ? 'Sky' : 'Subject') + ' + Brush'; m.kind = 'brush'; m.invert = false; m.brush = c;
   } else m.brush = cloneCanvas(m.brush);
   const B = brush.mask, erase = e.altKey || B.erase, mctx = m.brush.getContext('2d');
-  action = { type: 'stroke', tool: 'mask', layer: L, last: p, count: 1, erase, spacing: Math.max(1, B.size * .1), dab: q => softDab(mctx, q.x, q.y, B.size, B.hard, '#ffffff', B.flow / 100 * .5, erase) };
+  action = { type: 'stroke', tool: 'mask', layer: L, undo: () => { L.mask = prevMask; }, last: p, count: 1, erase, spacing: Math.max(1, B.size * .1), dab: q => softDab(mctx, q.x, q.y, B.size, B.hard, '#ffffff', B.flow / 100 * .5, erase) };
   action.dab(p); requestRender(false); drawOverlay();
 }
 function clickSelect(p) {
@@ -2417,7 +2462,7 @@ async function openItem(it, srcOpt) {
   catch (_) { it.status = 'error'; toast(`Could not decode ${it.name}`, 'warn'); }
   finally { setBusy(false); setTool(tool === 'crop' ? 'move' : tool, false); renderStrip(); }
 }
-const IMG_EXT = /\.(jpe?g|jfif|png|webp|gif|bmp|avif|tiff?)$/i, HEIC_EXT = /\.(heic|heif)$/i;
+const IMG_EXT = CAN_HEIC ? /\.(jpe?g|jfif|png|webp|gif|bmp|avif|tiff?|heic|heif)$/i : /\.(jpe?g|jfif|png|webp|gif|bmp|avif|tiff?)$/i, HEIC_EXT = CAN_HEIC ? /^$/ : /\.(heic|heif)$/i;
 const baseName = n => n.replace(/\.[^.]+$/, '');
 /**
  * Import photos from the file picker, drag-and-drop, paste, or (desktop app) files handed over by Windows.
@@ -2425,8 +2470,8 @@ const baseName = n => n.replace(/\.[^.]+$/, '');
  */
 function importFiles(list, remote = false) {
   const all = [...(list || [])].filter(f => f && f.name && !f.name.startsWith('.'));
-  const heic = all.filter(f => HEIC_EXT.test(f.name) || /heic|heif/.test(f.type || '')).length;
-  let files = all.filter(f => !HEIC_EXT.test(f.name) && !/heic|heif/.test(f.type || '') && ((f.type || '').startsWith('image/') || IMG_EXT.test(f.name) || isRawFile(f)));
+  const isHeic = f => !CAN_HEIC && (HEIC_EXT.test(f.name) || /heic|heif/.test(f.type || '')), heic = all.filter(isHeic).length;
+  let files = all.filter(f => !isHeic(f) && ((f.type || '').startsWith('image/') || IMG_EXT.test(f.name) || isRawFile(f)));
   const skipped = all.length - files.length - heic;
   // Cameras set to RAW+JPEG save the same picture twice; the RAW's preview is that JPEG, so keep just the JPEG.
   const jpgs = new Set(files.filter(f => !isRawFile(f)).map(f => baseName(f.name).toLowerCase()));
@@ -2504,7 +2549,7 @@ function renderStrip() {
   else info.textContent = it ? it.name : '';
   for (const id of [...libSel]) if (!library.some(x => x.id === id)) libSel.delete(id);
   const hb = $('#libHDR'); hb.disabled = libSel.size < 2; hb.textContent = libSel.size ? `Merge to HDR (${libSel.size})` : 'Merge to HDR';
-  const cur = strip.querySelector('.cur'); if (cur) cur.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  const cur = strip.querySelector('.cur'); if (cur) { const l = cur.offsetLeft - strip.offsetLeft, r = l + cur.offsetWidth; if (l < strip.scrollLeft) strip.scrollLeft = l - 12; else if (r > strip.scrollLeft + strip.clientWidth) strip.scrollLeft = r - strip.clientWidth + 12; }
 }
 function syncLibFilter() { $('#libFilter').querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === libFilter)); }
 $('#libFilter').querySelectorAll('button').forEach(b => b.addEventListener('click', () => { libFilter = b.dataset.v; syncLibFilter(); renderStrip(); }));
@@ -3071,7 +3116,7 @@ const IG = {
   tall: { label: 'Portrait 3:4', w: 1080, h: 1440 }, story: { label: 'Story / Reel 9:16', w: 1080, h: 1920 },
   landscape: { label: 'Landscape 1.91:1', w: 1080, h: 566 }
 };
-const MAX_EDGE = 16384, MAX_PIXELS = 100e6; // browser canvas ceilings
+const MAX_EDGE = IS_MOBILE ? 8192 : 16384, MAX_PIXELS = IS_MOBILE ? 16e6 : 100e6; // browser canvas ceilings
 const EX = { mode: 'one', fmt: 'jpeg', q: 92, scale: 1, edge: 0, ig: '', igFull: false };
 let downloads = null, exBusy = null;
 (async () => { try { if (window.claude && window.claude.use) downloads = await window.claude.use('downloads'); } catch (_) { downloads = null; } })();
@@ -3139,6 +3184,20 @@ async function makeZip(files) {
   if (off + cdSize > 0xFFFFFFFF) throw new Error('zip-too-big');
   return new Blob([...parts, ...central, end.buffer], { type: 'application/zip' });
 }
+let pendingShare = null;
+const canShareFiles = files => { try { return !downloads && IS_MOBILE && !!navigator.canShare && navigator.canShare({ files }); } catch (_) { return false; } };
+/** Phones: after rendering, offer a "Save to Photos" button that opens the share sheet (it must come from a tap). */
+function offerShare(files, done) {
+  pendingShare = { files, done }; const b = $('#exShare'); b.hidden = false; b.textContent = files.length > 1 ? `Save ${files.length} to Photos` : 'Save to Photos'; $('#exGo').hidden = true; b.focus();
+}
+$('#exShare').addEventListener('click', async () => {
+  if (!pendingShare) return; const { files, done } = pendingShare, msg = $('#exMsg');
+  try { await navigator.share({ files }); msg.style.color = 'var(--ok)'; msg.textContent = done; pendingShare = null; $('#exShare').hidden = true; $('#exGo').hidden = false; toast(done); }
+  catch (e) {
+    if (e && e.name === 'AbortError') { msg.style.color = 'var(--muted)'; msg.textContent = 'Not saved yet · tap Save to Photos again, or close'; return; }
+    for (const f of files) await deliver(f.name, f); pendingShare = null; $('#exShare').hidden = true; $('#exGo').hidden = false; msg.style.color = 'var(--ok)'; msg.textContent = 'Saved to your Downloads instead';
+  }
+});
 async function deliver(fname, blob) {
   if (downloads) { await downloads.save({ filename: fname, data: blob }); return 'saved'; }
   const a = document.createElement('a'), url = URL.createObjectURL(blob); a.href = url; a.download = fname; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 8000); return 'download';
@@ -3258,7 +3317,7 @@ function openExport(mode) {
   $('#exName').value = EX.mode === 'keepers' ? `keepers-${new Date().toISOString().slice(0, 10)}` : slug(imageName) + '-edit';
   wmSync(); exRefresh(); setTimeout(() => $('#exGo').focus(), 20);
 }
-function closeExport() { if (exBusy) { exBusy.abort = true; return; } $('#exportDlg').hidden = true; }
+function closeExport() { if (exBusy) { exBusy.abort = true; return; } $('#exportDlg').hidden = true; pendingShare = null; $('#exShare').hidden = true; $('#exGo').hidden = false; }
 $('#exIG').innerHTML = `<option value="">Off · use my crop</option>` + Object.entries(IG).map(([k, v]) => `<option value="${k}">${v.label} · ${v.w} × ${v.h}</option>`).join('');
 $('#exMode').querySelectorAll('button').forEach(b => b.addEventListener('click', () => { if (exBusy) return; EX.mode = b.dataset.v; $('#exName').value = EX.mode === 'keepers' ? `keepers-${new Date().toISOString().slice(0, 10)}` : slug(imageName) + '-edit'; exRefresh(); }));
 $('#exFmt').querySelectorAll('button').forEach(b => b.addEventListener('click', () => { EX.fmt = b.dataset.v; exRefresh(); }));
@@ -3277,6 +3336,8 @@ async function exportOne() {
     const t0 = performance.now(), out = renderOutput({ ...doc, geo: g }, w, h, true), blob = await encode(out); out.width = out.height = 1;
     if (!blob) throw new Error('encode');
     const ext = extFor(blob, EX.fmt), fname = slug($('#exName').value) + '.' + ext, info = `${w} × ${h} · ${(blob.size / 1048576).toFixed(2)} MB · ${Math.round(performance.now() - t0)} ms`;
+    const file = new File([blob], fname, { type: blob.type || 'image/' + EX.fmt });
+    if (canShareFiles([file])) { msg.style.color = 'var(--ok)'; msg.textContent = `Ready · ${info} · tap Save to Photos`; offerShare([file], `Saved ${fname}`); return; }
     try { const how = await deliver(fname, blob); msg.style.color = 'var(--ok)'; msg.textContent = `${how === 'saved' ? 'Saved' : 'Download started'} · ${fname} · ${info}`; toast('Exported ' + fname); }
     catch (err) { msg.style.color = 'var(--warn)'; msg.textContent = saveErr(err) || 'Saving files is not available in this view.'; }
     if (ext !== (EX.fmt === 'jpeg' ? 'jpg' : EX.fmt)) msg.textContent += ` · this browser cannot encode ${EX.fmt.toUpperCase()}, so it wrote ${ext.toUpperCase()}`;
@@ -3317,6 +3378,8 @@ async function exportKeepers() {
   }
   const stopped = exBusy.abort; exBusy = null; cancel.textContent = 'Close'; go.disabled = false;
   if (!files.length) { msg.style.color = 'var(--warn)'; msg.textContent = stopped ? 'Stopped before any photo was rendered.' : 'None of the keepers could be rendered.'; return; }
+  const asFiles = files.map(f => new File([f.blob], f.name, { type: f.blob.type || 'image/' + EX.fmt }));
+  if (canShareFiles(asFiles)) { msg.style.color = 'var(--ok)'; msg.textContent = `${files.length} photo${files.length === 1 ? '' : 's'} ready${failed ? ` · ${failed} could not be rendered` : ''} · tap Save to Photos`; offerShare(asFiles, `Saved ${files.length} keeper${files.length === 1 ? '' : 's'} to Photos`); return; }
   msg.textContent = 'Packing ZIP…';
   try {
     const zip = await makeZip(files), fname = slug($('#exName').value) + '.zip', mb = (zip.size / 1048576).toFixed(1);
@@ -3385,6 +3448,60 @@ window.addEventListener('blur', () => { if (spaceHeld) { spaceHeld = false; upda
 /* =====================================================================
    17. BOOT
    ===================================================================== */
+/* =====================================================================
+   18. PHONES & TABLETS — installable app, pinch zoom, saving to Photos
+   ===================================================================== */
+// Two-finger pinch zooms and pans the canvas; it also ends any brush stroke the first finger started.
+const touchPts = new Map(); let pinch = null;
+const pinchState = () => { const [a, b] = [...touchPts.values()]; return { d: Math.hypot(a.x - b.x, a.y - b.y) || 1, mx: (a.x + b.x) / 2, my: (a.y + b.y) / 2 }; };
+const inCanvas = e => e.target && e.target.closest && e.target.closest('#vp') && !e.target.closest('#aiPanel,#knob,#cropBox');
+document.addEventListener('pointerdown', e => { // capture on the document so it runs before the brush handlers
+  if (e.pointerType !== 'touch' || !inCanvas(e)) return;
+  touchPts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (touchPts.size === 2) {
+    e.stopImmediatePropagation(); e.preventDefault();
+    if (action && action.type === 'stroke' && action.count <= 4 && action.undo) { action.undo(); action = null; vp.classList.remove('panning'); requestRender(false); drawOverlay(); }
+    else if (action) endAction();
+    const s = pinchState(), vr = vp.getBoundingClientRect();
+    pinch = { d0: s.d, z0: V.z, cx: (s.mx - vr.left - V.tx) / V.z, cy: (s.my - vr.top - V.ty) / V.z };
+  } else if (touchPts.size > 2) e.stopImmediatePropagation();
+}, { capture: true });
+document.addEventListener('pointermove', e => {
+  if (e.pointerType !== 'touch' || !touchPts.has(e.pointerId)) return;
+  touchPts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (!pinch || touchPts.size < 2) return;
+  e.stopImmediatePropagation();
+  const s = pinchState(), vr = vp.getBoundingClientRect(), nz = clamp(pinch.z0 * s.d / pinch.d0, .25, 20);
+  V.z = nz; V.tx = s.mx - vr.left - pinch.cx * nz; V.ty = s.my - vr.top - pinch.cy * nz; applyTransform();
+}, { capture: true });
+const touchEnd = e => { if (e.pointerType !== 'touch') return; touchPts.delete(e.pointerId); if (touchPts.size < 2) pinch = null; };
+document.addEventListener('pointerup', touchEnd, { capture: true }); document.addEventListener('pointercancel', touchEnd, { capture: true });
+
+// Installing: Android/desktop Chrome offer a prompt; iPhone and iPad use Share → Add to Home Screen.
+let installPrompt = null;
+const standaloneApp = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+const pwaEnabled = () => (location.protocol === 'https:' || location.hostname === 'localhost') && !window.claude && !!document.querySelector('link[rel="manifest"]');
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installPrompt = e; if (!standaloneApp()) $('#btnInstall').hidden = false; });
+window.addEventListener('appinstalled', () => { $('#btnInstall').hidden = true; toast('Installed · open Lumen Layer from your home screen'); });
+if (pwaEnabled() && IS_IOS && !standaloneApp()) $('#btnInstall').hidden = false;
+$('#btnInstall').addEventListener('click', async () => {
+  if (installPrompt) { installPrompt.prompt(); const r = await installPrompt.userChoice.catch(() => null); if (r && r.outcome === 'accepted') $('#btnInstall').hidden = true; installPrompt = null; return; }
+  $('#installDlg').hidden = false;
+});
+$('#installClose').addEventListener('click', () => $('#installDlg').hidden = true);
+$('#installDlg').addEventListener('click', e => { if (e.target.id === 'installDlg') $('#installDlg').hidden = true; });
+if (pwaEnabled() && 'serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => { });
+
+// Android share target: photos shared from Gallery or other apps arrive here via the service worker.
+(async () => {
+  if (!('caches' in window) || !new URLSearchParams(location.search).has('shared')) return;
+  history.replaceState(null, '', location.pathname);
+  try {
+    const c = await caches.open('lumen-share'), files = [];
+    for (const k of await c.keys()) { const r = await c.match(k), b = await r.blob(); files.push(new File([b], decodeURIComponent(k.url.split('/').pop()), { type: b.type })); await c.delete(k); }
+    if (files.length) setTimeout(() => importFiles(files), 800);
+  } catch (_) { }
+})();
 $('#btnUndo').addEventListener('click', undo); $('#btnRedo').addEventListener('click', redo);
 $('#btnCompare').addEventListener('click', () => setCompare(!compareOn, false));
 $('#btnAuto').addEventListener('click', () => enh ? closeEnhance(false) : openEnhance());

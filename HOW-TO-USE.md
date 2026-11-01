@@ -7,6 +7,20 @@
    - If it opens in another app, right-click it → **Open with** → Chrome, Edge, Firefox or Safari.
    - Tip: bookmark the page so you can come back to it quickly.
 
+**On iPhone, iPad or Android**, install it from the published web address (see the README's *Publish it for phones*):
+- **iPhone / iPad:** Safari → **Share** → **Add to Home Screen**.
+- **Android:** Chrome → **Install app**.
+
+The app then opens from your home screen, full screen, and works offline.
+
+**Using it on a phone:**
+- **Import photos** opens your photo library. iPhone HEIC photos open directly in Safari.
+- **Zoom and pan** with two fingers. Tools work with one finger.
+- **Export:** tap **Export**, then **Save to Photos**, then **Save Image** in the share sheet. **Export keepers** saves all of them at once, as separate photos.
+- **Android sharing:** from Gallery, tap **Share → Lumen Layer** to send photos straight into the app.
+- **Layout:** the screen stacks top to bottom: tools, photo, library, sliders, then presets and history.
+- **Size limit:** phones keep photos up to 16 MP, the most a phone browser can handle.
+
 The editor opens with six sample photos in the **Library** strip at the bottom. Three are good shots and three are deliberately flawed, so you can try everything straight away.
 
 ## 2. The screen at a glance

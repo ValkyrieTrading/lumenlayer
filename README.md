@@ -21,6 +21,14 @@ Lumen Layer Studio takes a shoot from import to finished files:
 
 There is nothing to install. It is one ~7 MB file that opens through Microsoft Edge (built into Windows 10/11) and closes when you close the window. To rebuild it from source, see [`desktop/README.md`](desktop/README.md).
 
+### iPhone, iPad and Android
+Lumen Layer installs as an app from your phone's browser. It gets a home-screen icon, opens full screen and works offline. You need the web address where it's published; see [Publish it for phones](#publish-it-for-phones) below.
+
+- **iPhone / iPad:** open the address in **Safari** → tap **Share** → **Add to Home Screen** → **Add**. You can also tap **Install app** in the app for these steps.
+- **Android:** open the address in **Chrome** → tap **Install app** in the app, or **⋮ → Install app**. Once installed, you can share photos from Gallery straight into **Lumen Layer**.
+
+On phones, use two fingers to zoom and pan. Exports open the share sheet, where you tap **Save Image** to put them in Photos.
+
 ### Any computer (browser)
 1. On this page click **Code → Download ZIP**, then unzip it.
 2. Double-click **`index.html`** to open it in Chrome, Edge, Firefox or Safari.
@@ -91,13 +99,27 @@ The **Fix** presets rescue common problems:
 - **Social media AI labels:** exports carry no AI or provenance tags, and AI edit only sets ordinary adjustments, so there's nothing in the file that marks it as AI-generated. Each platform still applies its own policies and detection.
 - **Very large exports** (40 MP and up) can take several seconds and a lot of memory. Merged HDR photos are capped at about 6 MP.
 
+## Publish it for phones
+
+Phones install the app from a web address, so the files need to be online. **GitHub Pages** does this for free; you only need to set it up once:
+
+1. In this repository open **Settings → Pages**. On iPhone, use Safari and tap **aA → Request Desktop Website** to see Settings.
+2. Under **Build and deployment**, set **Source** to *Deploy from a branch*, choose **main** and **/ (root)**, and click **Save**.
+3. After a minute or two the address appears at the top of that page, for example `https://valkyrietrading.github.io/Nutition-app/`.
+
+GitHub Pages is free for **public** repositories. For a private repository it needs a paid GitHub plan, so either make the repository public (**Settings → General → Danger Zone → Change visibility**) or host the files elsewhere. Netlify and Cloudflare Pages also host it for free: upload the repository folder.
+
+**App stores:** this is an installable web app, not an App Store or Play Store download. To list it in the Google Play Store, paste the web address into [PWABuilder](https://www.pwabuilder.com) to generate an Android package. The Apple App Store needs a Mac and a paid Apple Developer account.
+
 ## Files
 
 | File | Purpose |
 |---|---|
 | `dist/LumenLayerStudio.exe` | Windows app (x64): double-click to run |
 | `dist/LumenLayerStudio-arm64.exe` | Windows app for ARM laptops |
-| `index.html` | The whole application: open it in a browser |
+| `index.html` | The whole application: open it in a browser, or publish it for phones |
+| `manifest.webmanifest`, `sw.js`, `pwa/` | What makes it installable on phones: app name and icons, offline support, Android "Share to" |
+| `src/app.html` | App source. Run `python3 build-web.py` to rebuild `index.html` and `sw.js` |
 | `desktop/` | Source and build script for the Windows app |
 | `HOW-TO-USE.md` | Step-by-step guide, AI setup and keyboard shortcuts |
 | `docs/screenshot.png` | Screenshot used above |
