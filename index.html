@@ -89,7 +89,7 @@ input[type=color]{width:28px;height:24px;border:1px solid var(--line-2);border-r
 
 /* presets */
 .presets{flex:0 0 auto;max-height:58%;display:flex;flex-direction:column;border-bottom:1px solid var(--line)}
-.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px;overflow:auto}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:max-content;align-content:start;gap:8px;padding:10px 12px;overflow:auto;min-height:0;flex:1}
 .pcard{position:relative;display:flex;flex-direction:column;gap:4px;padding:0;border:1px solid var(--line);border-radius:6px;background:var(--well);cursor:pointer;text-align:left;overflow:hidden;transition:border-color .12s,transform .12s}
 .pcard:hover{border-color:var(--accent)}
 .pcard canvas{width:100%;height:auto;aspect-ratio:3/2;display:block;background:#000}
@@ -123,6 +123,8 @@ input[type=color]{width:28px;height:24px;border:1px solid var(--line-2);border-r
 .vp.t-hand{cursor:grab}.vp.panning{cursor:grabbing}
 .vp.t-brush{cursor:none}
 .vp.t-move{cursor:default}
+.vp.t-pick,.vp.t-pick *{cursor:crosshair!important}
+.fsel{height:30px;width:100%;border-radius:6px;border:1px solid var(--line-2);background:var(--well);padding:0 8px;margin-bottom:4px}
 .ring{position:absolute;left:0;top:0;border-radius:50%;pointer-events:none;border:1.5px solid rgba(255,255,255,.9);box-shadow:0 0 0 1px rgba(0,0,0,.6),inset 0 0 0 1px rgba(0,0,0,.4);transform:translate(-50%,-50%)}
 .ring::after{content:"";position:absolute;left:50%;top:50%;width:3px;height:3px;margin:-1.5px;border-radius:50%;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.6)}
 .ring.erase{border-style:dashed}
@@ -270,7 +272,7 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
 .exprev .cap{padding:6px 9px;font-family:var(--f-mono);font-size:10.5px;color:var(--faint)}
 .field{display:flex;flex-direction:column;gap:6px;margin-bottom:13px}
 .field>label,.field>.fl{font-size:10.5px;text-transform:uppercase;letter-spacing:.13em;color:var(--muted)}
-.field input[type=text],.field input[type=number]{height:30px;border-radius:6px;border:1px solid var(--line-2);background:var(--well);padding:0 9px}
+.field input[type=text],.field input[type=number],.field input[type=password]{height:30px;border-radius:6px;border:1px solid var(--line-2);background:var(--well);padding:0 9px}
 .exsum{padding:10px 12px;border-radius:7px;background:var(--well);border:1px solid var(--line);font-family:var(--f-mono);font-size:11px;color:var(--muted);line-height:1.6}
 .exsum b{color:var(--text);font-weight:500}
 .dfoot{display:flex;justify-content:flex-end;align-items:center;gap:8px;padding:12px 18px;border-top:1px solid var(--line)}
@@ -322,6 +324,27 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
 .syrow b{font-weight:500;font-size:12.5px}
 .syrow small{grid-column:2;font-size:11px;color:var(--faint);overflow-wrap:anywhere}
 #syPrev{max-width:100%;border-radius:6px;display:block;margin-top:6px}
+.aipanel{position:absolute;top:12px;right:12px;z-index:7;width:min(340px,calc(100% - 24px));max-height:calc(100% - 24px);overflow:auto;background:rgba(23,26,31,.97);border:1px solid var(--line-2);border-radius:10px;box-shadow:0 16px 40px rgba(0,0,0,.55);padding:12px 14px;display:flex;flex-direction:column;gap:10px;cursor:default}
+.aph{display:flex;align-items:baseline;gap:8px}.aph b{font-family:var(--f-display);font-size:22px;font-weight:400;line-height:1}.aph span{flex:1;font-size:11px;color:var(--muted)}
+.aph button{width:24px;height:24px;border-radius:5px;border:1px solid var(--line-2);background:var(--raise);cursor:pointer}
+#apStyle{align-self:flex-start}
+.apsrc{font-size:10px;text-transform:uppercase;letter-spacing:.13em;color:var(--faint)}
+.apnotes{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px;font-size:11.5px;color:var(--muted);line-height:1.4}
+.apnotes li{padding-left:12px;position:relative}.apnotes li::before{content:"";position:absolute;left:0;top:.5em;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.apmsg{font-size:11.5px;min-height:0}.apmsg:empty{display:none}
+.apfoot{display:flex;align-items:center;gap:6px}.apfoot span{flex:1;font-size:10.5px;color:var(--faint)}
+.lcard.sel{outline:2px solid var(--sky);outline-offset:-2px}
+.lflags button[aria-pressed="true"][data-f="sel"]{background:var(--sky);color:#04212b;border-color:var(--sky)}
+.aihint{display:block;font-size:11px;color:var(--faint);text-transform:none;letter-spacing:0;line-height:1.45;margin-top:2px}
+.aiinfo{font-size:11.5px;line-height:1.55;color:var(--muted);padding:10px 12px;border-radius:7px;background:var(--well);border:1px solid var(--line)}
+.aiinfo b{color:var(--text);font-weight:500}
+.aitest{font-size:12px;margin-top:10px;min-height:16px;overflow-wrap:anywhere}
+.pcats{display:flex;flex-wrap:wrap;gap:4px;padding:8px 12px 0}
+.pcats button{height:22px;padding:0 8px;border-radius:11px;border:1px solid var(--line-2);background:var(--raise);font-size:10.5px;color:var(--muted);cursor:pointer}
+.pcats button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent-2);background:rgba(242,163,58,.1)}
+.pcard .pkeep{position:absolute;top:4px;right:4px;height:20px;padding:0 6px;border-radius:4px;border:1px solid var(--line-2);background:rgba(13,15,18,.88);font-size:10px;color:var(--accent-2);cursor:pointer;opacity:0;transition:opacity .12s}
+.pcard.custom .pkeep{top:28px}
+.pcard:hover .pkeep,.pcard:focus-within .pkeep{opacity:1}
 .lempty{align-self:center;color:var(--faint);font-size:12px;padding:0 4px}
 .lcard{position:relative;flex:0 0 128px;border-radius:6px;border:1px solid var(--line);background:var(--well);cursor:pointer;overflow:hidden;--vc:var(--faint)}
 .lcard::after{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--vc);pointer-events:none}
@@ -384,7 +407,7 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
       <button class="tb icon" id="btnRedo" type="button" title="Redo (Ctrl/Cmd+Shift+Z)" aria-label="Redo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14l5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 000 11H13"/></svg></button>
     </div>
     <div class="grow"></div>
-    <button class="tb" id="btnAuto" type="button" title="Auto tone the current edit target">Auto Tone</button>
+    <button class="tb" id="btnAuto" type="button" title="Enhance exposure, color, noise and detail (E)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Enhance <kbd>E</kbd></button>
     <button class="tb" id="btnCompare" type="button" aria-pressed="false" title="Before / After split (\)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M12 3v18"/><path d="M3 5h9v14H3z" fill="currentColor" opacity=".3" stroke="none"/></svg>Before / After <kbd>\</kbd>
     </button>
@@ -403,11 +426,13 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
     <aside class="leftp">
       <section class="presets">
         <div class="ph"><h2>Hybrid Presets</h2><span class="meta">sliders + masked layers</span></div>
+        <div class="pcats" id="pcats" aria-label="Preset categories"></div>
         <div class="pgrid" id="pgrid"></div>
         <form class="psave" id="psave" autocomplete="off">
           <input id="pname" type="text" placeholder="Name this look" maxlength="40" aria-label="Preset name">
           <button class="tb" type="submit">Save</button>
         </form>
+        <label class="chk" for="pAdapt" style="padding:0 12px 6px"><input type="checkbox" id="pAdapt" checked> Adapt exposure, tone &amp; white balance to each photo</label>
         <div class="psave-msg" id="pmsg">Saves develop settings and masked layers in this browser.</div>
       </section>
       <section class="history">
@@ -428,6 +453,15 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
       <div class="cchip b" id="chipB" hidden>Before</div>
       <div class="cchip a" id="chipA" hidden>After</div>
       <div class="ring" id="ring" hidden></div>
+      <div class="aipanel" id="aiPanel" hidden role="dialog" aria-labelledby="apTitle">
+        <div class="aph"><b id="apTitle">Enhance</b><span>Best exposure, color, noise and detail</span><button type="button" id="apClose" aria-label="Close">✕</button></div>
+        <div class="seg" id="apStyle" aria-label="Style"></div>
+        <label class="straight" for="apStr" style="justify-content:space-between"><span>Strength</span><input id="apStr" class="sl" type="range" min="0" max="150" step="5" value="100" style="flex:1;width:auto"><output id="apStrV">100%</output></label>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span class="apsrc" id="apSrc"></span><span style="display:flex;gap:4px"><button class="tb sm claude" type="button" id="apClaude" title="Let your chosen AI pick the settings">AI edit</button><button class="tb sm" type="button" id="apAISet" title="Choose your AI (Claude, OpenAI, Gemini, a local model…)" aria-label="AI settings">⚙</button></span></div>
+        <ul class="apnotes" id="apNotes"></ul>
+        <div class="apmsg" id="apMsg"></div>
+        <div class="apfoot"><span id="apTarget"></span><button class="tb sm" type="button" id="apCancel">Cancel</button><button class="tb sm primary" type="button" id="apApply">Apply</button></div>
+      </div>
       <div class="hud" id="hud" aria-live="polite"></div>
       <div class="drop" id="drop" hidden>Drop photos to import</div>
       <div class="busy" id="busy" hidden>Developing…</div>
@@ -443,9 +477,10 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
         <select id="libSort" aria-label="Sort photos"><option value="best">Best first</option><option value="worst">Weakest first</option><option value="import">Import order</option></select>
         <span class="libinfo" id="libInfo"></span>
         <span class="libprog" id="libProg"></span>
-        <button class="tb sm claude" type="button" id="aiReview" hidden title="Send small previews to Claude for a keep / reject judgement">Review with Claude</button>
+        <button class="tb sm claude" type="button" id="aiReview" title="Let your chosen AI judge which photos to keep">AI review</button>
         <button class="tb sm" type="button" id="libClear" title="Remove photos marked Reject from the library">Remove rejects</button>
         <button class="tb sm" type="button" id="libAdd">Add photos</button>
+        <button class="tb sm" type="button" id="libHDR" disabled title="Ctrl/⌘-click 2–7 bracketed exposures, then merge them into one HDR photo">Merge to HDR</button>
         <button class="tb sm" type="button" id="libSync" title="Copy the open photo's edits to every keeper (Shift+C)">Copy edits to keepers</button>
         <button class="tb sm primary" type="button" id="libExport" title="Render every Keep photo with its edits into one ZIP">Export keepers</button>
       </div>
@@ -548,6 +583,26 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
   </div>
 </div>
 
+<!-- ===== AI settings ===== -->
+<div class="dlg" id="aiDlg" hidden role="dialog" aria-modal="true" aria-labelledby="aiTitle">
+  <div class="dcard" style="width:min(560px,100%)">
+    <div class="dhead"><h3 id="aiTitle">AI settings</h3><span>Choose the AI that suggests edits and reviews photos.</span><button type="button" id="aiClose" aria-label="Close">✕</button></div>
+    <div style="padding:16px 18px">
+      <div id="aiReason" style="font-size:12px;color:var(--accent-2);margin-bottom:8px"></div>
+      <div class="field"><label for="aiProv">Provider</label><select id="aiProv" class="fsel"></select><div class="aihint" id="aiNote"></div></div>
+      <div class="field" id="aiBaseRow"><label for="aiBase">Address</label><input id="aiBase" type="text" spellcheck="false" autocomplete="off"></div>
+      <div class="field" id="aiModelRow"><label for="aiModel">Model <span class="aihint">must accept images (a vision model)</span></label><div style="display:flex;gap:6px"><input id="aiModel" type="text" list="aiModels" spellcheck="false" autocomplete="off" style="flex:1;min-width:0;height:30px;border-radius:6px;border:1px solid var(--line-2);background:var(--well);padding:0 9px"><button class="tb sm" type="button" id="aiList">List models</button></div><datalist id="aiModels"></datalist></div>
+      <div class="field" id="aiKeyRow"><label for="aiKey">API key</label><input id="aiKey" type="password" autocomplete="off" spellcheck="false"><div><label class="chk" for="aiRemember"><input type="checkbox" id="aiRemember"> Remember on this device</label></div></div>
+      <div class="aiinfo"><b>What the AI sees:</b> a 1024 px preview and the photo's measurements, sent only to the provider you pick. Local models keep everything on your PC.<br><b>What it changes:</b> only slider values. Your photo is still processed by the app's own standard adjustments; no pixels are generated. Exported files contain no metadata at all: no AI or C2PA tags, no GPS, no camera data.</div>
+      <div class="aitest" id="aiTest" role="status"></div>
+    </div>
+    <div class="dfoot"><button class="tb" type="button" id="aiTestBtn">Test connection</button><span class="msg"></span><button class="tb" type="button" id="aiCancel">Cancel</button><button class="tb primary" type="button" id="aiSave">Save</button></div>
+  </div>
+</div>
+
+<!-- ===== Progress (blocks input while the engine works on other photos) ===== -->
+<div class="dlg" id="blockDlg" hidden role="dialog" aria-modal="true" aria-labelledby="blockTitle"><div class="dcard" style="width:min(440px,100%)"><div class="dhead"><h3 id="blockTitle">Working</h3></div><div style="padding:16px 18px;font-size:12.5px;color:var(--muted)" id="blockTxt" role="status"></div><div class="dfoot"><button class="tb" type="button" id="blockStop">Stop</button></div></div></div>
+
 <!-- ===== Shortcut sheet ===== -->
 <div class="dlg" id="keysDlg" hidden role="dialog" aria-modal="true" aria-labelledby="kTitle">
   <div class="dcard" style="width:min(620px,100%)">
@@ -561,7 +616,7 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
       <div>Erase while brushing <kbd>Alt</kbd></div><div>Mask overlay <kbd>O</kbd></div>
       <div>Crop &amp; Rotate <kbd>C</kbd> / <kbd>R</kbd></div><div>Apply / cancel crop <kbd>Enter</kbd> <kbd>Esc</kbd></div>
       <div>Mark Keep / Reject <kbd>P</kbd> <kbd>X</kbd></div><div>Clear manual flag <kbd>U</kbd></div>
-      <div>Previous / next photo <kbd>←</kbd> <kbd>→</kbd></div><div>Export all keepers <kbd>Ctrl/⌘ ⇧ S</kbd></div><div>Copy edits to keepers <kbd>⇧ C</kbd></div><div>Paste copied edits here <kbd>⇧ V</kbd></div><div>Import photos <kbd>Ctrl/⌘ O</kbd></div>
+      <div>Previous / next photo <kbd>←</kbd> <kbd>→</kbd></div><div>Export all keepers <kbd>Ctrl/⌘ ⇧ S</kbd></div><div>Enhance &amp; AI edit panel <kbd>E</kbd></div><div>Pick neutral (white balance) <kbd>W</kbd></div><div>Select for HDR merge <kbd>Ctrl/⌘ click</kbd></div><div>Copy edits to keepers <kbd>⇧ C</kbd></div><div>Paste copied edits here <kbd>⇧ V</kbd></div><div>Import photos <kbd>Ctrl/⌘ O</kbd></div>
       <div>Fit to screen <kbd>Ctrl/⌘ 0</kbd></div><div>Zoom <kbd>Ctrl/⌘ +</kbd> <kbd>−</kbd> or wheel</div>
     </div>
   </div>
@@ -631,7 +686,8 @@ const MASK_COLOR = { sky: '#47d3ff', subject: '#ff5cb4', brush: '#ffb347' };
 function defaultDev() {
   return {
     exposure: 0, contrast: 0, highlights: 0, shadows: 0, whites: 0, blacks: 0,
-    temp: 0, tint: 0, vibrance: 0, saturation: 0, dehaze: 0,
+    temp: 0, tint: 0, vibrance: 0, saturation: 0, dehaze: 0, profile: 'none', profileAmt: 100,
+    clarity: 0, sharpen: 0, nrLuma: 0, nrColor: 0, hdr: 0,
     curve: { m: [[0, 0], [1, 1]], r: [[0, 0], [1, 1]], g: [[0, 0], [1, 1]], b: [[0, 0], [1, 1]] },
     grade: { sh: { h: 210, s: 0, l: 0 }, mid: { h: 40, s: 0, l: 0 }, hi: { h: 40, s: 0, l: 0 }, blend: 50, balance: 0 },
     hsl: { h: [0, 0, 0, 0, 0, 0, 0, 0], s: [0, 0, 0, 0, 0, 0, 0, 0], l: [0, 0, 0, 0, 0, 0, 0, 0] }
@@ -764,14 +820,36 @@ function hslLUT(vals, scale, base = 0) {
   }
   return out;
 }
+/* Camera & film color profiles: a base rendering applied before your sliders (tone shape, color mix, hue/sat tweaks). */
+const PROFILES = {
+  none: { label: 'As shot (no profile)', g: 'Basic' },
+  standard: { label: 'Camera Standard', g: 'Camera', curve: [[0, 0], [.25, .22], [.75, .79], [1, 1]], sat: 1.06 },
+  neutral: { label: 'Camera Neutral', g: 'Camera', curve: [[0, .02], [.25, .27], [.75, .74], [1, .98]], sat: .9 },
+  portrait: { label: 'Camera Portrait', g: 'Camera', curve: [[0, 0], [.25, .24], [.75, .77], [1, 1]], sat: .97, warm: .025, hsl: { h: [0, 4, 0, 0, 0, 0, 0, 0], s: [-6, -8, 0, 0, 0, 0, 0, 0], l: [4, 10, 0, 0, 0, 0, 0, 0] } },
+  landscape: { label: 'Camera Landscape', g: 'Camera', curve: [[0, 0], [.25, .2], [.75, .81], [1, 1]], sat: 1.12, hsl: { h: [0, 0, 0, 8, 0, 0, 0, 0], s: [0, 0, 8, 18, 10, 16, 0, 0], l: [0, 0, 0, 0, 0, -12, 0, 0] } },
+  vivid: { label: 'Camera Vivid', g: 'Camera', curve: [[0, 0], [.25, .18], [.75, .83], [1, 1]], sat: 1.28 },
+  flat: { label: 'Camera Flat (log-like)', g: 'Camera', curve: [[0, .08], [.5, .5], [1, .92]], sat: .82 },
+  chrome: { label: 'Chrome Slide', g: 'Film', curve: [[0, 0], [.25, .19], [.75, .8], [1, .98]], sat: .86, hsl: { h: [0, 0, 0, 0, 0, -4, 0, 0], s: [6, 0, -10, -10, 0, 8, 0, 0], l: [0, 0, 0, -6, 0, -16, 0, 0] }, split: [[205, .07], [40, .03]] },
+  saturated: { label: 'Saturated Slide', g: 'Film', curve: [[0, 0], [.25, .17], [.75, .84], [1, 1]], sat: 1.38, hsl: { h: [0, 0, 0, 0, 0, 0, 0, 0], s: [0, 0, 0, 0, 0, 0, 0, 0], l: [0, 0, 0, -4, 0, -10, 0, 0] } },
+  warmneg: { label: 'Warm Negative', g: 'Film', curve: [[0, .06], [.3, .31], [.75, .76], [1, .96]], sat: .92, warm: .05, hsl: { h: [0, 6, 4, 0, 0, 0, 0, 0], s: [0, 0, 0, -10, 0, -8, 0, 0], l: [0, 0, 0, 0, 0, 0, 0, 0] }, split: [[190, .04], [38, .08]] },
+  pastel: { label: 'Pastel Negative', g: 'Film', curve: [[0, .1], [.5, .53], [1, .95]], sat: .78, split: [[185, .07], [30, .05]] },
+  cinema: { label: 'Cinema Teal & Orange', g: 'Film', curve: [[0, .03], [.25, .21], [.75, .79], [1, .97]], sat: .95, split: [[192, .12], [32, .1]] },
+  mono: { label: 'Monochrome', g: 'Monochrome', mono: [.3, .59, .11], curve: [[0, 0], [.25, .2], [.75, .8], [1, 1]] },
+  monored: { label: 'Mono Red Filter', g: 'Monochrome', mono: [.62, .33, .05], curve: [[0, 0], [.25, .19], [.75, .81], [1, 1]] },
+  monogreen: { label: 'Mono Green Filter', g: 'Monochrome', mono: [.25, .65, .1], curve: [[0, 0], [.25, .21], [.75, .79], [1, 1]] },
+  monosoft: { label: 'Mono Soft Matte', g: 'Monochrome', mono: [.3, .59, .11], curve: [[0, .08], [.5, .5], [1, .93]] }
+};
 function gradeVec(z) { const c = hslToRgb(z.h / 360, 1, .5); const m = (c[0] + c[1] + c[2]) / 3; return [(c[0] - m) * z.s * .3, (c[1] - m) * z.s * .3, (c[2] - m) * z.s * .3, z.l / 100 * .16]; }
 
 /** The develop kernel: ImageData in → new ImageData out. */
 function develop(src, dv) {
   const w = src.width, h = src.height, s = src.data, out = new ImageData(w, h), o = out.data;
   const [LR, LG, LB] = channelLUTs(dv);
-  const dz = Math.max(0, dv.dehaze / 100), satMul = 1 + dv.saturation / 100 + dz * .25, vib = dv.vibrance / 100;
-  const hs = dv.hsl, hslOn = hs.h.some(v => v) || hs.s.some(v => v) || hs.l.some(v => v);
+  const pf = dv.profile && dv.profile !== 'none' ? PROFILES[dv.profile] : null, pa = pf ? (dv.profileAmt ?? 100) / 100 : 0, pOn = !!pf && pa > 0;
+  const pCurve = pOn && pf.curve ? curveLUT(pf.curve) : null, pWarm = pOn ? (pf.warm || 0) * pa : 0, pMono = pOn && pf.mono ? pf.mono : null;
+  const pSplit = pOn && pf.split ? pf.split.map(([hh, ss]) => { const c = hslToRgb(hh / 360, 1, .5), m = (c[0] + c[1] + c[2]) / 3; return [(c[0] - m) * ss * pa, (c[1] - m) * ss * pa, (c[2] - m) * ss * pa]; }) : null;
+  const dz = Math.max(0, dv.dehaze / 100), satMul = (1 + dv.saturation / 100 + dz * .25) * (pOn ? 1 + ((pf.sat ?? 1) - 1) * pa : 1), vib = dv.vibrance / 100;
+  const hs0 = dv.hsl, hs = pOn && pf.hsl ? { h: hs0.h.map((v, i) => v + (pf.hsl.h ? pf.hsl.h[i] : 0) * pa), s: hs0.s.map((v, i) => v + (pf.hsl.s ? pf.hsl.s[i] : 0) * pa), l: hs0.l.map((v, i) => v + (pf.hsl.l ? pf.hsl.l[i] : 0) * pa) } : hs0, hslOn = hs.h.some(v => v) || hs.s.some(v => v) || hs.l.some(v => v);
   const hueL = hslOn ? hslLUT(hs.h, .3) : null, satL = hslOn ? hslLUT(hs.s, .01, 1) : null, lumL = hslOn ? hslLUT(hs.l, .003) : null;
   const g = dv.grade, gradeOn = !!(g.sh.s || g.mid.s || g.hi.s || g.sh.l || g.mid.l || g.hi.l);
   const vs = gradeVec(g.sh), vm = gradeVec(g.mid), vh = gradeVec(g.hi);
@@ -781,9 +859,12 @@ function develop(src, dv) {
     const p = 1.2 + (100 - g.blend) / 40, bal = g.balance / 100 * .3;
     for (let i = 0; i < 256; i++) { const L = clamp(i / 255 - bal, 0, 1); wS[i] = Math.pow(1 - L, p); wH[i] = Math.pow(L, p); }
   }
-  const colorOn = satMul !== 1 || vib !== 0 || hslOn || gradeOn;
+  const colorOn = satMul !== 1 || vib !== 0 || hslOn || gradeOn || pOn;
   for (let i = 0; i < s.length; i += 4) {
     let r = LR[s[i]], gg = LG[s[i + 1]], b = LB[s[i + 2]];
+    if (pCurve) { r += (evalLUT(pCurve, r) - r) * pa; gg += (evalLUT(pCurve, gg) - gg) * pa; b += (evalLUT(pCurve, b) - b) * pa; }
+    if (pWarm) { r *= 1 + pWarm; b *= 1 - pWarm; }
+    if (pSplit) { const L = clamp(.2126 * r + .7152 * gg + .0722 * b, 0, 1), ws = (1 - L) * (1 - L), wh = L * L; r += pSplit[0][0] * ws + pSplit[1][0] * wh; gg += pSplit[0][1] * ws + pSplit[1][1] * wh; b += pSplit[0][2] * ws + pSplit[1][2] * wh; }
     if (colorOn) {
       if (satMul !== 1 || vib) {
         const L = .2126 * r + .7152 * gg + .0722 * b;
@@ -813,9 +894,79 @@ function develop(src, dv) {
         b += vs[2] * ws + vm[2] * wm + vh[2] * wh + lo;
       }
     }
+    if (pMono) { const y = pMono[0] * r + pMono[1] * gg + pMono[2] * b, k = Math.min(1, pa); r += (y - r) * k; gg += (y - gg) * k; b += (y - b) * k; }
     o[i] = r * 255 + .5; o[i + 1] = gg * 255 + .5; o[i + 2] = b * 255 + .5; o[i + 3] = s[i + 3];
   }
+  if (dv.clarity || dv.sharpen || dv.nrLuma || dv.nrColor || dv.hdr) detailStage(o, w, h, dv);
   return out;
+}
+
+/* ---------------- Stage A, part 2: detail — noise reduction, HDR tone mapping, clarity, sharpening ----------------
+   Runs on luma/chroma (Y, B−Y, R−Y). Radii scale with image size so preview, full view and export look alike. */
+function dsample(a, w, h, f) {
+  const sw = Math.max(1, (w / f) | 0), sh = Math.max(1, (h / f) | 0), o = new Float32Array(sw * sh), n = f * f;
+  for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) { let s = 0; for (let yy = 0; yy < f; yy++) { const row = (y * f + yy) * w + x * f; for (let xx = 0; xx < f; xx++) s += a[row + xx]; } o[y * sw + x] = s / n; }
+  return { a: o, w: sw, h: sh };
+}
+function usample(a, sw, sh, w, h) {
+  const o = new Float32Array(w * h), fx = sw / w, fy = sh / h;
+  for (let y = 0; y < h; y++) {
+    let sy = (y + .5) * fy - .5; if (sy < 0) sy = 0; const y0 = Math.min(sh - 1, sy | 0), y1 = Math.min(sh - 1, y0 + 1), ty = sy - y0;
+    for (let x = 0; x < w; x++) {
+      let sx = (x + .5) * fx - .5; if (sx < 0) sx = 0; const x0 = Math.min(sw - 1, sx | 0), x1 = Math.min(sw - 1, x0 + 1), tx = sx - x0;
+      const a0 = a[y0 * sw + x0] + (a[y0 * sw + x1] - a[y0 * sw + x0]) * tx, a1 = a[y1 * sw + x0] + (a[y1 * sw + x1] - a[y1 * sw + x0]) * tx; o[y * w + x] = a0 + (a1 - a0) * ty;
+    }
+  }
+  return o;
+}
+function guidedCoef(I, w, h, r, eps) {
+  const mI = boxBlur(I, w, h, r), I2 = new Float32Array(I.length); for (let i = 0; i < I.length; i++) I2[i] = I[i] * I[i];
+  const mII = boxBlur(I2, w, h, r);
+  for (let i = 0; i < I.length; i++) { const v = mII[i] - mI[i] * mI[i], a = v / (v + eps); mII[i] = a; mI[i] = mI[i] - a * mI[i]; }
+  return { a: boxBlur(mII, w, h, r), b: boxBlur(mI, w, h, r) };
+}
+/** Edge-preserving smoothing (fast guided filter: coefficients at reduced size for big images or radii). */
+function guided(I, w, h, r, eps) {
+  let f = Math.max(1, Math.min(Math.round(Math.sqrt(w * h / 1.5e6)), r)); if (r >= 8) f = Math.max(f, Math.min(4, (r / 4) | 0));
+  f = Math.max(1, Math.min(f, Math.floor(Math.min(w, h) / 4)));
+  if (f <= 1) { const c = guidedCoef(I, w, h, r, eps); for (let i = 0; i < I.length; i++) c.a[i] = c.a[i] * I[i] + c.b[i]; return c.a; }
+  const d = dsample(I, w, h, f), c = guidedCoef(d.a, d.w, d.h, Math.max(1, Math.round(r / f)), eps), A = usample(c.a, d.w, d.h, w, h), B = usample(c.b, d.w, d.h, w, h);
+  for (let i = 0; i < I.length; i++) A[i] = A[i] * I[i] + B[i]; return A;
+}
+function blurLarge(a, w, h, r) {
+  const f = Math.max(1, Math.min((r / 2) | 0, 8, Math.floor(Math.min(w, h) / 4)));
+  if (f <= 1) return boxBlur(boxBlur(a, w, h, r), w, h, r);
+  const d = dsample(a, w, h, f), rs = Math.max(1, Math.round(r / f)); return usample(boxBlur(boxBlur(d.a, d.w, d.h, rs), d.w, d.h, rs), d.w, d.h, w, h);
+}
+function detailStage(o, w, h, dv) {
+  const N = w * h, s = Math.max(w, h) / 1280, Y = new Float32Array(N), U = new Float32Array(N), V = new Float32Array(N);
+  for (let i = 0, j = 0; i < N; i++, j += 4) { const r = o[j] / 255, g = o[j + 1] / 255, b = o[j + 2] / 255, y = .299 * r + .587 * g + .114 * b; Y[i] = y; U[i] = b - y; V[i] = r - y; }
+  const nrL = (dv.nrLuma || 0) / 100, nrC = (dv.nrColor || 0) / 100, hdr = (dv.hdr || 0) / 100, cl = (dv.clarity || 0) / 100, sh = (dv.sharpen || 0) / 100;
+  let Yv = Y;
+  if (nrL > 0) { // luminance noise: guided filter whose smoothing threshold rises with strength
+    const q = guided(Yv, w, h, Math.max(1, Math.round((1 + 2 * nrL) * s)), 1e-5 + .006 * nrL * nrL), k = Math.min(1, nrL * 1.6);
+    for (let i = 0; i < N; i++) q[i] = Yv[i] + (q[i] - Yv[i]) * k; Yv = q;
+  }
+  if (nrC > 0) { // colour noise lives at low frequencies of chroma
+    const r = Math.max(1, Math.round((2 + 6 * nrC) * s)), Ub = blurLarge(U, w, h, r), Vb = blurLarge(V, w, h, r), k = Math.min(1, nrC * 1.5);
+    for (let i = 0; i < N; i++) { U[i] += (Ub[i] - U[i]) * k; V[i] += (Vb[i] - V[i]) * k; }
+  }
+  if (hdr > 0) { // local tone mapping: compress the large-scale base layer in log space, keep and boost detail
+    const L = new Float32Array(N); for (let i = 0; i < N; i++) L[i] = Math.log(Yv[i] + .02);
+    const base = guided(L, w, h, Math.max(2, Math.round(28 * s)), .04); let mb = 0; for (let i = 0; i < N; i++) mb += base[i]; mb /= N;
+    const comp = 1 - .6 * hdr, boost = 1 + .7 * hdr;
+    for (let i = 0; i < N; i++) {
+      let y = Math.exp(mb + (base[i] - mb) * comp + (L[i] - base[i]) * boost) - .02;
+      y = y < 0 ? 0 : y > .85 ? .85 + (1 - Math.exp(-(y - .85) / .15)) * .15 : y;
+      const ratio = Math.pow(Math.min(2, Math.max(.5, (y + .03) / (Yv[i] + .03))), .5); U[i] *= ratio; V[i] *= ratio; Yv[i] = y;
+    }
+  }
+  if (cl) { const b = blurLarge(Yv, w, h, Math.max(2, Math.round(16 * s))); for (let i = 0; i < N; i++) { const y = Yv[i]; Yv[i] = y + cl * .9 * (y - b[i]) * Math.max(0, 4 * y * (1 - y)); } }
+  if (sh > 0) { // unsharp mask with a noise threshold
+    const b = boxBlur(Yv, w, h, Math.max(1, Math.round(s))), k = sh * 1.6, th = .006 + .02 * nrL;
+    for (let i = 0; i < N; i++) { const d = Yv[i] - b[i]; if (d > th || d < -th) Yv[i] += k * (d - (d > 0 ? th : -th)); }
+  }
+  for (let i = 0, j = 0; i < N; i++, j += 4) { const y = Yv[i], r = y + V[i], b = y + U[i], g = (y - .299 * r - .114 * b) / .587; o[j] = r * 255 + .5; o[j + 1] = g * 255 + .5; o[j + 2] = b * 255 + .5; }
 }
 
 /* ---------------- resolutions & caches ---------------- */
@@ -948,7 +1099,9 @@ function renderNow() {
 function boxBlur(a, w, h, r) {
   const t = new Float32Array(a.length), o = new Float32Array(a.length), n = 2 * r + 1;
   for (let y = 0; y < h; y++) { const row = y * w; let s = 0; for (let k = -r; k <= r; k++) s += a[row + clamp(k, 0, w - 1)]; for (let x = 0; x < w; x++) { t[row + x] = s / n; s += a[row + Math.min(w - 1, x + r + 1)] - a[row + Math.max(0, x - r)]; } }
-  for (let x = 0; x < w; x++) { let s = 0; for (let k = -r; k <= r; k++) s += t[clamp(k, 0, h - 1) * w + x]; for (let y = 0; y < h; y++) { o[y * w + x] = s / n; s += t[Math.min(h - 1, y + r + 1) * w + x] - t[Math.max(0, y - r) * w + x]; } }
+  const acc = new Float32Array(w); // vertical pass walks rows, keeping one running sum per column (cache friendly)
+  for (let k = -r; k <= r; k++) { const row = clamp(k, 0, h - 1) * w; for (let x = 0; x < w; x++) acc[x] += t[row + x]; }
+  for (let y = 0; y < h; y++) { const ro = y * w, ad = Math.min(h - 1, y + r + 1) * w, sb = Math.max(0, y - r) * w; for (let x = 0; x < w; x++) { o[ro + x] = acc[x] / n; acc[x] += t[ad + x] - t[sb + x]; } }
   return o;
 }
 function floatMaskToCanvas(F, aw, ah) {
@@ -1467,8 +1620,9 @@ let action = null;
 vp.addEventListener('pointerenter', () => { pointerInVp = true; updateCursorClass(); });
 vp.addEventListener('pointerleave', () => { pointerInVp = false; updateCursorClass(); });
 vp.addEventListener('pointerdown', e => {
-  if (!RES.full || e.target.closest('#knob')) return;
+  if (!RES.full || e.target.closest('#knob') || e.target.closest('#aiPanel')) return;
   if (e.button !== 0 && e.button !== 1) return;
+  if (wbPick && e.button === 0) { e.preventDefault(); doWBPick(toImg(e)); return; }
   const t = e.button === 1 ? 'hand' : effTool();
   vp.setPointerCapture(e.pointerId); e.preventDefault();
   if (t === 'hand') { action = { type: 'pan', sx: e.clientX, sy: e.clientY, tx: V.tx, ty: V.ty }; vp.classList.add('panning'); return; }
@@ -1503,7 +1657,7 @@ const endAction = () => {
   }
 };
 vp.addEventListener('pointerup', endAction); vp.addEventListener('pointercancel', endAction);
-vp.addEventListener('wheel', e => { if (!RES.full) return; e.preventDefault(); const r = vp.getBoundingClientRect(); zoomAt(Math.exp(-e.deltaY * .0016), e.clientX - r.left, e.clientY - r.top); }, { passive: false });
+vp.addEventListener('wheel', e => { if (!RES.full || e.target.closest('#aiPanel')) return; e.preventDefault(); const r = vp.getBoundingClientRect(); zoomAt(Math.exp(-e.deltaY * .0016), e.clientX - r.left, e.clientY - r.top); }, { passive: false });
 vp.addEventListener('dblclick', () => { if (effTool() === 'hand') layoutStage(true); });
 
 /* strokes: spaced dabs along the pointer path */
@@ -1655,16 +1809,35 @@ function section(title, resetFn) {
 }
 const pF = (k, label, min, max, extra = {}) => ({ label, min, max, get: () => editDev()[k], set: v => editDev()[k] = v, ...extra });
 function buildDevelop() {
+  const prof = section('Profile', d => { d.profile = 'none'; d.profileAmt = 100; });
+  const ps = document.createElement('select'); ps.id = 'profSel'; ps.className = 'fsel'; ps.setAttribute('aria-label', 'Color profile');
+  const groups = {}; Object.entries(PROFILES).forEach(([k, v]) => (groups[v.g] = groups[v.g] || []).push([k, v.label]));
+  ps.innerHTML = Object.entries(groups).map(([g, list]) => `<optgroup label="${g}">${list.map(([k, l]) => `<option value="${k}">${l}</option>`).join('')}</optgroup>`).join('');
+  ps.addEventListener('change', () => { editDev().profile = ps.value; liveChange(); syncDevelopUI(); commit(`Profile · ${PROFILES[ps.value].label}${targetSuffix()}`); });
+  prof.appendChild(ps);
+  makeSlider(prof, { label: 'Amount', min: 0, max: 200, def: 100, zero: 0, get: () => editDev().profileAmt ?? 100, set: v => editDev().profileAmt = v, fmt: v => v + '%' });
   const light = section('Light', d => ['exposure', 'contrast', 'highlights', 'shadows', 'whites', 'blacks'].forEach(k => d[k] = 0));
   makeSlider(light, pF('exposure', 'Exposure', -4, 4, { step: .05, fmt: v => (v > 0 ? '+' : '') + v.toFixed(2) + ' EV' }));
   [['contrast', 'Contrast'], ['highlights', 'Highlights'], ['shadows', 'Shadows'], ['whites', 'Whites'], ['blacks', 'Blacks']].forEach(([k, l]) => makeSlider(light, pF(k, l, -100, 100)));
   const color = section('Color', d => ['temp', 'tint', 'vibrance', 'saturation'].forEach(k => d[k] = 0));
+  const wbb = document.createElement('div'); wbb.className = 'minibtns'; wbb.style.margin = '0 0 4px';
+  wbb.innerHTML = '<button type="button" id="wbAuto" title="Remove color casts automatically">Auto white balance</button><button type="button" id="wbPick" title="Click something neutral in the photo (W)">◎ Pick neutral</button><button type="button" id="wbShot">As shot</button>';
+  color.appendChild(wbb);
+  wbb.querySelector('#wbAuto').addEventListener('click', () => autoWB());
+  wbb.querySelector('#wbPick').addEventListener('click', () => startWBPick());
+  wbb.querySelector('#wbShot').addEventListener('click', () => { const d = editDev(); d.temp = 0; d.tint = 0; syncDevelopUI(); liveChange(); commit('White balance · as shot' + targetSuffix()); });
   makeSlider(color, pF('temp', 'Temp', -100, 100, { track: 'linear-gradient(90deg,#3c78ff,#cfcfcf,#ffbf3a)' }));
   makeSlider(color, pF('tint', 'Tint', -100, 100, { track: 'linear-gradient(90deg,#3dd06b,#cfcfcf,#ff4fd6)' }));
   makeSlider(color, pF('vibrance', 'Vibrance', -100, 100));
   makeSlider(color, pF('saturation', 'Saturation', -100, 100, { track: 'linear-gradient(90deg,#808080,#c9a27a 50%,#ff7a2f 75%,#ff2f6a)' }));
   const fx = section('Effects', d => d.dehaze = 0);
   makeSlider(fx, pF('dehaze', 'Dehaze', -100, 100));
+  const det = section('Detail & HDR', d => ['hdr', 'clarity', 'sharpen', 'nrLuma', 'nrColor'].forEach(k => d[k] = 0));
+  makeSlider(det, pF('hdr', 'HDR', 0, 100, { track: 'linear-gradient(90deg,var(--line-2),#ffd08e 60%,#ff8a3d)' }));
+  makeSlider(det, pF('clarity', 'Clarity', -100, 100));
+  makeSlider(det, pF('sharpen', 'Sharpening', 0, 100));
+  makeSlider(det, pF('nrLuma', 'Noise reduction', 0, 100));
+  makeSlider(det, pF('nrColor', 'Color noise', 0, 100));
   buildCurve(section('Tone Curve', d => d.curve[curveCh] = [[0, 0], [1, 1]]));
   buildWheels(section('Color Grading', d => d.grade = defaultDev().grade));
   buildHSL(section('HSL Mixer', d => d.hsl = defaultDev().hsl));
@@ -1778,7 +1951,7 @@ function buildHSL(body) {
   tabs.querySelectorAll('button').forEach(b => b.addEventListener('click', () => { hslTab = b.dataset.t; tabs.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); for (const k in hslPanes) hslPanes[k].hidden = k !== hslTab; }));
 }
 function syncAll() { renderLayers(); syncDevelopUI(); drawOverlay(); }
-function syncDevelopUI() { sliders.forEach(paintSlider); wheels.forEach(drawWheel); drawCurve(); updateTargetBanner(); }
+function syncDevelopUI() { const pS = $('#profSel'); if (pS) pS.value = editDev().profile || 'none'; sliders.forEach(paintSlider); wheels.forEach(drawWheel); drawCurve(); updateTargetBanner(); }
 function updateTargetBanner() {
   const L = activeLayer(), dot = $('#tdot'), tt = $('#ttext'), back = $('#tback');
   if (L && L.type === 'smart') {
@@ -1955,19 +2128,66 @@ $('#tback').addEventListener('click', () => selectLayer('base'));
    13. HYBRID PRESETS (built-in + localStorage)
    ===================================================================== */
 const BUILTIN = [
-  { name: 'Golden Hour Sky', tag: 'Warm grade · sunset wash on sky', dev: { temp: 22, tint: 6, contrast: 12, shadows: 18, vibrance: 18, grade: { hi: { h: 38, s: .35 }, sh: { h: 265, s: .18 } } },
-    layers: [{ type: 'fill', name: 'Sunset Sky Wash', blend: 'overlay', opacity: 70, fill: { type: 'linear', c1: '#ff7a3d', c2: '#7b3fa0' }, mask: { kind: 'sky' } }, { type: 'smart', name: 'Subject Glow', mask: { kind: 'subject' }, dev: { exposure: .3, vibrance: 20, temp: 10 } }] },
-  { name: 'Teal & Orange', tag: 'Split tone · cooled sky', dev: { contrast: 18, dehaze: 12, saturation: -6, grade: { sh: { h: 190, s: .45, l: -8 }, mid: { h: 30, s: .12 }, hi: { h: 32, s: .4, l: 4 } }, hsl: { h: [0, -15, -20, 40, 10, -10, 0, 0], s: [0, 15, -20, -30, 10, 10, 0, 0] } },
-    layers: [{ type: 'smart', name: 'Sky Cool-down', mask: { kind: 'sky' }, dev: { temp: -25, exposure: -.25, saturation: 10 } }] },
-  { name: 'Dramatic Sky', tag: 'Sky dehaze · vignette', dev: { vibrance: 15, contrast: 8 },
-    layers: [{ type: 'smart', name: 'Sky Drama', mask: { kind: 'sky' }, dev: { exposure: -.55, contrast: 35, highlights: -60, dehaze: 45, saturation: 12 } }, { type: 'fill', name: 'Vignette', blend: 'multiply', opacity: 55, fill: { type: 'vignette', c1: '#000000', c2: '#1b1410' } }] },
-  { name: 'Silver Noir', tag: 'Mono S-curve · lit subject', dev: { saturation: -100, contrast: 30, blacks: -20, whites: 15, curve: { m: [[0, 0], [.25, .18], [.75, .85], [1, 1]] } },
-    layers: [{ type: 'smart', name: 'Subject Lift', mask: { kind: 'subject' }, dev: { exposure: .35, shadows: 30 } }, { type: 'fill', name: 'Vignette', blend: 'multiply', opacity: 70, fill: { type: 'vignette', c1: '#000000', c2: '#000000' } }] },
-  { name: 'Faded Film', tag: 'Matte curve · warm haze', dev: { contrast: -10, saturation: -15, temp: 8, curve: { m: [[0, .09], [.5, .52], [1, .94]] }, grade: { sh: { h: 210, s: .2 }, hi: { h: 45, s: .25 } } },
-    layers: [{ type: 'fill', name: 'Warm Haze', blend: 'screen', opacity: 18, fill: { type: 'solid', c1: '#ff9a5a', c2: '#000000' } }] },
-  { name: 'Subject Pop', tag: 'Calm background · boosted subject', dev: { shadows: 10, vibrance: 10 },
+  // Fix — adaptive: each measures the photo first, so they work across very different shots
+  { cat: 'Fix', name: 'Auto Fix', tag: 'Exposure, tone, color & noise', auto: ['exposure', 'tone', 'wb', 'noise', 'color'], dev: { clarity: 6 } },
+  { cat: 'Fix', name: 'Fix Indoor Light', tag: 'Neutralises orange bulbs', auto: ['exposure', 'tone', 'wb', 'noise'], dev: { vibrance: 8, hsl: { s: [0, -12, -8, 0, 0, 0, 0, 0] } } },
+  { cat: 'Fix', name: 'Fix Shade & Overcast', tag: 'Warms cold, flat light', auto: ['exposure', 'tone', 'wb'], dev: { temp: 8, vibrance: 14, contrast: 8, clarity: 8 } },
+  { cat: 'Fix', name: 'Fix Underwater', tag: 'Restores reds, cuts blue haze', auto: ['exposure', 'tone', 'wb'], dev: { temp: 22, tint: 12, dehaze: 28, contrast: 10, vibrance: 12, hsl: { h: [0, 0, 0, 0, -10, -8, 0, 0], s: [25, 15, 0, 0, -15, -10, 0, 0] } } },
+  { cat: 'Fix', name: 'Rescue Dark Photo', tag: 'Lifts shadows, cleans grain', auto: ['exposure', 'tone', 'wb', 'noise'], dev: { exposure: .1, shadows: 20, hdr: 28, nrLuma: 10 } },
+  { cat: 'Fix', name: 'Rescue Hazy Photo', tag: 'Cuts haze, restores depth', auto: ['exposure', 'wb'], dev: { dehaze: 38, contrast: 12, blacks: -10, vibrance: 10 } },
+  { cat: 'Fix', name: 'Bright Snow & Beach', tag: 'Fixes grey snow and sand', auto: ['exposure', 'wb'], dev: { exposure: .35, highlights: -30, whites: 8, vibrance: 8, hsl: { s: [0, 0, 0, 0, 10, 10, 0, 0] } } },
+  // Portrait
+  { cat: 'Portrait', name: 'Soft Skin Portrait', tag: 'Gentle tones, smooth skin', auto: ['exposure', 'tone', 'wb', 'noise'], dev: { profile: 'portrait', clarity: -14, contrast: -4, hsl: { s: [-4, -8, 0, 0, 0, 0, 0, 0], l: [2, 8, 0, 0, 0, 0, 0, 0] } }, layers: [{ type: 'smart', name: 'Subject Glow', mask: { kind: 'subject' }, dev: { exposure: .15, clarity: -10 } }] },
+  { cat: 'Portrait', name: 'Clean Headshot', tag: 'Neutral color · lit subject', auto: ['exposure', 'tone', 'wb', 'noise'], dev: { profile: 'neutral', vibrance: 10 }, layers: [{ type: 'smart', name: 'Subject Lift', mask: { kind: 'subject' }, dev: { exposure: .2, shadows: 15 } }, { type: 'fill', name: 'Soft Vignette', blend: 'multiply', opacity: 25, fill: { type: 'vignette', c1: '#000000', c2: '#000000' } }] },
+  { cat: 'Portrait', name: 'Golden Portrait', tag: 'Warm, glowing skin', auto: ['exposure', 'tone', 'wb'], dev: { profile: 'portrait', temp: 12, vibrance: 6, grade: { hi: { h: 40, s: .25 } } } },
+  { cat: 'Portrait', name: 'Subject Pop', tag: 'Calm background · boosted subject', dev: { shadows: 10, vibrance: 10 },
     layers: [{ type: 'smart', name: 'Background Calm', mask: { kind: 'subject', invert: true }, dev: { exposure: -.35, saturation: -35 } }, { type: 'smart', name: 'Subject Boost', mask: { kind: 'subject' }, dev: { exposure: .25, contrast: 15, vibrance: 30 } }] },
+  // Landscape
+  { cat: 'Landscape', name: 'Crisp Landscape', tag: 'Clear air, rich greens & blues', auto: ['exposure', 'tone', 'wb'], dev: { profile: 'landscape', dehaze: 10, clarity: 15, vibrance: 12 }, layers: [{ type: 'smart', name: 'Sky Depth', mask: { kind: 'sky' }, dev: { highlights: -25, dehaze: 15 } }] },
+  { cat: 'Landscape', name: 'Moody Mountains', tag: 'Deep, quiet color', auto: ['exposure', 'wb'], dev: { profile: 'chrome', contrast: 15, saturation: -12, shadows: -5 }, layers: [{ type: 'smart', name: 'Darker Sky', mask: { kind: 'sky' }, dev: { exposure: -.35, contrast: 20 } }] },
+  { cat: 'Landscape', name: 'Golden Hour Sky', tag: 'Warm grade · sunset wash on sky', dev: { temp: 22, tint: 6, contrast: 12, shadows: 18, vibrance: 18, grade: { hi: { h: 38, s: .35 }, sh: { h: 265, s: .18 } } },
+    layers: [{ type: 'fill', name: 'Sunset Sky Wash', blend: 'overlay', opacity: 70, fill: { type: 'linear', c1: '#ff7a3d', c2: '#7b3fa0' }, mask: { kind: 'sky' } }, { type: 'smart', name: 'Subject Glow', mask: { kind: 'subject' }, dev: { exposure: .3, vibrance: 20, temp: 10 } }] },
+  { cat: 'Landscape', name: 'Dramatic Sky', tag: 'Sky dehaze · vignette', dev: { vibrance: 15, contrast: 8 },
+    layers: [{ type: 'smart', name: 'Sky Drama', mask: { kind: 'sky' }, dev: { exposure: -.55, contrast: 35, highlights: -60, dehaze: 45, saturation: 12 } }, { type: 'fill', name: 'Vignette', blend: 'multiply', opacity: 55, fill: { type: 'vignette', c1: '#000000', c2: '#1b1410' } }] },
+  // Street
+  { cat: 'Street', name: 'Urban Grit', tag: 'Hard contrast, muted color', auto: ['exposure', 'wb'], dev: { profile: 'neutral', clarity: 30, contrast: 22, saturation: -28, blacks: -10 }, layers: [{ type: 'fill', name: 'Vignette', blend: 'multiply', opacity: 45, fill: { type: 'vignette', c1: '#000000', c2: '#000000' } }] },
+  { cat: 'Street', name: 'Street Chrome', tag: 'Film-like, cool shadows', auto: ['exposure', 'wb'], dev: { profile: 'chrome', contrast: 8, clarity: 10 } },
+  // Night
+  { cat: 'Night', name: 'Night City', tag: 'Clean lights, low noise', auto: ['exposure', 'noise'], dev: { shadows: 20, highlights: -40, temp: -8, hdr: 20, nrLuma: 15, nrColor: 10, vibrance: 12 } },
+  { cat: 'Night', name: 'Low Light Clean', tag: 'Strong noise cleanup', auto: ['exposure', 'tone', 'wb', 'noise'], dev: { nrLuma: 25, nrColor: 20, clarity: 10, blacks: -8 } },
+  // Food
+  { cat: 'Food', name: 'Fresh Food', tag: 'Appetising color, crisp texture', auto: ['exposure', 'tone', 'wb'], dev: { vibrance: 20, clarity: 10, temp: 4, hsl: { s: [10, 10, 6, 10, 0, 0, 0, 0] } } },
+  // Interiors, products, events
+  { cat: 'Interiors', name: 'Bright Interior', tag: 'Even light, true whites', auto: ['exposure', 'wb', 'noise'], dev: { hdr: 40, shadows: 30, highlights: -40, whites: 10, clarity: 6 } },
+  { cat: 'Interiors', name: 'Clean Product', tag: 'Neutral, white background', auto: ['exposure', 'wb'], dev: { profile: 'neutral', whites: 22, blacks: -10, clarity: 10 } },
+  { cat: 'Interiors', name: 'Airy Wedding', tag: 'Light, creamy, soft', auto: ['exposure', 'tone', 'wb'], dev: { exposure: .2, contrast: -10, shadows: 18, saturation: -8, temp: 5, grade: { hi: { h: 45, s: .15 } } } },
+  // Black & white
+  { cat: 'B&W', name: 'Classic B&W', tag: 'Rich mono contrast', auto: ['exposure', 'tone'], dev: { profile: 'mono', contrast: 15 } },
+  { cat: 'B&W', name: 'Red Filter B&W', tag: 'Dark skies, bright skin', auto: ['exposure', 'tone'], dev: { profile: 'monored', contrast: 18 } },
+  { cat: 'B&W', name: 'Silver Noir', tag: 'Mono S-curve · lit subject', dev: { saturation: -100, contrast: 30, blacks: -20, whites: 15, curve: { m: [[0, 0], [.25, .18], [.75, .85], [1, 1]] } },
+    layers: [{ type: 'smart', name: 'Subject Lift', mask: { kind: 'subject' }, dev: { exposure: .35, shadows: 30 } }, { type: 'fill', name: 'Vignette', blend: 'multiply', opacity: 70, fill: { type: 'vignette', c1: '#000000', c2: '#000000' } }] },
+  // Film looks
+  { cat: 'Film', name: 'Warm Negative', tag: 'Lifted blacks, warm glow', auto: ['exposure', 'wb'], dev: { profile: 'warmneg' } },
+  { cat: 'Film', name: 'Pastel Film', tag: 'Soft, airy pastel', auto: ['exposure', 'wb'], dev: { profile: 'pastel', shadows: 10 } },
+  { cat: 'Film', name: 'Cinematic', tag: 'Teal shadows, warm skin', auto: ['exposure', 'wb'], dev: { profile: 'cinema', contrast: 6 } },
+  { cat: 'Film', name: 'Teal & Orange', tag: 'Split tone · cooled sky', dev: { contrast: 18, dehaze: 12, saturation: -6, grade: { sh: { h: 190, s: .45, l: -8 }, mid: { h: 30, s: .12 }, hi: { h: 32, s: .4, l: 4 } }, hsl: { h: [0, -15, -20, 40, 10, -10, 0, 0], s: [0, 15, -20, -30, 10, 10, 0, 0] } },
+    layers: [{ type: 'smart', name: 'Sky Cool-down', mask: { kind: 'sky' }, dev: { temp: -25, exposure: -.25, saturation: 10 } }] },
+  { cat: 'Film', name: 'Faded Film', tag: 'Matte curve · warm haze', dev: { contrast: -10, saturation: -15, temp: 8, curve: { m: [[0, .09], [.5, .52], [1, .94]] }, grade: { sh: { h: 210, s: .2 }, hi: { h: 45, s: .25 } } },
+    layers: [{ type: 'fill', name: 'Warm Haze', blend: 'screen', opacity: 18, fill: { type: 'solid', c1: '#ff9a5a', c2: '#000000' } }] },
 ];
+/** Adaptive presets: these slider groups are first measured from the photo, then the preset's own values are added on top. */
+const AUTO_GROUPS = { exposure: ['exposure'], tone: ['highlights', 'shadows', 'whites', 'blacks', 'contrast'], wb: ['temp', 'tint'], noise: ['nrLuma', 'nrColor', 'sharpen'], color: ['vibrance', 'dehaze'] };
+function presetDev(p) {
+  const d = mergeDev(p.dev); if (!p.auto || !RES.full) return d;
+  const base = deviceRec('natural', getMeasure()).values;
+  p.auto.forEach(g => (AUTO_GROUPS[g] || []).forEach(k => {
+    const [a, b] = enhRange(k), off = p.dev && typeof p.dev[k] === 'number' ? p.dev[k] : 0, v = clamp(base[k] + off, a, b);
+    d[k] = k === 'exposure' ? Math.round(v * 20) / 20 : Math.round(v);
+  }));
+  return d;
+}
+const PCATS = ['All', 'Fix', 'Portrait', 'Landscape', 'Street', 'Night', 'Food', 'Interiors', 'B&W', 'Film', 'Saved'];
+let presetCat = 'All';
 const LS_KEY = 'lumenlayer.presets.v1';
 function loadCustom() { try { const v = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); return Array.isArray(v) ? v : []; } catch (_) { return []; } }
 function saveCustom(list) { try { localStorage.setItem(LS_KEY, JSON.stringify(list)); return true; } catch (_) { return false; } }
@@ -1980,21 +2200,27 @@ function presetLayer(s, onAsync) {
   if (s.mask) { L.mask = { kind: s.mask.kind || 'none', invert: !!s.mask.invert, brush: null, label: s.mask.label || '' }; if (s.mask.brushData) { L.mask.kind = 'brush'; L.mask.brush = mkCanvas(workW, workH); loadInto(L.mask.brush, s.mask.brushData, onAsync); } }
   return L;
 }
-function presetDoc(p, onAsync) { return { dev: mergeDev(p.dev), geo: structuredClone(doc.geo), layers: [...(p.layers || []).map(s => presetLayer(s, onAsync)), ...doc.layers.filter(l => !l.fromPreset)], active: 'base' }; }
+function presetDoc(p, onAsync) { return { dev: presetDev(p), geo: structuredClone(doc.geo), layers: [...(p.layers || []).map(s => presetLayer(s, onAsync)), ...doc.layers.filter(l => !l.fromPreset)], active: 'base' }; }
 function applyPreset(p) {
   const pd = presetDoc(p, () => requestRender(false)); doc.dev = pd.dev; doc.layers = pd.layers; doc.active = 'base'; previewDoc = null;
   renderLayers(); syncDevelopUI(); requestRender(false); commit('Preset · ' + p.name);
   const m = doc.layers.find(l => l.fromPreset && maskSource(l)); if (m) flashMask(m, true);
-  toast(`“${p.name}” set ${Object.keys(p.dev || {}).length} develop values and ${(p.layers || []).length} masked layer${(p.layers || []).length === 1 ? '' : 's'}`);
+  const nl = (p.layers || []).length; toast(`“${p.name}” applied${p.auto ? ' · adapted to this photo' : ''}${nl ? ` · ${nl} masked layer${nl === 1 ? '' : 's'}` : ''}`);
 }
 function renderPresets() {
   const g = $('#pgrid'); g.innerHTML = '';
-  const all = [...BUILTIN.map(p => ({ p, custom: false })), ...customPresets.map(p => ({ p, custom: true }))];
+  if (presetCat === 'Saved' && !customPresets.length) presetCat = 'All';
+  const cats = $('#pcats'); cats.innerHTML = PCATS.filter(k => k !== 'Saved' || customPresets.length).map(k => `<button type="button" aria-pressed="${k === presetCat}">${k}</button>`).join('');
+  cats.querySelectorAll('button').forEach(b => b.addEventListener('click', () => { presetCat = b.textContent; renderPresets(); renderPresetThumbs(); }));
+  const all = [...BUILTIN.map(p => ({ p, custom: false })), ...customPresets.map(p => ({ p, custom: true }))]
+    .filter(({ p, custom }) => presetCat === 'All' || (presetCat === 'Saved' ? custom : p.cat === presetCat));
   all.forEach(({ p, custom }) => {
     const b = document.createElement('div'); b.className = 'pcard' + (custom ? ' custom' : ''); b.tabIndex = 0; b.setAttribute('role', 'button');
     b.innerHTML = `<canvas width="180" height="120"></canvas><div class="pn"></div><div class="pt"></div>`;
-    b.querySelector('.pn').textContent = p.name; b.querySelector('.pt').textContent = p.tag || 'Saved look';
-    b.addEventListener('click', e => { if (e.target.closest('.pdel')) return; applyPreset(p); });
+    b.querySelector('.pn').textContent = p.name; b.querySelector('.pt').textContent = (p.auto ? 'Adapts · ' : '') + (p.tag || 'Saved look'); b.title = p.auto ? `${p.name}: measures each photo's exposure${p.auto.includes('wb') ? ', white balance' : ''}${p.auto.includes('noise') ? ' and noise' : ''} first, then adds the look` : p.name;
+    b.addEventListener('click', e => { if (e.target.closest('.pdel') || e.target.closest('.pkeep')) return; applyPreset(p); });
+    const kb = document.createElement('button'); kb.type = 'button'; kb.className = 'pkeep'; kb.textContent = '→ Keepers'; kb.title = 'Apply to every keeper, adapting to each photo';
+    kb.addEventListener('click', e => { e.stopPropagation(); applyPresetToKeepers(p); }); b.appendChild(kb);
     b.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); applyPreset(p); } });
     b.addEventListener('mouseenter', () => { if (!RES.full || action) return; previewDoc = presetDoc(p); liveChange(); });
     b.addEventListener('mouseleave', () => { if (!previewDoc) return; previewDoc = null; liveChange(); });
@@ -2012,7 +2238,7 @@ function renderPresetThumbs() {
   thumbTimer = setTimeout(() => {
     document.querySelectorAll('#pgrid .pcard').forEach(card => {
       const c = card.querySelector('canvas'), x = c.getContext('2d'), res = RES.thumb;
-      const d = { dev: mergeDev(card._preset.dev), layers: (card._preset.layers || []).map(s => presetLayer(s)), active: 'base' };
+      const d = { dev: presetDev(card._preset), layers: (card._preset.layers || []).map(s => presetLayer(s)), active: 'base' };
       const tmp = mkCanvas(res.w, res.h); composite(tmp.getContext('2d'), res, d, false);
       const s = Math.max(c.width / res.w, c.height / res.h), w = res.w * s, h = res.h * s; x.drawImage(tmp, (c.width - w) / 2, (c.height - h) / 2, w, h);
     });
@@ -2022,7 +2248,9 @@ function smallDataURL(cv) { const s = Math.min(1, 512 / Math.max(cv.width, cv.he
 $('#psave').addEventListener('submit', e => {
   e.preventDefault(); const name = $('#pname').value.trim(), msg = $('#pmsg');
   if (!name) { msg.textContent = 'Name the preset first.'; msg.style.color = 'var(--warn)'; $('#pname').focus(); return; }
-  const p = { name, tag: `Saved ${new Date().toLocaleDateString()}`, dev: structuredClone(doc.dev), layers: doc.layers.filter(l => l.type !== 'paint').map(l => ({ type: l.type, name: l.name, blend: l.blend, opacity: l.opacity, visible: l.visible, src: l.src, dev: l.dev ? structuredClone(l.dev) : undefined, fill: l.fill ? { ...l.fill } : undefined, mask: { kind: l.mask.kind, invert: l.mask.invert, label: l.mask.label, brushData: l.mask.kind === 'brush' && l.mask.brush ? smallDataURL(l.mask.brush) : undefined } })) };
+  const adapt = $('#pAdapt').checked, dev = structuredClone(doc.dev);
+  if (adapt) { const base = deviceRec('natural', getMeasure()).values; ['exposure', 'tone', 'wb'].forEach(g => AUTO_GROUPS[g].forEach(k => dev[k] = Math.round((doc.dev[k] - base[k]) * 100) / 100)); }
+  const p = { name, tag: `Saved ${new Date().toLocaleDateString()}`, auto: adapt ? ['exposure', 'tone', 'wb'] : undefined, dev, layers: doc.layers.filter(l => l.type !== 'paint').map(l => ({ type: l.type, name: l.name, blend: l.blend, opacity: l.opacity, visible: l.visible, src: l.src, dev: l.dev ? structuredClone(l.dev) : undefined, fill: l.fill ? { ...l.fill } : undefined, mask: { kind: l.mask.kind, invert: l.mask.invert, label: l.mask.label, brushData: l.mask.kind === 'brush' && l.mask.brush ? smallDataURL(l.mask.brush) : undefined } })) };
   const i = customPresets.findIndex(x => x.name.toLowerCase() === name.toLowerCase()); const replaced = i >= 0;
   if (replaced) customPresets[i] = p; else customPresets.push(p);
   const ok = saveCustom(customPresets); msg.style.color = ok ? 'var(--ok)' : 'var(--warn)';
@@ -2154,6 +2382,7 @@ function updateLibProgress() {
 async function openItem(it, srcOpt) {
   if (!it || it === currentItem || action || it.status === 'error' || ctxBusy) return;
   if (cropMode) { exitCrop(true); tool = 'move'; }
+  if (enh) closeEnhance(false);
   if (currentItem && RES.full) {
     currentItem.session = { doc, entries: hist.entries, idx: hist.idx };
     if (hist.idx > 0) { const c = mkCanvas(240, 160), x = c.getContext('2d'), s = Math.min(240 / view.width, 160 / view.height); c.width = Math.max(1, Math.round(view.width * s)); c.height = Math.max(1, Math.round(view.height * s)); x.drawImage(view, 0, 0, c.width, c.height); currentItem.editThumb = c; }
@@ -2188,10 +2417,10 @@ function renderStrip() {
   if (!items.length) { const e = document.createElement('div'); e.className = 'lempty'; e.textContent = library.length ? `No photos marked ${VERDICT_LABEL[libFilter] || libFilter}.` : 'Import photos to start a library.'; strip.appendChild(e); }
   items.forEach(it => {
     const v = verdictOf(it), sc = scoreOf(it), card = document.createElement('div');
-    card.className = `lcard v-${v}${it === currentItem ? ' cur' : ''}`; card.tabIndex = 0; card.setAttribute('role', 'option'); card.setAttribute('aria-selected', it === currentItem);
-    card.innerHTML = `<canvas width="256" height="171"></canvas>${sc != null ? `<span class="lsc mono">${sc}</span>` : ''}${it.ai ? '<span class="lai" title="Scored by Claude">Claude</span>' : ''}${it.editThumb ? '<span class="ledit">Edited</span>' : ''}${it.isRaw ? `<span class="lraw">${it.raw ? it.raw.ext : 'RAW'}</span>` : ''}
+    card.className = `lcard v-${v}${it === currentItem ? ' cur' : ''}${libSel.has(it.id) ? ' sel' : ''}`; card.tabIndex = 0; card.setAttribute('role', 'option'); card.setAttribute('aria-selected', it === currentItem);
+    card.innerHTML = `<canvas width="256" height="171"></canvas>${sc != null ? `<span class="lsc mono">${sc}</span>` : ''}${it.ai ? `<span class="lai" title="Scored by ${esc(it.ai.by || 'AI')}">AI</span>` : ''}${it.editThumb ? '<span class="ledit">Edited</span>' : ''}${it.isRaw ? `<span class="lraw">${it.raw ? it.raw.ext : 'RAW'}</span>` : ''}${it.hdr ? '<span class="lraw">HDR</span>' : ''}
       <div class="lmeta"><span class="lv">${VERDICT_LABEL[v]}${it.manual ? ' · you' : ''}</span><span class="lwhy"></span></div><div class="lnm"></div>
-      <div class="lflags"><button type="button" data-f="keep" aria-pressed="${it.manual === 'keep'}" title="Mark Keep (P)">✓</button><button type="button" data-f="reject" aria-pressed="${it.manual === 'reject'}" title="Mark Reject (X)">✕</button></div>
+      <div class="lflags"><button type="button" data-f="keep" aria-pressed="${it.manual === 'keep'}" title="Mark Keep (P)">✓</button><button type="button" data-f="reject" aria-pressed="${it.manual === 'reject'}" title="Mark Reject (X)">✕</button><button type="button" data-f="sel" aria-pressed="${libSel.has(it.id)}" title="Select for HDR merge (Ctrl/⌘-click)">◎</button></div>
       ${it.status === 'queued' || it.status === 'analyzing' ? `<div class="lspin">${it.status === 'queued' ? 'Queued' : 'Scoring…'}</div>` : ''}`;
     card.querySelector('.lnm').textContent = it.name + (it.demo ? ' · sample' : '');
     card.querySelector('.lwhy').textContent = it.status === 'error' ? (it.err || 'Unreadable') : reasonText(it);
@@ -2200,15 +2429,17 @@ function renderStrip() {
     const cv = card.querySelector('canvas'), x = cv.getContext('2d'), t = it.editThumb || it.thumb;
     x.fillStyle = '#0d0f12'; x.fillRect(0, 0, cv.width, cv.height);
     if (t) { const s = Math.max(cv.width / t.width, cv.height / t.height), w = t.width * s, h = t.height * s; x.drawImage(t, (cv.width - w) / 2, (cv.height - h) / 2, w, h); }
-    card.addEventListener('click', e => { const fb = e.target.closest('[data-f]'); if (fb) { e.stopPropagation(); setManual(it, fb.dataset.f); return; } openItem(it); });
+    card.addEventListener('click', e => { const fb = e.target.closest('[data-f]'); if (fb) { e.stopPropagation(); if (fb.dataset.f === 'sel') toggleSel(it); else setManual(it, fb.dataset.f); return; } if (e.ctrlKey || e.metaKey || e.shiftKey) { if (it.status === 'done') toggleSel(it); return; } openItem(it); });
     card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openItem(it); } });
     strip.appendChild(card);
   });
   const n = library.length, cnt = k => library.filter(it => verdictOf(it) === k).length;
   $('#libStats').textContent = `${n} photo${n === 1 ? '' : 's'} · ${cnt('keep')} keep · ${cnt('review')} review · ${cnt('reject')} reject`;
   const it = currentItem, info = $('#libInfo');
-  if (it && it.local) { const v = verdictOf(it); info.innerHTML = `<b>${esc(it.name)}</b> · ${VERDICT_LABEL[v]} · score ${scoreOf(it)}${it.ai ? ' (Claude)' : ''} · ${esc(reasonText(it))}`; }
+  if (it && it.local) { const v = verdictOf(it); info.innerHTML = `<b>${esc(it.name)}</b> · ${VERDICT_LABEL[v]} · score ${scoreOf(it)}${it.ai ? ' (AI)' : ''} · ${esc(reasonText(it))}`; }
   else info.textContent = it ? it.name : '';
+  for (const id of [...libSel]) if (!library.some(x => x.id === id)) libSel.delete(id);
+  const hb = $('#libHDR'); hb.disabled = libSel.size < 2; hb.textContent = libSel.size ? `Merge to HDR (${libSel.size})` : 'Merge to HDR';
   const cur = strip.querySelector('.cur'); if (cur) cur.scrollIntoView({ block: 'nearest', inline: 'nearest' });
 }
 function syncLibFilter() { $('#libFilter').querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === libFilter)); }
@@ -2225,45 +2456,142 @@ $('#libClear').addEventListener('click', () => {
 });
 function navItem(dir) { const a = sortedItems(), i = a.indexOf(currentItem); const n = a[clamp((i < 0 ? 0 : i + dir), 0, a.length - 1)]; if (n && n !== currentItem) openItem(n); }
 
-/* ---- Claude review: sends 768px previews in small batches, asks for JSON verdicts ---- */
+/* ---- AI provider layer: built-in Claude, a cloud API of your choice, or a local model, all behind aiJSON() ---- */
 let sampleFn = null, aiLimits = null, aiCtl = null;
-(async () => {
+const AI_PROVIDERS = {
+  builtin: { label: 'Claude (built in)', short: 'Claude', kind: 'builtin', note: 'Uses your Claude account. Works only when this page is opened inside Claude.' },
+  openai: { label: 'OpenAI', kind: 'openai', base: 'https://api.openai.com/v1', model: 'gpt-4o-mini', key: true, maxImages: 6, models: ['gpt-4o-mini', 'gpt-4o', 'gpt-4.1-mini', 'gpt-4.1'], note: 'Get an API key at platform.openai.com.' },
+  anthropic: { label: 'Anthropic API (Claude)', short: 'Claude API', kind: 'anthropic', base: 'https://api.anthropic.com/v1', model: 'claude-sonnet-5-5', key: true, maxImages: 6, models: ['claude-sonnet-5-5', 'claude-haiku-5-5', 'claude-opus-5-5'], note: 'Get an API key at console.anthropic.com.' },
+  gemini: { label: 'Google Gemini', short: 'Gemini', kind: 'gemini', base: 'https://generativelanguage.googleapis.com/v1beta', model: 'gemini-2.0-flash', key: true, maxImages: 6, models: ['gemini-2.0-flash', 'gemini-2.5-flash', 'gemini-2.5-pro'], note: 'Get an API key at aistudio.google.com.' },
+  openrouter: { label: 'OpenRouter (many models)', short: 'OpenRouter', kind: 'openai', base: 'https://openrouter.ai/api/v1', model: 'openai/gpt-4o-mini', key: true, maxImages: 4, models: ['openai/gpt-4o-mini', 'google/gemini-2.0-flash-001', 'meta-llama/llama-3.2-11b-vision-instruct'], note: 'One key for hundreds of models at openrouter.ai.' },
+  ollama: { label: 'Ollama (local, free, private)', short: 'Ollama', kind: 'ollama', base: 'http://localhost:11434', model: 'llama3.2-vision', key: false, local: true, maxImages: 1, models: ['llama3.2-vision', 'qwen2.5vl', 'gemma3', 'llava'], note: 'Runs on your PC. Install Ollama, run: ollama pull llama3.2-vision, then start it with OLLAMA_ORIGINS="*" ollama serve so this page may connect.' },
+  lmstudio: { label: 'LM Studio (local)', short: 'LM Studio', kind: 'openai', base: 'http://localhost:1234/v1', model: '', key: false, local: true, maxImages: 1, models: [], note: 'Runs on your PC. Load a vision model, start the local server and turn on "Enable CORS" in its server settings. Use List models to fill in the name.' },
+  custom: { label: 'Custom (OpenAI-compatible)', short: 'Custom AI', kind: 'openai', base: '', model: '', key: 'optional', maxImages: 4, models: [], note: 'Any server with an OpenAI-compatible /chat/completions endpoint, such as vLLM, LocalAI, Jan or a company gateway.' }
+};
+const AI_KEY = 'lumenlayer.ai.v1';
+const AI = Object.assign({ provider: '', remember: true, cfg: {} }, (() => { try { return JSON.parse(localStorage.getItem(AI_KEY) || '{}'); } catch (_) { return {}; } })());
+function aiSave() { try { const copy = structuredClone(AI); if (!AI.remember) for (const k in copy.cfg) copy.cfg[k].key = ''; localStorage.setItem(AI_KEY, JSON.stringify(copy)); } catch (_) { } }
+function aiCfg(id) { const P = AI_PROVIDERS[id] || {}, c = AI.cfg[id] || (AI.cfg[id] = {}); if (c.base == null) c.base = P.base || ''; if (c.model == null) c.model = P.model || ''; if (c.key == null) c.key = ''; return c; }
+const builtinReady = () => !!(sampleFn && aiLimits);
+const aiProvider = () => AI.provider || (builtinReady() ? 'builtin' : '');
+function aiReady() { const id = aiProvider(), P = AI_PROVIDERS[id]; if (!P) return false; if (P.kind === 'builtin') return builtinReady(); const c = aiCfg(id); return !!(c.base && c.model && (P.key !== true || c.key)); }
+const aiLabel = () => { const P = AI_PROVIDERS[aiProvider()]; return P ? (P.short || P.label) : 'AI'; };
+const aiMaxImages = () => { const P = AI_PROVIDERS[aiProvider()]; return !P ? 1 : P.kind === 'builtin' ? Math.max(1, Math.min((aiLimits && aiLimits.maxCount) || 4, 6)) : P.maxImages; };
+(async () => { try { if (!(window.claude && window.claude.use)) return; sampleFn = await window.claude.use('sample'); if (!sampleFn) return; const lim = await sampleFn.limits().catch(() => null); if (lim && lim.images) aiLimits = lim.images; } catch (_) { sampleFn = null; } })();
+const blobB64 = b => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1]); r.onerror = rej; r.readAsDataURL(b); });
+function parseLooseJSON(t) {
+  if (t == null || t === '') throw { code: 'invalid_json' };
+  t = String(t).trim(); const f = t.match(/```(?:json)?\s*([\s\S]*?)```/); if (f) t = f[1].trim();
+  try { return JSON.parse(t); } catch (_) { }
+  const a = [t.indexOf('{'), t.indexOf('[')].filter(i => i >= 0), st = a.length ? Math.min(...a) : -1, en = Math.max(t.lastIndexOf('}'), t.lastIndexOf(']'));
+  if (st >= 0 && en > st) { try { return JSON.parse(t.slice(st, en + 1)); } catch (_) { } }
+  throw { code: 'invalid_json', text: t };
+}
+/** Send a prompt (+ JPEG previews) to the chosen AI and return its reply parsed as JSON. */
+async function aiJSON(prompt, blobs = [], signal) {
+  const id = aiProvider(), P = AI_PROVIDERS[id]; if (!P) throw { code: 'not_configured' };
+  if (P.kind === 'builtin') { if (!sampleFn) throw { code: 'unavailable' }; const o = { signal, cache: false }; if (blobs.length) o.images = blobs; return await sampleFn.json(prompt, o); }
+  const c = aiCfg(id), base = c.base.replace(/\/+$/, ''), imgs = await Promise.all(blobs.map(blobB64)), text = prompt + '\n\nReply with JSON only, no other text.';
+  let res;
   try {
-    if (!(window.claude && window.claude.use)) return;
-    sampleFn = await window.claude.use('sample'); if (!sampleFn) return;
-    const lim = await sampleFn.limits().catch(() => null);
-    if (lim && lim.images) { aiLimits = lim.images; $('#aiReview').hidden = false; }
-  } catch (_) { sampleFn = null; }
-})();
+    if (P.kind === 'openai') res = await fetch(base + '/chat/completions', { method: 'POST', signal, headers: { 'Content-Type': 'application/json', ...(c.key ? { Authorization: 'Bearer ' + c.key } : {}) }, body: JSON.stringify({ model: c.model, temperature: .2, messages: [{ role: 'user', content: [{ type: 'text', text }, ...imgs.map(d => ({ type: 'image_url', image_url: { url: 'data:image/jpeg;base64,' + d } }))] }] }) });
+    else if (P.kind === 'anthropic') res = await fetch(base + '/messages', { method: 'POST', signal, headers: { 'Content-Type': 'application/json', 'x-api-key': c.key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' }, body: JSON.stringify({ model: c.model, max_tokens: 2000, messages: [{ role: 'user', content: [...imgs.map(d => ({ type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: d } })), { type: 'text', text }] }] }) });
+    else if (P.kind === 'gemini') res = await fetch(`${base}/models/${encodeURIComponent(c.model)}:generateContent?key=${encodeURIComponent(c.key)}`, { method: 'POST', signal, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contents: [{ parts: [{ text }, ...imgs.map(d => ({ inline_data: { mime_type: 'image/jpeg', data: d } }))] }], generationConfig: { temperature: .2, responseMimeType: 'application/json' } }) });
+    else if (P.kind === 'ollama') res = await fetch(base + '/api/chat', { method: 'POST', signal, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: c.model, stream: false, format: 'json', options: { temperature: .2 }, messages: [{ role: 'user', content: text, images: imgs }] }) });
+  } catch (e) { if (e && e.name === 'AbortError') throw { code: 'cancelled' }; throw { code: 'network', message: String(e && e.message || '') }; }
+  if (!res.ok) { let detail = ''; try { detail = (await res.text()).slice(0, 240); } catch (_) { } throw { code: 'http', status: res.status, message: detail }; }
+  const j = await res.json();
+  const out = P.kind === 'openai' ? j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content
+    : P.kind === 'anthropic' ? (j.content || []).map(x => x.text || '').join('')
+      : P.kind === 'gemini' ? (((j.candidates || [])[0] || {}).content || { parts: [] }).parts.map(x => x.text || '').join('')
+        : j.message && j.message.content;
+  return parseLooseJSON(Array.isArray(out) ? out.map(x => x.text || '').join('') : out);
+}
+function aiErrText(e) {
+  const id = aiProvider(), P = AI_PROVIDERS[id] || { label: 'The AI' }, c = e && e.code, cfg = id ? aiCfg(id) : {};
+  if (c === 'cancelled') return 'Stopped';
+  if (c === 'not_configured') return 'Choose an AI in AI settings first';
+  if (c === 'unavailable' || ['not_granted', 'sampling_disabled', 'images_unavailable', 'capability_disabled', 'capability_removed', 'not_declared'].includes(c)) return 'The built-in Claude is not available here · choose another AI in AI settings';
+  if (c === 'rate_limited') return `${P.label} is busy for your account right now · try again later`;
+  if (c === 'network') {
+    if (window.claude) return `Inside Claude, pages can only use the built-in AI. To use ${P.label}, download the app (index.html) and open it on your PC.`;
+    if (P.kind === 'ollama') return `Couldn't reach Ollama at ${cfg.base}. Start it with OLLAMA_ORIGINS="*" ollama serve, then try again.`;
+    if (P.local) return `Couldn't reach ${P.label} at ${cfg.base}. Start its local server and turn on "Enable CORS".`;
+    return `Couldn't reach ${P.label}. Check the address, your connection, and that the service allows browser requests.`;
+  }
+  if (c === 'http') {
+    if (e.status === 401 || e.status === 403) return `${P.label} rejected the API key (${e.status})`;
+    if (e.status === 404) return `${P.label} could not find model “${cfg.model}” (404)`;
+    if (e.status === 429) return `${P.label} rate limit reached · try again shortly`;
+    return `${P.label} returned error ${e.status}${e.message ? ': ' + e.message.replace(/\s+/g, ' ').slice(0, 140) : ''}`;
+  }
+  if (c === 'invalid_json') return 'The model replied in an unexpected format · try again, or pick a stronger vision model';
+  return 'The AI request was interrupted · try again';
+}
+let aiDraft = '';
+function openAISettings(reason) {
+  const sel = $('#aiProv'); sel.innerHTML = Object.entries(AI_PROVIDERS).map(([k, P]) => `<option value="${k}">${P.label}</option>`).join('');
+  aiDraft = aiProvider() || 'ollama'; sel.value = aiDraft; $('#aiRemember').checked = AI.remember;
+  $('#aiReason').textContent = reason || ''; aiFill(); $('#aiDlg').hidden = false; setTimeout(() => sel.focus(), 20);
+}
+function aiFill() {
+  const P = AI_PROVIDERS[aiDraft], c = aiCfg(aiDraft), api = P.kind !== 'builtin';
+  $('#aiBaseRow').hidden = !api; $('#aiModelRow').hidden = !api; $('#aiKeyRow').hidden = !api || P.key === false;
+  $('#aiBase').value = c.base; $('#aiModel').value = c.model; $('#aiKey').value = c.key; $('#aiKey').placeholder = P.key === 'optional' ? 'Optional' : 'Paste your API key';
+  $('#aiModels').innerHTML = (P.models || []).map(m => `<option value="${esc(m)}">`).join('');
+  let note = P.note || '';
+  if (P.kind === 'builtin' && !builtinReady()) note += ' It is not available in this window.';
+  if (P.kind !== 'builtin' && window.claude) note += ' Inside Claude, only the built-in AI can connect: download the app to use this one.';
+  $('#aiNote').textContent = note; $('#aiTest').textContent = ''; $('#aiList').hidden = !(P.kind === 'ollama' || P.kind === 'openai');
+}
+function aiReadForm() { if (AI_PROVIDERS[aiDraft].kind === 'builtin') return; const c = aiCfg(aiDraft); c.base = $('#aiBase').value.trim(); c.model = $('#aiModel').value.trim(); c.key = $('#aiKey').value.trim(); }
+$('#aiProv').addEventListener('change', e => { aiReadForm(); aiDraft = e.target.value; aiFill(); });
+$('#aiSave').addEventListener('click', () => { aiReadForm(); AI.provider = aiDraft; AI.remember = $('#aiRemember').checked; aiSave(); $('#aiDlg').hidden = true; toast(`AI set to ${AI_PROVIDERS[aiDraft].label}${aiReady() ? '' : ' · some details are still missing'}`); });
+$('#aiCancel').addEventListener('click', () => $('#aiDlg').hidden = true); $('#aiClose').addEventListener('click', () => $('#aiDlg').hidden = true);
+$('#aiDlg').addEventListener('click', e => { if (e.target.id === 'aiDlg') $('#aiDlg').hidden = true; });
+$('#aiTestBtn').addEventListener('click', async () => {
+  aiReadForm(); const prev = AI.provider, out = $('#aiTest'); AI.provider = aiDraft; out.style.color = 'var(--muted)'; out.textContent = 'Testing…';
+  try { const r = await aiJSON('This is a connection test. Reply with exactly this JSON: {"ok": true}', []); out.style.color = 'var(--ok)'; out.textContent = r && r.ok ? `Connected · ${AI_PROVIDERS[aiDraft].label} answered` : 'Connected, but the reply was unexpected · it may still work'; }
+  catch (e) { out.style.color = 'var(--warn)'; out.textContent = aiErrText(e); } finally { AI.provider = prev; }
+});
+$('#aiList').addEventListener('click', async () => {
+  aiReadForm(); const P = AI_PROVIDERS[aiDraft], c = aiCfg(aiDraft), out = $('#aiTest'); out.style.color = 'var(--muted)'; out.textContent = 'Looking for models…';
+  try {
+    const res = await fetch(c.base.replace(/\/+$/, '') + (P.kind === 'ollama' ? '/api/tags' : '/models'), { headers: c.key ? { Authorization: 'Bearer ' + c.key } : {} });
+    if (!res.ok) throw { code: 'http', status: res.status };
+    const j = await res.json(), names = (j.models || j.data || []).map(m => m.name || m.id).filter(Boolean);
+    $('#aiModels').innerHTML = names.map(n => `<option value="${esc(n)}">`).join('');
+    out.style.color = names.length ? 'var(--ok)' : 'var(--warn)'; out.textContent = names.length ? `Found ${names.length}: ${names.slice(0, 6).join(', ')}${names.length > 6 ? '…' : ''}` : 'No models installed yet';
+    if (names.length && !$('#aiModel').value) $('#aiModel').value = names[0];
+  } catch (e) { const prev = AI.provider; AI.provider = aiDraft; out.style.color = 'var(--warn)'; out.textContent = aiErrText(e && e.code ? e : { code: 'network' }); AI.provider = prev; }
+});
 async function runAIReview() {
   const btn = $('#aiReview');
   if (aiCtl) { aiCtl.abort(); return; }
+  if (!aiReady()) { openAISettings('Choose the AI that should review your photos.'); return; }
   const todo = library.filter(it => it.status === 'done' && !it.ai && it.aiBlob);
-  if (!todo.length) { toast(library.some(it => it.status !== 'done') ? 'Wait for scoring to finish, then review' : 'Claude has already reviewed every photo'); return; }
-  const per = Math.max(1, Math.min(aiLimits.maxCount || 4, 6)); aiCtl = new AbortController(); btn.textContent = 'Stop review'; let done = 0;
+  if (!todo.length) { toast(library.some(it => it.status !== 'done') ? 'Wait for scoring to finish, then review' : 'Every photo already has an AI review'); return; }
+  const per = aiMaxImages(), who = aiLabel(); aiCtl = new AbortController(); btn.textContent = 'Stop review'; let done = 0;
   try {
     for (let i = 0; i < todo.length; i += per) {
       const chunk = todo.slice(i, i + per);
-      $('#libProg').textContent = `Claude is reviewing ${i + 1}–${i + chunk.length} of ${todo.length}…`;
+      $('#libProg').textContent = `${who} is reviewing ${i + 1}${chunk.length > 1 ? '–' + (i + chunk.length) : ''} of ${todo.length}…`;
       const lines = chunk.map((it, k) => `Image ${k + 1} "${it.name}": focus ${it.local.sharp}, exposure ${it.local.expo}, contrast ${it.local.contrast}, noise ${it.local.noise} (0-100, higher is better).`).join('\n');
-      const prompt = `You are a professional photo editor culling a shoot. ${chunk.length} photos are attached in order (Image 1 to Image ${chunk.length}). Decide which are keepers. Weigh focus and motion blur, exposure, composition, subject clarity and visual impact. On-device measurements for reference:\n${lines}\n\nReply with only a JSON array, one object per image in order, like [{"i":1,"score":82,"verdict":"keep","reason":"Sharp subject, balanced light"}]. score is 0-100; verdict is "keep", "review" or "reject"; reason is at most 10 words.`;
-      const out = await sampleFn.json(prompt, { images: chunk.map(it => it.aiBlob), modelTier: 'quick', signal: aiCtl.signal });
-      (Array.isArray(out) ? out : []).forEach((o, k) => {
+      const prompt = `You are a professional photo editor culling a shoot. ${chunk.length} photo${chunk.length > 1 ? 's are' : ' is'} attached in order (Image 1${chunk.length > 1 ? ' to Image ' + chunk.length : ''}). Decide which are keepers. Weigh focus and motion blur, exposure, composition, subject clarity and visual impact. On-device measurements for reference:\n${lines}\n\nReply with only JSON like {"photos":[{"i":1,"score":82,"verdict":"keep","reason":"Sharp subject, balanced light"}]}, one object per image in order. score is 0-100; verdict is "keep", "review" or "reject"; reason is at most 10 words.`;
+      const out = await aiJSON(prompt, chunk.map(it => it.aiBlob), aiCtl.signal);
+      const arr = Array.isArray(out) ? out : out && Array.isArray(out.photos) ? out.photos : out && Array.isArray(out.results) ? out.results : out && typeof out === 'object' && 'score' in out ? [out] : [];
+      arr.forEach((o, k) => {
         const it = chunk[(Number(o && o.i) || k + 1) - 1]; if (!it || !o) return;
         const score = clamp(Math.round(Number(o.score) || 0), 0, 100), v = String(o.verdict || '').toLowerCase();
-        it.ai = { score, verdict: ['keep', 'review', 'reject'].includes(v) ? v : score >= 68 ? 'keep' : score >= 45 ? 'review' : 'reject', reason: String(o.reason || '').slice(0, 90) }; done++;
+        it.ai = { score, verdict: ['keep', 'review', 'reject'].includes(v) ? v : score >= 68 ? 'keep' : score >= 45 ? 'review' : 'reject', reason: String(o.reason || '').slice(0, 90), by: who }; done++;
       });
       renderStrip();
     }
-    toast(`Claude reviewed ${done} photo${done === 1 ? '' : 's'} · its verdicts replace the on-device scores`);
+    toast(`${who} reviewed ${done} photo${done === 1 ? '' : 's'} · its verdicts replace the on-device scores`);
   } catch (e) {
-    const c = e && e.code;
-    if (c === 'cancelled') toast(`Review stopped · ${done} photo${done === 1 ? '' : 's'} reviewed`);
-    else if (['not_granted', 'sampling_disabled', 'images_unavailable', 'capability_disabled', 'capability_removed', 'not_declared'].includes(c)) { btn.hidden = true; toast('Claude review is not available here · on-device scores still sort your photos', 'warn'); }
-    else if (c === 'rate_limited') toast('Claude is busy for your account right now · try the review again later', 'warn');
-    else if (c === 'image_rejected') toast('Claude could not read one of these previews · review the others individually', 'warn');
-    else toast('The review was interrupted · press Review with Claude to continue where it stopped', 'warn');
-  } finally { aiCtl = null; btn.textContent = 'Review with Claude'; updateLibProgress(); renderStrip(); }
+    if (e && e.code === 'cancelled') toast(`Review stopped · ${done} photo${done === 1 ? '' : 's'} reviewed`);
+    else toast(aiErrText(e), 'warn');
+  } finally { aiCtl = null; btn.textContent = 'AI review'; updateLibProgress(); renderStrip(); }
 }
 $('#aiReview').addEventListener('click', runAIReview);
 
@@ -2276,14 +2604,17 @@ const SYNC_PARTS = [
   { k: 'light', label: 'Light', keys: ['exposure', 'contrast', 'highlights', 'shadows', 'whites', 'blacks'] },
   { k: 'color', label: 'White balance & color', keys: ['temp', 'tint', 'vibrance', 'saturation'] },
   { k: 'effects', label: 'Dehaze', keys: ['dehaze'] },
+  { k: 'detail', label: 'Detail, noise & HDR', keys: ['hdr', 'clarity', 'sharpen', 'nrLuma', 'nrColor'] },
+  { k: 'profile', label: 'Camera profile', keys: ['profile', 'profileAmt'] },
   { k: 'curve', label: 'Tone curve' }, { k: 'grade', label: 'Color grading' }, { k: 'hsl', label: 'HSL mixer' },
   { k: 'layers', label: 'Sky, Subject & adjustment layers' }, { k: 'brush', label: 'Brush-masked layers' }, { k: 'geo', label: 'Crop & rotate' }
 ];
-const NICE = { exposure: 'Exposure', contrast: 'Contrast', highlights: 'Highlights', shadows: 'Shadows', whites: 'Whites', blacks: 'Blacks', temp: 'Temp', tint: 'Tint', vibrance: 'Vibrance', saturation: 'Saturation', dehaze: 'Dehaze' };
+const NICE = { exposure: 'Exposure', contrast: 'Contrast', highlights: 'Highlights', shadows: 'Shadows', whites: 'Whites', blacks: 'Blacks', temp: 'Temp', tint: 'Tint', vibrance: 'Vibrance', saturation: 'Saturation', dehaze: 'Dehaze', hdr: 'HDR', clarity: 'Clarity', sharpen: 'Sharpening', nrLuma: 'Noise reduction', nrColor: 'Color noise' };
 let clip = null, syncSel = null, syncTarget = 'keep';
 /** What each group would copy from document d, in words; empty string = nothing changed. */
 function partSummary(p, d) {
   const dv = d.dev;
+  if (p.k === 'profile') return dv.profile && dv.profile !== 'none' ? `${PROFILES[dv.profile].label} ${dv.profileAmt ?? 100}%` : '';
   if (p.keys) return p.keys.filter(k => dv[k]).map(k => `${NICE[k]} ${k === 'exposure' ? (dv[k] > 0 ? '+' : '') + dv[k].toFixed(2) : fmtSigned(dv[k])}`).join(', ');
   if (p.k === 'curve') return ['m', 'r', 'g', 'b'].filter(c => !isIdentity(dv.curve[c])).map(c => ({ m: 'RGB', r: 'Red', g: 'Green', b: 'Blue' })[c] + ' curve').join(', ');
   if (p.k === 'grade') { const g = dv.grade; return [['sh', 'Shadows'], ['mid', 'Midtones'], ['hi', 'Highlights']].filter(([z]) => g[z].s || g[z].l).map(([z, n]) => `${n} ${g[z].h}°`).join(', '); }
@@ -2419,6 +2750,245 @@ $('#syNone').addEventListener('click', () => { SYNC_PARTS.forEach(p => syncSel[p
 $('#syCopyOnly').addEventListener('click', () => { clip = makeClip(syncSel); $('#syMsg').style.color = 'var(--ok)'; $('#syMsg').textContent = 'Copied. Open any photo and press Shift+V to paste.'; toast(`Copied edits from “${clip.from}” · Shift+V pastes`); });
 $('#syGo').addEventListener('click', pasteToTargets);
 $('#libSync').addEventListener('click', openSync);
+/** Apply a preset to every keeper; adaptive presets re-measure each photo so one look fits different light. */
+async function applyPresetToKeepers(p) {
+  const ks = keepers(); if (!ks.length) { toast('No keepers yet · mark photos with P first', 'warn'); return; } if (ctxBusy || !RES.full) return;
+  const withCur = ks.includes(currentItem); if (withCur) applyPreset(p);
+  const others = ks.filter(it => it !== currentItem); if (!others.length) return;
+  $('#blockTitle').textContent = `Applying “${p.name}”`; $('#blockDlg').hidden = false;
+  const r = await inItemContexts(others, async it => {
+    if (!it.session) it.session = { doc, entries: [{ label: `Open “${it.name}”`, doc: cloneDoc(doc), t: new Date(), thumb: null }], idx: 0 };
+    const d = presetDoc(p), s = it.session; s.entries = s.entries.slice(0, s.idx + 1); s.entries.push({ label: 'Preset · ' + p.name, doc: cloneDoc(d), t: new Date(), thumb: null }); s.idx = s.entries.length - 1; s.doc = d; doc = d;
+    const gi = geoInfo(d.geo), sc = 240 / Math.max(gi.OW, gi.OH); it.editThumb = renderOutput(d, Math.max(1, Math.round(gi.OW * sc)), Math.max(1, Math.round(gi.OH * sc)));
+  }, (i, it) => { $('#blockTxt').textContent = `${p.auto ? 'Measuring and adapting to' : 'Applying to'} photo ${i + 1} of ${others.length} · ${it.name}`; });
+  $('#blockDlg').hidden = true; renderStrip();
+  const n = r.done + (withCur ? 1 : 0); toast(`“${p.name}” applied to ${n} keeper${n === 1 ? '' : 's'}${p.auto ? ' · each adapted to its own light' : ''}${r.stopped ? ' · stopped early' : ''}`);
+}
+$('#blockStop').addEventListener('click', () => { ctxAbort = true; $('#blockTxt').textContent = 'Stopping after this photo…'; });
+
+/* =====================================================================
+   14d. ENHANCE — best exposure, color, noise and detail, on device or by Claude
+   ===================================================================== */
+const ENH_STYLES = [['natural', 'Natural'], ['vivid', 'Vivid'], ['bright', 'Bright'], ['moody', 'Moody'], ['hdr', 'HDR']];
+const ENH_KEYS = ['exposure', 'contrast', 'highlights', 'shadows', 'whites', 'blacks', 'temp', 'tint', 'vibrance', 'saturation', 'dehaze', 'clarity', 'sharpen', 'nrLuma', 'nrColor', 'hdr'];
+const enhRange = k => k === 'exposure' ? [-2, 2] : ['sharpen', 'nrLuma', 'nrColor', 'hdr'].includes(k) ? [0, 100] : [-100, 100];
+let enh = null, enhCtl = null;
+/** Measurements of the unedited photo that drive the recommendation. */
+const measureCache = new WeakMap();
+function getMeasure() { let m = measureCache.get(RES.full); if (!m) { m = measurePhoto(); measureCache.set(RES.full, m); } return m; }
+const wbFrom = (R, G, B, k = 100) => [clamp(Math.round((B - R) / (.28 * R + .32 * B) * k), -100, 100), clamp(Math.round((G - (R + B) / 2) / (.22 * G) * k), -100, 100)];
+function autoWB() {
+  if (!RES.full) return; const m = getMeasure();
+  if (!m.wb) { toast('No neutral areas found to balance on · try Pick neutral', 'warn'); return; }
+  const [t, ti] = wbFrom(...m.wb, 85), d = editDev(); d.temp = t; d.tint = ti; syncDevelopUI(); liveChange();
+  commit(`Auto white balance · Temp ${fmtSigned(t)}, Tint ${fmtSigned(ti)}${targetSuffix()}`); toast(`Auto white balance · Temp ${fmtSigned(t)}, Tint ${fmtSigned(ti)}`);
+}
+let wbPick = false;
+function startWBPick() { if (!RES.full) return; if (cropMode) { exitCrop(true); setTool('move', false); } wbPick = true; vp.classList.add('t-pick'); hud(IC.mask, 'Pick a neutral point', 'Click something that should be grey or white · Esc cancels', 'W'); }
+function endWBPick() { wbPick = false; vp.classList.remove('t-pick'); }
+function doWBPick(p) {
+  endWBPick(); const d = RES.full.srcData.data, W = workW, H = workH, cx = Math.round(p.x), cy = Math.round(p.y);
+  if (cx < 0 || cy < 0 || cx >= W || cy >= H) { toast('Click inside the photo', 'warn'); return; }
+  let R = 0, G = 0, B = 0, n = 0;
+  for (let y = cy - 4; y <= cy + 4; y++) for (let x = cx - 4; x <= cx + 4; x++) { const i = (clamp(y, 0, H - 1) * W + clamp(x, 0, W - 1)) * 4; R += d[i]; G += d[i + 1]; B += d[i + 2]; n++; }
+  R /= n * 255; G /= n * 255; B /= n * 255;
+  if (Math.max(R, G, B) > .97 || Math.min(R, G, B) < .03) { toast('That spot is clipped · pick a mid-grey or off-white area instead', 'warn'); return; }
+  const [t, ti] = wbFrom(R, G, B), dv = editDev(); dv.temp = t; dv.tint = ti; syncDevelopUI(); liveChange();
+  commit(`White balance · picked (Temp ${fmtSigned(t)}, Tint ${fmtSigned(ti)})${targetSuffix()}`); toast(`Neutral point picked · Temp ${fmtSigned(t)}, Tint ${fmtSigned(ti)}`);
+}
+function measurePhoto() {
+  const d = RES.full.srcData.data, h = new Uint32Array(256); let n = 0, sr = 0, sg = 0, sb = 0, sn = 0, ch = 0;
+  for (let i = 0; i < d.length; i += 16) {
+    const r = d[i] / 255, g = d[i + 1] / 255, b = d[i + 2] / 255, l = .2126 * r + .7152 * g + .0722 * b, mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+    h[Math.min(255, (l * 255) | 0)]++; n++; ch += mx - mn;
+    if (l > .2 && l < .85 && mx - mn < .15) { sr += r; sg += g; sb += b; sn++; }
+  }
+  const pct = q => { let a = 0; for (let i = 0; i < 256; i++) { a += h[i]; if (a >= n * q) return i / 255; } return 1; };
+  const a = assess(RES.full.srcCanvas);
+  return { p005: pct(.005), p05: pct(.05), p50: pct(.5), p95: pct(.95), p995: pct(.995), clipHi: (h[255] + h[254]) / n * 100, clipLo: (h[0] + h[1]) / n * 100, chroma: ch / n, wb: sn > n * .02 ? [sr / sn, sg / sn, sb / sn] : null, noise: a.raw.noiseV, sharp: a.sharp, std: a.raw.std };
+}
+function deviceRec(style, m) {
+  const v = Object.fromEntries(ENH_KEYS.map(k => [k, 0])), notes = [];
+  const target = { natural: .42, vivid: .42, bright: .52, moody: .32, hdr: .42 }[style];
+  const raw = Math.log2(target / Math.max(.02, m.p50)); // leave roughly-right exposures alone (scenes are allowed to be bright or dark)
+  let ev = clamp(Math.sign(raw) * Math.max(0, Math.abs(raw) - .35) * .85, -2, 2); if (Math.abs(ev) < .08) ev = 0; v.exposure = Math.round(ev * 20) / 20;
+  if (v.exposure) notes.push(`Exposure ${(v.exposure > 0 ? '+' : '') + v.exposure.toFixed(2)} EV · midtones were about ${Math.abs(raw).toFixed(1)} stops ${raw > 0 ? 'dark' : 'bright'}`);
+  const k = Math.pow(2, v.exposure), hi = Math.min(1, m.p995 * k), lo = m.p05 * k;
+  if (hi > .94 || m.clipHi > .5) { v.highlights = -Math.round(clamp((hi - .88) * 500 + m.clipHi * 4, 15, 85)); notes.push(`Highlights ${v.highlights} · recovers bright detail${m.clipHi > .1 ? ` (${m.clipHi.toFixed(1)}% clipped)` : ''}`); }
+  if (lo < .08) { v.shadows = Math.round(clamp((.1 - lo) * 450, 10, 70)); notes.push(`Shadows +${v.shadows} · opens up dark areas`); }
+  if (m.p005 * k > .06 && m.p50 > .15) { v.blacks = -Math.round(clamp((m.p005 - .03) * 350, 5, 45)); notes.push(`Blacks ${v.blacks} · restores a true black, the photo looked washed out`); }
+  if (hi < .85) { v.whites = Math.round(clamp((.92 - hi) * 250, 5, 40)); notes.push(`Whites +${v.whites} · the brightest tones only reached ${Math.round(hi * 100)}%`); }
+  if (m.std < .17) { v.contrast = Math.round(clamp((.2 - m.std) * 220, 5, 35)); notes.push(`Contrast +${v.contrast} · the scene was flat`); }
+  if (m.wb) {
+    const [R, G, B] = m.wb, t = clamp((B - R) / (.28 * R + .32 * B) * 60, -40, 40), ti = clamp((G - (R + B) / 2) / (.22 * G) * 60, -30, 30);
+    if (Math.abs(t) >= 4) { v.temp = Math.round(t); notes.push(`Temp ${fmtSigned(v.temp)} · neutralises a ${t < 0 ? 'warm' : 'cool'} cast`); }
+    if (Math.abs(ti) >= 4) { v.tint = Math.round(ti); notes.push(`Tint ${fmtSigned(v.tint)} · removes a ${ti > 0 ? 'green' : 'magenta'} tint`); }
+  }
+  if (m.p005 > .1 && m.chroma < .2) { v.dehaze = Math.round(clamp((m.p005 - .06) * 220, 8, 40)); notes.push(`Dehaze +${v.dehaze} · cuts atmospheric haze`); }
+  if (m.chroma < .16) { v.vibrance = Math.round(clamp((.2 - m.chroma) * 180, 6, 30)); notes.push(`Vibrance +${v.vibrance} · colors were muted`); }
+  const noiseEff = m.noise * Math.pow(2, Math.max(0, v.exposure) * .7); // brightening reveals grain
+  if (noiseEff > 2.4) { v.nrLuma = Math.round(clamp((noiseEff - 2) * 7, 10, 75)); v.nrColor = Math.round(clamp(v.nrLuma * .8 + 10, 15, 65)); notes.push(`Noise reduction ${v.nrLuma}, color noise ${v.nrColor} · grain measured at ${m.noise.toFixed(1)} in flat areas${v.exposure > .3 ? ', and the exposure boost makes it stronger' : ''}`); }
+  v.sharpen = Math.round(clamp(30 - v.nrLuma * .2 + (m.sharp < 60 ? 10 : 0), 10, 45)); notes.push(`Sharpening ${v.sharpen}${v.nrLuma ? ' · kept gentle so grain is not sharpened' : ' · output sharpening'}`);
+  v.clarity = 8;
+  if ((m.clipHi > .5 && m.clipLo > .5) || (m.p995 - m.p005 > .95 && (m.clipHi > .3 || m.clipLo > 2))) { v.hdr = 30; notes.push('HDR 30 · wide dynamic range, so bright and dark areas are compressed locally'); }
+  if (style === 'vivid') { v.vibrance += 22; v.saturation += 8; v.contrast += 10; v.clarity += 12; notes.push('Vivid style · richer color and punchier contrast'); }
+  if (style === 'bright') { v.shadows += 15; v.contrast -= 6; v.highlights = Math.min(v.highlights, -10); v.temp += 4; notes.push('Bright style · lifted shadows and softer contrast'); }
+  if (style === 'moody') { v.contrast += 14; v.saturation -= 14; v.blacks -= 8; v.temp -= 6; v.clarity += 10; notes.push('Moody style · deeper tones and restrained color'); }
+  if (style === 'hdr') { v.hdr = Math.max(v.hdr, 65); v.clarity += 22; v.shadows += 20; v.highlights = Math.min(v.highlights, -45); v.vibrance += 10; notes.push('HDR style · strong local tone mapping with extra detail'); }
+  ENH_KEYS.forEach(k => { const [a, b] = enhRange(k); v[k] = clamp(v[k], a, b); });
+  return { values: v, notes, source: 'device' };
+}
+function applyEnh() {
+  const dv = editDev();
+  ENH_KEYS.forEach(k => {
+    const val = (enh.rec.values[k] || 0) * enh.strength;
+    dv[k] = k === 'exposure' ? Math.round(val * 20) / 20 : Math.round(val);
+  });
+  syncDevelopUI(); liveChange();
+}
+function openEnhance() {
+  if (!RES.full || ctxBusy) return; if (cropMode) { exitCrop(true); setTool('move', false); }
+  if (enh) return;
+  const m = getMeasure();
+  enh = { base: structuredClone(editDev()), m, style: 'natural', strength: 1, rec: null };
+  enh.rec = deviceRec(enh.style, m); applyEnh();
+  $('#aiPanel').hidden = false; renderEnh();
+}
+function closeEnhance(apply) {
+  if (!enh) return; if (enhCtl) enhCtl.abort();
+  const dv = editDev();
+  if (apply) { const label = enh.rec.source === 'ai' ? 'AI edit' : 'Enhance'; commit(`${label} · ${ENH_STYLES.find(s => s[0] === enh.style)[1]}${enh.strength < 1 ? ' ' + Math.round(enh.strength * 100) + '%' : ''}${targetSuffix()}`); toast(`${label} applied · every change is an ordinary slider you can fine-tune`); }
+  else { ENH_KEYS.forEach(k => dv[k] = enh.base[k] ?? 0); syncDevelopUI(); liveChange(); }
+  enh = null; $('#aiPanel').hidden = true;
+}
+function renderEnh() {
+  if (!enh) return;
+  $('#apStyle').innerHTML = ENH_STYLES.map(([k, l]) => `<button type="button" data-v="${k}" aria-pressed="${enh.style === k}">${l}</button>`).join('');
+  $('#apStyle').querySelectorAll('button').forEach(b => b.addEventListener('click', () => { if (enhCtl) return; enh.style = b.dataset.v; enh.rec = deviceRec(enh.style, enh.m); applyEnh(); renderEnh(); }));
+  const si = $('#apStr'); si.value = Math.round(enh.strength * 100); $('#apStrV').textContent = si.value + '%'; si.style.setProperty('--a', '0%'); si.style.setProperty('--b', si.value + '%');
+  $('#apSrc').textContent = enh.rec.source === 'ai' ? `AI edit · ${enh.rec.by}` : 'On-device analysis';
+  const ul = $('#apNotes'); ul.innerHTML = ''; enh.rec.notes.forEach(n => { const li = document.createElement('li'); li.textContent = n; ul.appendChild(li); });
+  $('#apTarget').textContent = targetSuffix() ? 'Editing ' + activeLayer().name : 'Editing the whole photo';
+}
+async function aiEditEnhance() {
+  if (!enh) return;
+  if (enhCtl) { enhCtl.abort(); return; }
+  if (!aiReady()) { openAISettings('Choose the AI that should edit your photos.'); return; }
+  const btn = $('#apClaude'), msg = $('#apMsg'), m = enh.m, who = aiLabel(); enhCtl = new AbortController(); btn.textContent = 'Stop'; msg.textContent = `${who} is looking at your photo…`; msg.style.color = 'var(--muted)';
+  try {
+    const sc = Math.min(1, 1024 / Math.max(workW, workH)), c = downscale(RES.full.srcCanvas, Math.round(workW * sc), Math.round(workH * sc)), blob = await new Promise(r => c.toBlob(r, 'image/jpeg', .88));
+    const style = ENH_STYLES.find(s => s[0] === enh.style)[1];
+    const prompt = `You are an expert photo retoucher. The attached photo is unedited. Choose develop settings that give the best exposure, natural white balance, controlled highlights and shadows, low noise and crisp detail, in a "${style}" style.
+Measured on device: median brightness ${Math.round(m.p50 * 100)}/100, 0.5th percentile ${Math.round(m.p005 * 100)}, 99.5th percentile ${Math.round(m.p995 * 100)}, clipped highlights ${m.clipHi.toFixed(1)}%, clipped shadows ${m.clipLo.toFixed(1)}%, noise ${m.noise.toFixed(1)} (2 is clean, 8 is very noisy), sharpness ${m.sharp}/100, average colorfulness ${Math.round(m.chroma * 100)}/100.
+Slider ranges: exposure -2..2 (stops); contrast, highlights, shadows, whites, blacks, temp (negative cooler), tint (negative greener), vibrance, saturation, dehaze, clarity -100..100; sharpen 0..100; nrLuma 0..100 (luminance noise reduction); nrColor 0..100 (color noise reduction); hdr 0..100 (local tone mapping, only for high-contrast scenes or the HDR style). 0 means unchanged. Be restrained and natural unless the style asks otherwise.
+Reply with only JSON: {"settings":{"exposure":0.3,"contrast":10,"highlights":-30,"shadows":20,"whites":5,"blacks":-5,"temp":0,"tint":0,"vibrance":12,"saturation":0,"dehaze":0,"clarity":8,"sharpen":25,"nrLuma":0,"nrColor":0,"hdr":0},"notes":["Exposure +0.30: the subject is underexposed"]} with up to 6 short notes, each starting with the setting name.`;
+    const out = await aiJSON(prompt, [blob], enhCtl.signal);
+    if (!enh) return;
+    const src = out && out.settings ? out.settings : out || {}, v = {};
+    ENH_KEYS.forEach(k => { const [a, b] = enhRange(k); v[k] = clamp(Number(src[k]) || 0, a, b); });
+    enh.rec = { values: v, notes: (Array.isArray(out && out.notes) ? out.notes : []).slice(0, 7).map(n => String(n).slice(0, 160)), source: 'ai', by: who };
+    if (!enh.rec.notes.length) enh.rec.notes = [`${who} chose these settings without comments`];
+    applyEnh(); renderEnh(); msg.textContent = '';
+  } catch (e) {
+    msg.style.color = e && e.code === 'cancelled' ? 'var(--muted)' : 'var(--warn)';
+    msg.textContent = e && e.code === 'cancelled' ? 'Stopped · the on-device result is still shown' : aiErrText(e);
+  } finally { enhCtl = null; btn.textContent = 'AI edit'; }
+}
+$('#apStr').addEventListener('input', e => { if (!enh) return; enh.strength = +e.target.value / 100; applyEnh(); renderEnh(); });
+$('#apClaude').addEventListener('click', aiEditEnhance);
+$('#apAISet').addEventListener('click', () => openAISettings());
+$('#apApply').addEventListener('click', () => closeEnhance(true));
+$('#apCancel').addEventListener('click', () => closeEnhance(false));
+$('#apClose').addEventListener('click', () => closeEnhance(false));
+
+/* =====================================================================
+   14e. MERGE TO HDR — exposure fusion of bracketed shots (Mertens), with MTB alignment
+   ===================================================================== */
+const libSel = new Set();
+function toggleSel(it) { if (libSel.has(it.id)) libSel.delete(it.id); else libSel.add(it.id); renderStrip(); }
+function mtbBits(g) { const h = new Uint32Array(256); for (let i = 0; i < g.length; i++) h[Math.min(255, g[i] | 0)]++; let a = 0, med = 128; for (let i = 0; i < 256; i++) { a += h[i]; if (a >= g.length / 2) { med = i; break; } } const t = new Uint8Array(g.length), e = new Uint8Array(g.length); for (let i = 0; i < g.length; i++) { t[i] = g[i] > med ? 1 : 0; e[i] = Math.abs(g[i] - med) > 4 ? 1 : 0; } return { t, e }; }
+function mtbErr(A, B, w, h, dx, dy) { let n = 0; for (let y = Math.max(0, -dy); y < Math.min(h, h - dy); y++) { const r = y * w, r2 = (y + dy) * w + dx; for (let x = Math.max(0, -dx); x < Math.min(w, w - dx); x++) { const i = r + x, j = r2 + x; if (A.e[i] && B.e[j] && A.t[i] !== B.t[j]) n++; } } return n; }
+/** Ward's median-threshold-bitmap alignment: exposure-independent translation search over a pyramid. */
+function mtbAlign(a, b, W, H) {
+  const L = Math.max(0, Math.floor(Math.log2(Math.min(W, H) / 48))), pa = [{ a, w: W, h: H }], pb = [{ a: b, w: W, h: H }];
+  for (let i = 0; i < L; i++) { pa.push(dsample(pa[i].a, pa[i].w, pa[i].h, 2)); pb.push(dsample(pb[i].a, pb[i].w, pb[i].h, 2)); }
+  let sx = 0, sy = 0;
+  for (let l = L; l >= 0; l--) {
+    sx *= 2; sy *= 2; const { w, h } = pa[l], A = mtbBits(pa[l].a), B = mtbBits(pb[l].a); let best = [sx, sy], be = Infinity;
+    for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) { const e = mtbErr(A, B, w, h, sx + dx, sy + dy); if (e < be) { be = e; best = [sx + dx, sy + dy]; } }
+    [sx, sy] = best;
+  }
+  return [sx, sy];
+}
+function pyrDown(a, w, h) {
+  const k = [1, 4, 6, 4, 1], t = new Float32Array(w * h), sw = (w + 1) >> 1, sh = (h + 1) >> 1, o = new Float32Array(sw * sh);
+  for (let y = 0; y < h; y++) { const r = y * w; for (let x = 0; x < w; x++) { let s = 0; for (let j = -2; j <= 2; j++) s += k[j + 2] * a[r + clamp(x + j, 0, w - 1)]; t[r + x] = s / 16; } }
+  for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) { let s = 0; const xx = Math.min(w - 1, x * 2); for (let j = -2; j <= 2; j++) s += k[j + 2] * t[clamp(y * 2 + j, 0, h - 1) * w + xx]; o[y * sw + x] = s / 16; }
+  return { a: o, w: sw, h: sh };
+}
+function gaussPyr(a, w, h, n) { const p = [{ a, w, h }]; for (let i = 0; i < n; i++) p.push(pyrDown(p[i].a, p[i].w, p[i].h)); return p; }
+function lapPyr(a, w, h, n) { const g = gaussPyr(a, w, h, n); for (let i = 0; i < n; i++) { const up = usample(g[i + 1].a, g[i + 1].w, g[i + 1].h, g[i].w, g[i].h), L = new Float32Array(up.length); for (let j = 0; j < L.length; j++) L[j] = g[i].a[j] - up[j]; g[i] = { a: L, w: g[i].w, h: g[i].h }; } return g; }
+async function mergeHDR() {
+  const items = library.filter(it => libSel.has(it.id) && it.status === 'done');
+  if (items.length < 2) { toast('Select 2 to 7 bracketed photos first · Ctrl/⌘-click their cards', 'warn'); return; }
+  if (items.length > 7) { toast('Merge up to 7 brackets at a time', 'warn'); return; }
+  if (ctxBusy) return;
+  const r0 = items[0].w / items[0].h;
+  if (items.some(it => Math.abs(it.w / it.h - r0) > .01)) { toast('Brackets must have the same size and orientation', 'warn'); return; }
+  ctxBusy = true; const tick = () => new Promise(r => setTimeout(r, 16)), prog = t => { $('#busy').hidden = false; $('#busy').textContent = t; };
+  try {
+    const w0 = items[0].w, h0 = items[0].h, sc = Math.min(1, 3600 / Math.max(w0, h0), Math.sqrt(6e6 / (w0 * h0))), W = Math.round(w0 * sc), H = Math.round(h0 * sc), N = W * H, n = items.length;
+    const imgs = [];
+    for (let i = 0; i < n; i++) { prog(`Merging HDR · loading ${i + 1} of ${n}`); await tick(); const c = downscale(await getSource(items[i]), W, H); imgs.push(c.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, W, H).data); }
+    const gray = d => { const g = new Float32Array(N); for (let i = 0, j = 0; i < N; i++, j += 4) g[i] = (d[j] * 54 + d[j + 1] * 183 + d[j + 2] * 19) / 256; return g; };
+    const bright = imgs.map(d => { let s = 0; for (let i = 0; i < d.length; i += 64) s += d[i] + d[i + 1] + d[i + 2]; return s; });
+    const order = [...imgs.keys()].sort((a, b) => bright[a] - bright[b]), ref = order[order.length >> 1];
+    prog('Merging HDR · aligning brackets'); await tick();
+    const gref = gray(imgs[ref]); let maxShift = 0;
+    for (let k = 0; k < n; k++) {
+      if (k === ref) continue; const [dx, dy] = mtbAlign(gref, gray(imgs[k]), W, H); maxShift = Math.max(maxShift, Math.abs(dx), Math.abs(dy));
+      if (dx || dy) { const s = imgs[k], o = new Uint8ClampedArray(s.length); for (let y = 0; y < H; y++) { const sy = clamp(y + dy, 0, H - 1); for (let x = 0; x < W; x++) { const si = (sy * W + clamp(x + dx, 0, W - 1)) * 4, oi = (y * W + x) * 4; o[oi] = s[si]; o[oi + 1] = s[si + 1]; o[oi + 2] = s[si + 2]; o[oi + 3] = 255; } } imgs[k] = o; }
+    }
+    prog('Merging HDR · weighing contrast, saturation and exposure'); await tick();
+    const Ws = imgs.map(d => {
+      const g = gray(d), w = new Float32Array(N);
+      for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+        const i = y * W + x, j = i * 4, r = d[j] / 255, gg = d[j + 1] / 255, b = d[j + 2] / 255, mu = (r + gg + b) / 3;
+        const lap = Math.abs(4 * g[i] - g[y * W + Math.max(0, x - 1)] - g[y * W + Math.min(W - 1, x + 1)] - g[Math.max(0, y - 1) * W + x] - g[Math.min(H - 1, y + 1) * W + x]) / 255;
+        const sat = Math.sqrt(((r - mu) ** 2 + (gg - mu) ** 2 + (b - mu) ** 2) / 3), ex = Math.exp(-((r - .5) ** 2 + (gg - .5) ** 2 + (b - .5) ** 2) / .08);
+        w[i] = (lap + .02) * (sat + .02) * ex + 1e-9;
+      }
+      return w;
+    });
+    for (let i = 0; i < N; i++) { let s = 0; for (const w of Ws) s += w[i]; for (const w of Ws) w[i] /= s; }
+    const levels = Math.max(1, Math.floor(Math.log2(Math.min(W, H))) - 3), acc = [null, null, null];
+    for (let k = 0; k < n; k++) {
+      prog(`Merging HDR · blending ${k + 1} of ${n}`); await tick();
+      const G = gaussPyr(Ws[k], W, H, levels);
+      for (let c = 0; c < 3; c++) {
+        const I = new Float32Array(N), d = imgs[k]; for (let i = 0; i < N; i++) I[i] = d[i * 4 + c] / 255;
+        const Lp = lapPyr(I, W, H, levels);
+        if (!acc[c]) acc[c] = Lp.map(l => ({ a: new Float32Array(l.a.length), w: l.w, h: l.h }));
+        for (let l = 0; l <= levels; l++) { const A = acc[c][l].a, Lq = Lp[l].a, Gq = G[l].a; for (let i = 0; i < A.length; i++) A[i] += Gq[i] * Lq[i]; }
+      }
+      Ws[k] = null; imgs[k] = null;
+    }
+    prog('Merging HDR · building the image'); await tick();
+    const out = mkCanvas(W, H), ox = out.getContext('2d'), id = ox.createImageData(W, H);
+    for (let c = 0; c < 3; c++) {
+      let R = acc[c][levels].a;
+      for (let l = levels - 1; l >= 0; l--) { const up = usample(R, acc[c][l + 1].w, acc[c][l + 1].h, acc[c][l].w, acc[c][l].h), A = acc[c][l].a; for (let i = 0; i < A.length; i++) up[i] += A[i]; R = up; }
+      for (let i = 0; i < N; i++) id.data[i * 4 + c] = R[i] * 255 + .5;
+    }
+    for (let i = 0; i < N; i++) id.data[i * 4 + 3] = 255;
+    ox.putImageData(id, 0, 0);
+    const it = addItem({ name: `HDR · ${items[0].name}${n > 1 ? ' +' + (n - 1) : ''}`, kind: 'sample', gen: () => out }); it.hdr = true; it.openWhenReady = true;
+    libSel.clear(); enqueue(it);
+    toast(`Merged ${n} brackets into an HDR photo · ${W} × ${H}${maxShift ? ` · aligned shifts up to ${maxShift} px` : ''}`);
+  } catch (e) { toast('The HDR merge failed · try fewer or smaller photos', 'warn'); }
+  finally { ctxBusy = false; $('#busy').hidden = true; renderStrip(); }
+}
+$('#libHDR').addEventListener('click', mergeHDR);
 
 $('#btnOpen').addEventListener('click', () => $('#fileIn').click());
 $('#fileIn').addEventListener('change', e => { importFiles(e.target.files); e.target.value = ''; });
@@ -2441,7 +3011,7 @@ const MAX_EDGE = 16384, MAX_PIXELS = 100e6; // browser canvas ceilings
 const EX = { mode: 'one', fmt: 'jpeg', q: 92, scale: 1, edge: 0, ig: '', igFull: false };
 let downloads = null, exBusy = null;
 (async () => { try { if (window.claude && window.claude.use) downloads = await window.claude.use('downloads'); } catch (_) { downloads = null; } })();
-const dlgOpen = () => !$('#exportDlg').hidden || !$('#keysDlg').hidden || !$('#syncDlg').hidden;
+const dlgOpen = () => !$('#exportDlg').hidden || !$('#keysDlg').hidden || !$('#syncDlg').hidden || !$('#aiDlg').hidden || !$('#blockDlg').hidden;
 const keepers = () => library.filter(it => it.status === 'done' && verdictOf(it) === 'keep');
 /**
  * Fit an Instagram ratio inside the photo's own crop, centred on the detected subject when there is one.
@@ -2589,11 +3159,11 @@ function exRefresh() {
   const g = exportGeo(doc.geo, EX.ig), [w, h] = outDims(g), f = ORIG.width / workW, gi = geoInfo(g), up = w > gi.OW * f * 1.001;
   const fmtLine = `Format <b>${EX.fmt.toUpperCase()}</b>${EX.fmt === 'png' ? ' · lossless' : ' · quality ' + EX.q}`;
   if (batch) {
-    $('#exSum').innerHTML = `<b>${ks.length} keeper${ks.length === 1 ? '' : 's'}</b> → 1 ZIP<br>${fmtLine}<br>Size <b>${EX.ig && !EX.igFull ? `${IG[EX.ig].w} × ${IG[EX.ig].h} px each` : EX.edge ? `long edge ${EX.edge} px each` : EX.scale === 1 ? 'native resolution of each photo' : Math.round(EX.scale * 100) + '% of each photo'}</b>${EX.ig ? `<br>Instagram <b>${IG[EX.ig].label}</b> · centred on each subject` : ''}<br>${wmSummary()}<br>RAW files use their full-size embedded preview`;
+    $('#exSum').innerHTML = `<b>${ks.length} keeper${ks.length === 1 ? '' : 's'}</b> → 1 ZIP<br>${fmtLine}<br>Size <b>${EX.ig && !EX.igFull ? `${IG[EX.ig].w} × ${IG[EX.ig].h} px each` : EX.edge ? `long edge ${EX.edge} px each` : EX.scale === 1 ? 'native resolution of each photo' : Math.round(EX.scale * 100) + '% of each photo'}</b>${EX.ig ? `<br>Instagram <b>${IG[EX.ig].label}</b> · centred on each subject` : ''}<br>${wmSummary()}<br>Metadata <b>none</b> · no AI tags, GPS or camera data<br>RAW files use their full-size embedded preview`;
     $('#exGo').textContent = ks.length ? `Export ${ks.length} keeper${ks.length === 1 ? '' : 's'}` : 'No keepers yet'; $('#exGo').disabled = !ks.length || !!exBusy;
   } else {
     const vis = doc.layers.filter(l => l.visible).length;
-    $('#exSum').innerHTML = `Output <b>${w} × ${h} px</b> · ${(w * h / 1e6).toFixed(1)} MP${up ? ' · <span style="color:var(--accent-2)">upscaled</span>' : ''}<br>${fmtLine}<br>Flatten <b>Layer 0 + ${vis} visible layer${vis === 1 ? '' : 's'}</b> → 1${EX.ig ? `<br>Instagram <b>${IG[EX.ig].label}</b> crop` : ''}<br>${wmSummary()}<br>Native source ${ORIG.width} × ${ORIG.height} px${currentItem && currentItem.raw ? ' (RAW preview)' : ''} · 8-bit sRGB`;
+    $('#exSum').innerHTML = `Output <b>${w} × ${h} px</b> · ${(w * h / 1e6).toFixed(1)} MP${up ? ' · <span style="color:var(--accent-2)">upscaled</span>' : ''}<br>${fmtLine}<br>Flatten <b>Layer 0 + ${vis} visible layer${vis === 1 ? '' : 's'}</b> → 1${EX.ig ? `<br>Instagram <b>${IG[EX.ig].label}</b> crop` : ''}<br>${wmSummary()}<br>Metadata <b>none</b> · no AI tags, GPS or camera data<br>Native source ${ORIG.width} × ${ORIG.height} px${currentItem && currentItem.raw ? ' (RAW preview)' : ''} · 8-bit sRGB`;
     $('#exGo').textContent = 'Export ' + EX.fmt.toUpperCase(); $('#exGo').disabled = !!exBusy;
   }
   drawExPreview();
@@ -2705,7 +3275,9 @@ window.addEventListener('keydown', e => {
   const typing = (tag === 'INPUT' && !['range', 'checkbox', 'radio', 'button', 'color'].includes(t.type)) || tag === 'TEXTAREA' || tag === 'SELECT' || (t && t.isContentEditable);
   const mod = e.ctrlKey || e.metaKey, k = e.key.toLowerCase();
   if (mod && k === 's') { e.preventDefault(); openExport(e.shiftKey ? 'keepers' : 'one'); return; }           // intercept native save
-  if (e.key === 'Escape' && dlgOpen()) { closeExport(); closeSync(); $('#keysDlg').hidden = true; return; }
+  if (e.key === 'Escape' && wbPick) { endWBPick(); toast('Neutral pick cancelled'); return; }
+  if (e.key === 'Escape' && enh && !dlgOpen()) { closeEnhance(false); return; }
+  if (e.key === 'Escape' && dlgOpen()) { closeExport(); closeSync(); $('#keysDlg').hidden = true; $('#aiDlg').hidden = true; return; }
   if (mod && k === 'o' && !dlgOpen()) { e.preventDefault(); $('#fileIn').click(); return; }
   if (!typing && !dlgOpen() && cropMode && !mod) {
     if (e.key === 'Escape') { e.preventDefault(); cancelCrop(); return; }
@@ -2731,6 +3303,8 @@ window.addEventListener('keydown', e => {
     case 'v': setTool('move', true); break;
     case 'h': setTool('hand', true); break;
     case 'c': case 'r': setTool(tool === 'crop' ? 'move' : 'crop', true); break;
+    case 'e': enh ? closeEnhance(false) : openEnhance(); break;
+    case 'w': startWBPick(); break;
     case 'p': if (currentItem) setManual(currentItem, 'keep'); break;
     case 'x': if (currentItem) setManual(currentItem, 'reject'); break;
     case 'u': if (currentItem && currentItem.manual) setManual(currentItem, currentItem.manual); break;
@@ -2749,7 +3323,7 @@ window.addEventListener('blur', () => { if (spaceHeld) { spaceHeld = false; upda
    ===================================================================== */
 $('#btnUndo').addEventListener('click', undo); $('#btnRedo').addEventListener('click', redo);
 $('#btnCompare').addEventListener('click', () => setCompare(!compareOn, false));
-$('#btnAuto').addEventListener('click', () => RES.full && autoTone());
+$('#btnAuto').addEventListener('click', () => enh ? closeEnhance(false) : openEnhance());
 $('#zFit').addEventListener('click', () => layoutStage(true));
 $('#z100').addEventListener('click', () => { if (!ORIG) return; zoomCenter((ORIG.width / V.baseW) / V.z); });
 new ResizeObserver(() => { if (RES.full) layoutStage(true); }).observe(vp);

@@ -1,55 +1,92 @@
 # Lumen Layer Studio
 
-A photo editor that runs entirely in your web browser. It combines two kinds of editing in one window:
+**A complete photo editor in one file. It runs in your web browser, with nothing to install and no account, and your photos stay on your computer.**
 
-- **Develop-style editing**: sliders for light, color, tone curve, color grading and an 8-color HSL mixer, applied to the whole photo.
-- **Layer-based retouching**: a stack of layers with blend modes and opacity, automatic Sky and Subject masks, a masking brush, and spot healing.
+Lumen Layer Studio takes a shoot from import to finished files:
 
-It also handles a whole shoot. You can import many photos (including camera RAW files), have them sorted automatically into **Keep / Review / Reject**, copy your edits to every keeper, and export them all as one ZIP. Exports can use Instagram sizes, full native resolution and an optional watermark.
-
-Everything is one file, `index.html`. There is nothing to install, no account to create, and your photos never leave your computer.
+- **Import** many photos at once, including camera RAW files.
+- **Sort** them automatically into Keep, Review and Reject.
+- **Edit** with develop sliders, camera color profiles, masked layers and HDR.
+- **Copy** your look to every keeper, or let your choice of AI suggest the edit.
+- **Export** all keepers in one ZIP: full resolution or Instagram sizes, with an optional watermark and no hidden metadata.
 
 ![Lumen Layer Studio](docs/screenshot.png)
 
 ## Quick start
 
-1. Download this repository: on GitHub click **Code → Download ZIP**, then unzip it.
-2. Double-click **`index.html`**. It opens in your web browser.
+1. On this page click **Code → Download ZIP**, then unzip it.
+2. Double-click **`index.html`** to open it in Chrome, Edge, Firefox or Safari.
 3. Drag your photos onto the window, or click **Import photos**.
 
-A current version of Chrome, Edge, Firefox or Safari works best. See **[HOW-TO-USE.md](HOW-TO-USE.md)** for the full guide.
+Read **[HOW-TO-USE.md](HOW-TO-USE.md)** for the step-by-step guide and all keyboard shortcuts.
 
-## Features
+## What it can do
 
-| Area | What you get |
+### Edit
+| | |
 |---|---|
-| **Develop** | Exposure, contrast, highlights, shadows, whites, blacks, temperature, tint, vibrance, saturation, dehaze, Auto Tone |
-| **Tone & color** | Point tone curve (RGB, R, G, B), 3-way color wheels, 8-channel HSL mixer, live RGB histogram with clipping warnings |
-| **Layers** | Smart Object layers with their own develop sliders, pixel layers, fill / gradient / vignette layers, drag-to-reorder stack, 9 blend modes, opacity |
-| **Masks** | One-click **Select Sky** and **Select Subject** (automatic detection on your computer, no AI service), masking brush, invert, glowing mask overlay |
-| **Retouching** | Spot Healing brush that matches the surrounding light, plus a paint brush |
-| **Crop & rotate** | Free or fixed ratios, all Instagram sizes, straighten slider, 90° rotation, flips |
-| **Presets** | 6 built-in looks that set sliders *and* build masked layers, plus your own saved looks |
-| **History** | Unlimited-feel undo/redo with thumbnail snapshots of every step |
-| **Library** | Batch import, automatic quality scoring (focus, exposure, contrast, noise), Keep / Review / Reject sorting, manual flags |
-| **AI review** | Optional "Review with Claude" judgement of composition and impact. This works only when the page is opened inside Claude; see the notes below |
-| **Copy edits** | Copy any group of settings from one photo to all keepers, each keeping its own undo history |
-| **RAW** | CR2, CR3, NEF, ARW, DNG, RAF, ORF, RW2, PEF, SRW and more |
-| **Export** | JPEG / PNG / WebP, native resolution up to 16,384 px, Instagram sizes, text or logo watermark, all keepers in one ZIP |
+| **Camera & film profiles** | Camera Standard, Neutral, Portrait, Landscape, Vivid and Flat; Chrome Slide, Saturated Slide, Warm Negative, Pastel Negative and Cinema film looks; Monochrome with red and green filters. Each has an Amount slider. |
+| **Light & color** | Exposure, contrast, highlights, shadows, whites, blacks, temperature, tint, vibrance, saturation and dehaze |
+| **Color fixes** | Auto white balance, **Pick neutral** (click something grey or white), and As shot |
+| **Detail & HDR** | HDR tone mapping, clarity, sharpening, and luminance and color noise reduction |
+| **Tone & color tools** | Point tone curve (RGB, R, G, B), 3-way color grading wheels, 8-color HSL mixer, live histogram |
+| **Enhance** | One click sets exposure, color, noise and detail for the photo, in a Natural, Vivid, Bright, Moody or HDR style, with a written reason for every change |
+| **Local edits** | One-click **Select Sky** and **Select Subject**, a masking brush, and Smart Object layers with their own sliders |
+| **Retouching** | Spot Healing brush, paint brush, blend modes, fill and vignette layers |
+| **Crop & rotate** | Free or fixed ratios, every Instagram size, straighten, 90° rotation and flips |
 
-## Things to know
+### Presets that work across very different photos
+There are **31 built-in presets** in 10 categories: **Fix, Portrait, Landscape, Street, Night, Food, Interiors, B&W, Film,** and your own **Saved** looks.
 
-- **Your photos stay on your computer.** Nothing is uploaded anywhere. The page needs an internet connection only for its fonts and one styling library; without one it still works, with plainer fonts.
-- **Imported photos are kept only while the page is open.** Export your keepers before you close or reload the tab. Saved presets and watermark settings *are* remembered by your browser.
-- **RAW files** are opened through the full-size JPEG preview that cameras store inside every RAW file. A browser cannot process raw sensor data, so you get the camera's own rendering at full resolution, but not the extra highlight and shadow range a dedicated RAW converter would recover.
-- **Sky and Subject detection** are simple automatic rules that run on your computer, not a trained AI model. They work well on clear skies and distinct subjects. Use the masking brush (`K`) to fix the rest.
-- **"Review with Claude"** only appears when the page is opened as an artifact inside Claude. In a normal browser the on-device scoring still sorts your photos.
-- **Very large exports** (40 MP and up) can take several seconds and a lot of memory. On iPhone and iPad, Safari's limit on image size may stop the largest ones.
+Most of them are **adaptive**. They measure each photo's exposure, white balance and noise first, then add the look on top, so a single preset suits bright, dark, warm and cool shots alike.
+
+The **Fix** presets rescue common problems:
+- indoor orange light
+- shade and overcast
+- underwater blue
+- dark photos
+- hazy photos
+- grey snow and sand
+
+### Manage a whole shoot
+- **Batch import:** JPEG, PNG, WebP and **RAW** (CR2, CR3, NEF, ARW, DNG, RAF, ORF, RW2, PEF, SRW and more).
+- **Automatic culling:** every photo is scored for focus, exposure, contrast and noise, then sorted into Keep, Review or Reject. You can override any verdict.
+- **Merge to HDR:** combines 2–7 bracketed exposures, with automatic alignment for hand-held shots.
+- **Copy edits to keepers** and **apply a preset to all keepers:** each photo keeps its own undo history.
+
+### AI edit and AI review, with the AI of your choice
+- **AI edit** asks an AI to choose the slider settings for a photo. **AI review** asks it to judge which photos are worth keeping.
+- **Choose any provider:**
+  - Claude (built in when the page is opened inside Claude)
+  - OpenAI
+  - Anthropic API
+  - Google Gemini
+  - OpenRouter
+  - **Ollama** or **LM Studio**, running **locally on your own PC**: free and private
+  - any OpenAI-compatible server
+- **What the AI changes:** only slider values. Your photo is processed by the app's standard adjustments, and no pixels are generated.
+
+### Export
+- JPEG, PNG or WebP, at **native resolution** (up to 16,384 px) or at any size.
+- **Instagram sizes:** 1:1, 4:5, 3:4, 9:16 and 1.91:1. The frame is centred on the subject.
+- **All keepers in one ZIP**, with an optional **text or logo watermark**.
+- **No metadata in exported files:** no GPS location, no camera data, and no AI or C2PA tags.
+
+## Good to know
+
+- **Privacy:** photos never leave your computer. The only exception is when you use AI edit or AI review with a cloud provider: that provider then receives a 1024 px preview. With Ollama or LM Studio, nothing leaves your PC.
+- **Internet:** needed only for fonts, one styling library and cloud AI. Offline, everything else still works.
+- **Imported photos last only while the tab is open.** Export your keepers before closing. Presets, watermark and AI settings *are* remembered by your browser.
+- **RAW files** open through the full-resolution JPEG that cameras store inside the RAW file. A browser can't process raw sensor data, so the extra highlight and shadow range of a dedicated RAW converter isn't available.
+- **Sky / Subject detection and photo scoring** use simple rules that run on your computer, not a trained model. They work well on clear scenes. Use the masking brush (`K`) or your own flags to correct them.
+- **AI providers other than the built-in Claude** work in the downloaded app (`index.html`), not inside Claude itself. API keys are stored only in your browser, and only if you tick "Remember".
+- **Social media AI labels:** exports carry no AI or provenance tags, and AI edit only sets ordinary adjustments, so there's nothing in the file that marks it as AI-generated. Each platform still applies its own policies and detection.
+- **Very large exports** (40 MP and up) can take several seconds and a lot of memory. Merged HDR photos are capped at about 6 MP.
 
 ## Files
 
 | File | Purpose |
 |---|---|
 | `index.html` | The whole application: open it in a browser |
-| `HOW-TO-USE.md` | Step-by-step user guide and keyboard shortcuts |
-| `docs/screenshot.png` | Screenshot used in this README |
+| `HOW-TO-USE.md` | Step-by-step guide, AI setup and keyboard shortcuts |
+| `docs/screenshot.png` | Screenshot used above |

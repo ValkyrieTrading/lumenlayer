@@ -5,28 +5,28 @@
 1. On the GitHub page of this repository click **Code → Download ZIP** and unzip it anywhere on your PC.
 2. Double-click **`index.html`**. It opens in your default browser.
    - If it opens in another app, right-click it → **Open with** → Chrome, Edge, Firefox or Safari.
-   - Tip: bookmark the page or pin the tab so you can come back to it quickly.
+   - Tip: bookmark the page so you can come back to it quickly.
 
-The editor opens with six sample photos in the **Library** strip at the bottom. Three are good shots and three are deliberately flawed, so you can try the sorting straight away.
+The editor opens with six sample photos in the **Library** strip at the bottom. Three are good shots and three are deliberately flawed, so you can try everything straight away.
 
 ## 2. The screen at a glance
 
 | Area | What it does |
 |---|---|
-| **Top bar** | Import photos, Undo / Redo, Auto Tone, Before / After, Shortcuts, Export |
+| **Top bar** | Import photos, Undo / Redo, **Enhance**, Before / After, Shortcuts, Export |
 | **Tool options bar** | Settings for the current tool (brush size, crop ratio, and so on) |
 | **Tool rail** (far left) | Select, Hand, Crop, Spot Heal, Paint, Masking brush |
-| **Presets & History** (left) | One-click looks, and every step you have taken |
+| **Presets & History** (left) | Looks by category, and every step you have taken |
 | **Canvas** (centre) | Your photo. Scroll to zoom, hold Space and drag to pan |
-| **Library** (under the canvas) | All imported photos with their score and verdict |
-| **Histogram & Develop** (right) | The editing sliders |
+| **Library** (under the canvas) | All imported photos with score and verdict, plus the batch buttons |
+| **Histogram & Develop** (right) | Profile and editing sliders |
 | **Layers** (bottom right) | Masked adjustments, paint and fill layers |
 
 ## 3. Import photos
 
 - Drag one or many files onto the window, click **Import photos** / **Add photos**, press `Ctrl+O` (`⌘O` on Mac), or paste an image.
 - Supported: **JPEG, PNG, WebP** and camera **RAW** (CR2, CR3, NEF, ARW, DNG, RAF, ORF, RW2, PEF, SRW and others).
-- The first photo opens immediately; the rest are scored in the background ("Scoring…" on each card).
+- The first photo opens immediately; the rest are scored in the background.
 
 ## 4. Sort good and bad photos (culling)
 
@@ -38,66 +38,117 @@ Every photo gets a **score from 0 to 100** and a verdict, shown by the colored b
 | 🟠 **Review** | 45 – 67 | Usable but worth a second look |
 | 🔴 **Reject** | 0 – 44 | Blurry, badly exposed, very noisy or flat |
 
-The reason is written on each card, for example "Soft or shaken" or "Underexposed". Hover over a card to see the details.
-
-- **Filter** with All / Keep / Review / Reject, and **sort** by Best first, Weakest first or Import order.
-- **Override** the verdict yourself: `P` marks Keep, `X` marks Reject, `U` clears your flag. You can also use the ✓ / ✕ buttons on a card.
-- **Remove rejects** clears rejected photos from the library. Click it twice to confirm.
-- `←` / `→` move to the previous or next photo. Each photo remembers its own edits and history.
-- **Review with Claude** (only when opened inside Claude) adds a judgement of composition and impact on top of the technical score.
+- The reason is written on each card. Hover over a card to see the details.
+- **Filter** (All / Keep / Review / Reject) and **sort** (Best first, Weakest first, Import order).
+- **Override** a verdict: `P` marks Keep, `X` marks Reject, `U` clears your flag. You can also use the ✓ / ✕ buttons on a card.
+- **AI review** asks your chosen AI to judge composition and impact as well (see section 8).
+- **Remove rejects** clears rejected photos. Click it twice to confirm.
+- `←` / `→` move between photos. Each photo remembers its own edits and history.
 
 ## 5. Edit a photo
 
-### Develop sliders (right panel)
+### Quick start: Enhance
+Press `E` (or click **Enhance**):
+1. The photo is measured, and exposure, white balance, highlights and shadows, contrast, noise reduction and sharpening are set for you. Each change is listed with its reason.
+2. Choose a style: **Natural, Vivid, Bright, Moody** or **HDR**. Use **Strength** to make it stronger or gentler.
+3. Optional: click **AI edit** to let your chosen AI pick the settings instead.
+4. Click **Apply**, or **Cancel** to put everything back. Every change is an ordinary slider you can fine-tune.
 
-- **Light**: Exposure, Contrast, Highlights, Shadows, Whites, Blacks.
-- **Color**: Temp, Tint, Vibrance, Saturation. **Effects**: Dehaze.
-- **Tone Curve**: click to add a point, drag to shape it, and double-click a point (or drag it off the graph) to remove it. Use the RGB / Red / Green / Blue tabs for each channel.
-- **Color Grading**: drag the dot inside the Shadows, Midtones or Highlights wheel, or click a color swatch. Hold Shift to change strength only.
-- **HSL Mixer**: Hue, Saturation and Luminance for 8 color ranges.
-- **Double-click any slider name** to reset it. Each section has its own **Reset**.
-- **Auto Tone** (top bar) sets a balanced starting point.
+### Camera profile
+At the top of Develop, choose a **Profile**:
+- **Camera:** Standard, Neutral, Portrait, Landscape, Vivid, Flat
+- **Film:** Chrome Slide, Saturated Slide, Warm Negative, Pastel Negative, Cinema Teal & Orange
+- **Monochrome:** plain, red filter, green filter, soft matte
+
+Use **Amount** to blend it in (0–200%). Your sliders work on top of the profile.
+
+### Fix the colors
+In the **Color** section:
+- **Auto white balance** removes color casts automatically.
+- **◎ Pick neutral** (`W`): click something that should be grey or white, such as a wall, paper or a cloud.
+- **As shot** resets white balance.
+
+### Sliders
+- **Light:** Exposure, Contrast, Highlights, Shadows, Whites, Blacks.
+- **Color:** Temp, Tint, Vibrance, Saturation. **Effects:** Dehaze.
+- **Detail & HDR:** **HDR** evens out very bright and very dark areas. Also Clarity, Sharpening, Noise reduction and Color noise.
+- **Tone Curve:** click to add a point, drag to shape it, double-click to remove it. Use the RGB / Red / Green / Blue tabs.
+- **Color Grading:** drag inside the Shadows, Midtones or Highlights wheel, or click a swatch.
+- **HSL Mixer:** Hue, Saturation and Luminance for 8 color ranges.
+- **Double-click any slider name** to reset it. Each section also has **Reset**.
 
 ### Local adjustments with masks
-
 1. Click **Select Sky** or **Select Subject** in the Layers panel. The detected area glows briefly.
-2. A new **Smart Object** layer is selected, and the panel header shows *Editing "Sky Adjustment"*. The Develop sliders now change **only that area**.
-3. Click **Edit global** (or Layer 0) to go back to editing the whole photo.
-4. To paint your own area, press `K` for the **Masking brush** and paint. `Alt` erases, and `O` keeps the mask overlay visible.
-5. Each layer has a blend mode, opacity, mask (None / Sky / Subject / Brush) and Invert. Drag layers to reorder them; the eye icon hides a layer.
+2. The Develop sliders now change **only that area** (the panel header says *Editing "Sky Adjustment"*). Click **Edit global** to go back.
+3. Press `K` for the **Masking brush** to paint your own area. `Alt` erases, and `O` keeps the overlay visible.
+4. Each layer has a blend mode, opacity, mask (None / Sky / Subject / Brush) and Invert. Drag layers to reorder them.
 
-### Remove dust and blemishes
+### Retouch, crop and compare
+- **Spot Healing** (`B`): paint over dust or blemishes. Press `B` again for the Paint brush, and use `[` / `]` to change brush size.
+- **Crop & rotate** (`C`): choose a ratio or an **Instagram** size, drag the frame, and use **Straighten** to level the horizon. Press **Enter** to apply or **Esc** to cancel.
+- **Before / After**: `\` toggles the split. Drag the handle to sweep it.
+- **Undo / redo**: `Ctrl+Z` / `Ctrl+Shift+Z`. Click any History step to jump to it.
 
-Press `B` for **Spot Healing** and paint over the spot. It copies nearby texture and matches the lighting. Press `B` again to switch to the **Paint** brush. Use `[` and `]` to change brush size.
+## 6. Presets
 
-### Crop & rotate
+- Choose a category: **Fix, Portrait, Landscape, Street, Night, Food, Interiors, B&W, Film** or **Saved**.
+- Hover over a preset to preview it, and click to apply it.
+- Presets marked **"Adapts"** measure each photo first (exposure, white balance and noise), then add the look. That's why one preset works on bright, dark, warm and cool photos.
+- **→ Keepers** (shown when you hover over a card) applies the preset to every Keep photo, adapting to each one.
+- **Save your own look:** type a name and click **Save**. Leave **"Adapt exposure, tone & white balance to each photo"** ticked to make it adaptive too.
 
-1. Press `C` (or `R`).
-2. Pick an **Aspect**: Original, Free, a fixed ratio, or an **Instagram** size (Square 1:1, Portrait 4:5, Portrait 3:4, Story 9:16, Landscape 1.91:1).
-3. Drag the corners or edges, drag inside to move the frame, or drag outside it to draw a new one.
-4. Use **Straighten** to level the horizon, the rotate buttons for 90° turns, and **Flip H / V** to mirror.
-5. Press **Enter** to apply or **Esc** to cancel. Cropping never deletes pixels, so you can come back and change it.
+Useful starting points:
 
-### Presets
+| Situation | Preset |
+|---|---|
+| Any photo that needs a general clean-up | **Auto Fix** |
+| Orange indoor light | **Fix Indoor Light** |
+| Grey, cold day | **Fix Shade & Overcast** |
+| Blue-green underwater shots | **Fix Underwater** |
+| Too dark or noisy | **Rescue Dark Photo** / **Low Light Clean** |
+| Snow or beach looks grey | **Bright Snow & Beach** |
+| People | **Soft Skin Portrait**, **Clean Headshot**, **Golden Portrait** |
+| Scenery | **Crisp Landscape**, **Moody Mountains**, **Dramatic Sky** |
+| City at night | **Night City** |
+| Rooms, products, events | **Bright Interior**, **Clean Product**, **Airy Wedding** |
 
-- Click a preset card to apply it, or hover over it to preview. Presets set the sliders **and** add masked layers (for example a sunset wash on the sky).
-- Save your own look: type a name under the presets and click **Save**. It is remembered by your browser.
+## 7. Work on many photos at once
 
-### Before / After and undo
+- **Copy edits to keepers** (`Shift+C`): tick the groups to copy (Light, Color, Profile, Detail & HDR, Tone curve, Color grading, HSL, Sky/Subject layers, Brush-masked layers, Crop), choose **All keepers** or **Keepers + Review**, then click **Paste**. Each photo can undo it in its own History. **Copy only** plus `Shift+V` pastes onto one photo at a time.
+- **Merge to HDR:** Ctrl/⌘-click 2–7 bracketed exposures in the library (or use the ◎ button on each card), then click **Merge to HDR**. The merged photo appears as a new library photo.
 
-- `\` toggles the Before / After split. Drag the round handle to sweep it.
-- `Ctrl+Z` undoes and `Ctrl+Shift+Z` redoes (`⌘` on Mac). Click any step in **History** to jump to it.
+## 8. Set up AI edit and AI review
 
-## 6. Copy your edits to all keepers
+Click the **⚙** button in the Enhance panel. The AI settings also open the first time you use AI edit or AI review.
 
-1. Edit one photo the way you like it.
-2. Click **Copy edits to keepers** in the Library bar (or press `Shift+C`).
-3. Tick the groups to copy: Light, White balance & color, Dehaze, Tone curve, Color grading, HSL, Sky/Subject layers, Brush-masked layers, Crop & rotate.
-4. Choose **All keepers** or **Keepers + Review**, then click **Paste**.
+| Provider | What you need |
+|---|---|
+| **Claude (built in)** | Nothing. This works only when the page is opened inside Claude |
+| **OpenAI** | An API key from platform.openai.com |
+| **Anthropic API** | An API key from console.anthropic.com |
+| **Google Gemini** | An API key from aistudio.google.com |
+| **OpenRouter** | One key from openrouter.ai gives access to many models |
+| **Ollama (local)** | Free and private. See below |
+| **LM Studio (local)** | Free and private. Load a vision model, start the local server, turn on **Enable CORS** |
+| **Custom** | Any OpenAI-compatible server address (vLLM, LocalAI, Jan, a company gateway) |
 
-Each photo gets a "Paste settings from …" step in its own History, so you can undo it per photo. Sky and Subject layers use each photo's own detected sky and subject. **Copy only** stores the settings so you can press `Shift+V` on any photo later.
+The model you choose **must accept images**: a vision model.
 
-## 7. Export
+**Set up Ollama (runs on your PC)**
+1. Install Ollama from ollama.com.
+2. Download a vision model: `ollama pull llama3.2-vision` (or `qwen2.5vl`, `gemma3`).
+3. Start it so this page may connect:
+   - Windows (PowerShell): `$env:OLLAMA_ORIGINS="*"; ollama serve`
+   - macOS / Linux: `OLLAMA_ORIGINS="*" ollama serve`
+4. In AI settings choose **Ollama**, click **List models**, pick your model, then click **Test connection** and **Save**.
+
+**Good to know**
+- AI providers other than the built-in Claude work in the **downloaded app** (`index.html`), not inside Claude.
+- API keys are kept only in your browser, and only if **Remember on this device** is ticked.
+- The AI receives a 1024 px preview and the photo's measurements. With Ollama or LM Studio, nothing leaves your PC.
+- The AI only chooses **slider values**. Your photo is processed by the app's standard adjustments, and nothing is generated.
+
+## 9. Export
 
 Click **Export** (`Ctrl+S`) for the open photo, or **Export keepers** (`Ctrl+Shift+S`) for every Keep photo.
 
@@ -105,28 +156,31 @@ Click **Export** (`Ctrl+S`) for the open photo, or **Export keepers** (`Ctrl+Shi
 |---|---|
 | **What to export** | This photo, or All keepers (one ZIP file) |
 | **Format** | JPEG, PNG (lossless) or WebP, with a quality slider |
-| **Instagram** | Off (use your crop) or an Instagram size. The frame is placed inside your crop and centred on the subject. Tick *Full resolution* to keep the ratio at native size |
+| **Instagram** | Off, or Square 1:1 · Portrait 4:5 · Portrait 3:4 · Story 9:16 · Landscape 1.91:1. The frame is centred on the subject. Tick *Full resolution* to keep the ratio at native size |
 | **Size** | Native (full original resolution), 75%, 50%, 25%, or an exact long edge up to 16,384 px |
-| **Watermark** | Off, Text (any wording and color) or Logo (PNG with transparency works best). Choose a position (corners, centre or tiled), size and opacity |
+| **Watermark** | Off, Text or Logo. Choose a position (corners, centre or tiled), size and opacity |
 
-The preview shows the result, including the watermark. When you click Export, the browser saves the file to your **Downloads** folder.
+Exported files contain **no metadata**: no GPS location, no camera data and no AI or C2PA tags. They are saved to your **Downloads** folder.
 
-## 8. Keyboard shortcuts
+## 10. Keyboard shortcuts
 
 | Key | Action |
 |---|---|
 | `V` | Select tool (click the sky or subject to pick its layer) |
-| `H` / hold `Space` | Hand tool: pan the canvas |
+| `H` / hold `Space` | Hand tool: pan |
 | `C` or `R` | Crop & rotate |
-| `B` | Spot Healing (press again for the Paint brush) |
+| `B` | Spot Healing (press again for Paint) |
 | `K` | Masking brush on / off |
+| `E` | Enhance & AI edit panel |
+| `W` | Pick neutral point (white balance) |
 | `[` / `]` | Smaller / larger brush |
 | `Alt` while painting | Erase |
-| `O` | Pin the mask overlay on or off |
+| `O` | Pin the mask overlay |
 | `\` | Before / After split |
-| `Enter` / `Esc` | Apply / cancel crop |
+| `Enter` / `Esc` | Apply / cancel crop (Esc also closes panels) |
 | `P` / `X` / `U` | Mark Keep / Mark Reject / clear your flag |
 | `←` / `→` | Previous / next photo |
+| Ctrl/⌘-click a card | Select photos for Merge to HDR |
 | `Shift+C` / `Shift+V` | Copy edits to keepers / paste copied edits here |
 | `Ctrl+Z` / `Ctrl+Shift+Z` | Undo / redo |
 | `Ctrl+S` / `Ctrl+Shift+S` | Export this photo / export all keepers |
@@ -135,13 +189,17 @@ The preview shows the result, including the watermark. When you click Export, th
 
 On a Mac use `⌘` instead of `Ctrl`.
 
-## 9. Troubleshooting
+## 11. Troubleshooting
 
 | Problem | What to do |
 |---|---|
-| A RAW file shows "No readable preview" | Some RAW files store only a small preview. Convert that file to JPEG or TIFF with your camera's software first |
-| The export is slow or fails at a huge size | Pick 75% or 50%, or type a smaller long edge |
+| "Couldn't reach Ollama" | Start it with `OLLAMA_ORIGINS="*"` as shown in section 8, and check that the address is `http://localhost:11434` |
+| "Couldn't reach LM Studio" | Start its local server and turn on **Enable CORS** |
+| AI says the key was rejected | Check the key and that your account has credit or API access |
+| "Could not find model" | Use **List models**, or check the exact model name on the provider's site |
+| AI edit replies in a strange way | Pick a stronger **vision** model |
+| Other AI providers don't work inside Claude | Expected: open the downloaded `index.html` on your PC instead |
+| A RAW file shows "No readable preview" | That file stores only a small preview. Convert it to JPEG or TIFF with your camera's software |
+| Export is slow or fails at a huge size | Pick 75% or 50%, or type a smaller long edge |
 | My photos were gone after reopening | Photos are kept only while the tab is open. Export your keepers before closing |
-| Fonts look plain | You are offline. Everything still works; the custom fonts just need an internet connection |
-| "Review with Claude" is missing | That button only works when the page is opened inside Claude; the on-device scores still apply |
-| Sky or Subject missed an area | Select that layer, press `K`, and paint the missing part (Alt to erase) |
+| Sky or Subject missed an area | Select that layer, press `K`, and paint the missing part (`Alt` erases) |
