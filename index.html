@@ -368,6 +368,23 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
 .lflags button[aria-pressed="true"][data-f="reject"]{background:var(--warn);color:#1a0a05;border-color:var(--warn)}
 .lspin{position:absolute;inset:0;display:grid;place-items:center;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:rgba(10,11,13,.55)}
 
+/* collapsible layer dock */
+.phbtn{display:flex;align-items:center;gap:8px;border:0;background:transparent;padding:0;cursor:pointer;color:inherit}
+.phbtn .chev{width:7px;height:7px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:rotate(45deg);transition:transform .15s}
+.layers.collapsed .phbtn .chev{transform:rotate(-45deg)}
+.layers.collapsed .lact,.layers.collapsed .lscroll{display:none}
+/* short laptop screens: give the Develop sliders more room */
+@media (max-height:780px) and (min-width:1101px){
+  .layers{max-height:34%}
+  .presets{max-height:70%}
+  .history{min-height:96px}
+  .pcats{padding-top:6px}
+  .pcats button{height:20px;font-size:10px}
+  .hwrap{height:72px}
+  .strip{min-height:96px;padding-bottom:6px}
+  .lcard{flex-basis:112px}
+  .libbar{padding:5px 12px 3px}
+}
 /* stacked layout for narrow screens */
 @media (max-width:1100px){
   body{overflow:auto}
@@ -463,7 +480,7 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
         <div class="apfoot"><span id="apTarget"></span><button class="tb sm" type="button" id="apCancel">Cancel</button><button class="tb sm primary" type="button" id="apApply">Apply</button></div>
       </div>
       <div class="hud" id="hud" aria-live="polite"></div>
-      <div class="drop" id="drop" hidden>Drop photos to import</div>
+      <div class="drop" id="drop" hidden>Drop photos or folders to import</div>
       <div class="busy" id="busy" hidden>Developing…</div>
       <div class="cropbox" id="cropBox" hidden><div class="grid"></div><i data-h="nw"></i><i data-h="n"></i><i data-h="ne"></i><i data-h="e"></i><i data-h="se"></i><i data-h="s"></i><i data-h="sw"></i><i data-h="w"></i><span class="cropdims" id="cropDims"></span></div>
       <div class="vtag mono" id="vtag"></div>
@@ -499,7 +516,7 @@ input[type=range].sl.grad::-moz-range-track{height:5px}
         <div id="devHost"></div>
       </section>
       <section class="layers">
-        <div class="ph"><h2>Layers</h2><span class="meta" id="lcount"></span></div>
+        <div class="ph"><button type="button" class="phbtn" id="layersToggle" aria-expanded="true" title="Show or hide the layer stack"><span class="chev"></span><h2>Layers</h2></button><span class="meta" id="lcount"></span></div>
         <div class="lact">
           <button type="button" class="ai" id="aiSky"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M7 18h10a4 4 0 00.6-7.96A6 6 0 006.2 9.1 4.5 4.5 0 007 18z"/></svg>Select Sky</button>
           <button type="button" class="ai subj" id="aiSubj"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-3.8 3.6-6 7-6s6.2 2.2 7 6"/></svg>Select Subject</button>
@@ -2123,6 +2140,12 @@ $('#addSmart').addEventListener('click', () => { const n = doc.layers.filter(l =
 $('#addPaint').addEventListener('click', () => { const L = makeLayer('paint', { name: 'Paint' }); doc.layers.push(L); doc.active = L.id; renderLayers(); syncDevelopUI(); setTool('paint', false); commit('New pixel layer'); });
 $('#addFill').addEventListener('click', () => { const L = makeLayer('fill', { name: 'Color Fill', blend: 'soft-light', opacity: 45 }); doc.layers.push(L); doc.active = L.id; renderLayers(); syncDevelopUI(); requestRender(false); commit('New fill layer'); });
 $('#tback').addEventListener('click', () => selectLayer('base'));
+(() => { // remember whether the layer dock is folded away
+  const dock = document.querySelector('.layers'), btn = $('#layersToggle');
+  const set = c => { dock.classList.toggle('collapsed', c); btn.setAttribute('aria-expanded', String(!c)); try { localStorage.setItem('lumenlayer.layersCollapsed', c ? '1' : ''); } catch (_) { } };
+  let c = false; try { c = localStorage.getItem('lumenlayer.layersCollapsed') === '1'; } catch (_) { }
+  set(c); btn.addEventListener('click', () => set(!dock.classList.contains('collapsed')));
+})();
 
 /* =====================================================================
    13. HYBRID PRESETS (built-in + localStorage)
@@ -2340,7 +2363,7 @@ function orientCanvas(img, o) {
   x.setTransform(...T); x.drawImage(img, 0, 0); return c;
 }
 async function extractRaw(it) {
-  const b = new Uint8Array(await it.file.arrayBuffer()); let best = null;
+  const b = new Uint8Array(await (it.file ? it.file.arrayBuffer() : fetch(it.url).then(r => { if (!r.ok) throw new Error('missing'); return r.arrayBuffer(); }))); let best = null;
   for (let i = 0, n = b.length - 3; i < n; i++) {
     if (b[i] !== 0xFF || b[i + 1] !== 0xD8 || b[i + 2] !== 0xFF) continue;
     const j = parseJpeg(b, i);
@@ -2349,10 +2372,11 @@ async function extractRaw(it) {
   if (!best) throw new Error('This RAW file has no embedded preview the browser can read');
   const img = await decodeFile(new Blob([b.subarray(best.start, best.end)], { type: 'image/jpeg' }));
   const o = best.exifO && best.exifO !== 1 ? 1 : tiffOrientation(b); // browsers already honour EXIF inside the JPEG itself
-  it.raw = { w: best.w, h: best.h, ext: (it.file.name.match(RAW_EXT) || ['', 'raw'])[1].toUpperCase() };
+  it.raw = { w: best.w, h: best.h, ext: ((it.fileName || it.name).match(RAW_EXT) || ['', 'raw'])[1].toUpperCase() };
   return orientCanvas(img, o);
 }
-const getSource = it => it.kind === 'sample' ? Promise.resolve(it.gen()) : it.isRaw ? extractRaw(it) : decodeFile(it.file);
+function decodeURL(url) { return new Promise((res, rej) => { const img = new Image(); img.onload = () => res(img); img.onerror = () => rej(new Error('decode')); img.src = url; }); }
+const getSource = it => it.kind === 'sample' ? Promise.resolve(it.gen()) : it.isRaw ? extractRaw(it) : it.kind === 'remote' ? decodeURL(it.url) : decodeFile(it.file);
 async function analyzeItem(it, src) {
   it.w = src.naturalWidth || src.width; it.h = src.naturalHeight || src.height;
   const s = Math.min(1, 768 / Math.max(it.w, it.h)), c = downscale(src, Math.max(1, Math.round(it.w * s)), Math.max(1, Math.round(it.h * s)));
@@ -2393,12 +2417,52 @@ async function openItem(it, srcOpt) {
   catch (_) { it.status = 'error'; toast(`Could not decode ${it.name}`, 'warn'); }
   finally { setBusy(false); setTool(tool === 'crop' ? 'move' : tool, false); renderStrip(); }
 }
-function importFiles(list) {
-  const all = [...(list || [])], files = all.filter(f => f.type.startsWith('image/') || isRawFile(f)), skipped = all.length - files.length;
-  if (!files.length) { toast('None of those files are photos. Use JPEG, PNG, WebP or a camera RAW file.', 'warn'); return; }
-  files.forEach((f, i) => { const it = addItem({ name: f.name.replace(/\.[^.]+$/, ''), kind: 'file', file: f }); it.isRaw = isRawFile(f) && !f.type.startsWith('image/jpeg'); if (i === 0) it.openWhenReady = true; enqueue(it); });
+const IMG_EXT = /\.(jpe?g|jfif|png|webp|gif|bmp|avif|tiff?)$/i, HEIC_EXT = /\.(heic|heif)$/i;
+const baseName = n => n.replace(/\.[^.]+$/, '');
+/**
+ * Import photos from the file picker, drag-and-drop, paste, or (desktop app) files handed over by Windows.
+ * `remote` entries are {name, url, size} served by the desktop launcher and read only when needed.
+ */
+function importFiles(list, remote = false) {
+  const all = [...(list || [])].filter(f => f && f.name && !f.name.startsWith('.'));
+  const heic = all.filter(f => HEIC_EXT.test(f.name) || /heic|heif/.test(f.type || '')).length;
+  let files = all.filter(f => !HEIC_EXT.test(f.name) && !/heic|heif/.test(f.type || '') && ((f.type || '').startsWith('image/') || IMG_EXT.test(f.name) || isRawFile(f)));
+  const skipped = all.length - files.length - heic;
+  // Cameras set to RAW+JPEG save the same picture twice; the RAW's preview is that JPEG, so keep just the JPEG.
+  const jpgs = new Set(files.filter(f => !isRawFile(f)).map(f => baseName(f.name).toLowerCase()));
+  const before = files.length; files = files.filter(f => !(isRawFile(f) && jpgs.has(baseName(f.name).toLowerCase()))); const paired = before - files.length;
+  if (!files.length) { toast(heic ? 'HEIC photos (iPhone default) cannot be opened here · export them as JPEG, or set the iPhone camera to "Most Compatible"' : 'None of those files are photos. Use JPEG, PNG, WebP or a camera RAW file.', 'warn'); return; }
+  files.forEach((f, i) => {
+    const it = addItem({ name: baseName(f.name), kind: remote ? 'remote' : 'file', file: remote ? null : f });
+    it.fileName = f.name; if (remote) it.url = f.url; it.isRaw = isRawFile(f);
+    if (i === 0) it.openWhenReady = true; enqueue(it);
+  });
   libFilter = 'all'; libSort = 'import'; $('#libSort').value = 'import'; syncLibFilter(); renderStrip();
-  toast(`Importing ${files.length} photo${files.length === 1 ? '' : 's'}${skipped ? ` · skipped ${skipped} file${skipped === 1 ? '' : 's'} that ${skipped === 1 ? 'is' : 'are'} not an image` : ''} · scoring each one`);
+  const notes = [];
+  if (paired) notes.push(`used the JPEG for ${paired} RAW+JPEG pair${paired === 1 ? '' : 's'}`);
+  if (heic) notes.push(`skipped ${heic} HEIC photo${heic === 1 ? '' : 's'} (export as JPEG first)`);
+  if (skipped) notes.push(`skipped ${skipped} file${skipped === 1 ? '' : 's'} that ${skipped === 1 ? 'is' : 'are'} not a photo`);
+  toast(`Importing ${files.length} photo${files.length === 1 ? '' : 's'}${notes.length ? ' · ' + notes.join(' · ') : ''} · scoring each one`, heic ? 'warn' : '');
+}
+/** Desktop app hook: the launcher hands over files dropped on the EXE or opened with it. */
+window.lumenImportRemote = list => importFiles((list || []).map(f => ({ name: String(f.name || ''), url: '/__file/' + encodeURIComponent(f.id), size: f.size })), true);
+/** Files from a drop, walking into dropped folders (and their subfolders). */
+async function filesFromDrop(dt) {
+  const items = [...(dt.items || [])].filter(i => i.kind === 'file'), direct = [...(dt.files || [])];
+  const entries = items.map(i => i.webkitGetAsEntry ? i.webkitGetAsEntry() : null); // must be read during the event
+  if (!entries.some(e => e && e.isDirectory)) return direct;
+  const out = [];
+  const walk = async (entry, depth) => {
+    if (!entry || out.length >= 5000) return;
+    if (entry.isFile) { const f = await new Promise(res => entry.file(res, () => res(null))); if (f) out.push(f); }
+    else if (entry.isDirectory && depth < 8 && !entry.name.startsWith('.')) {
+      const reader = entry.createReader(); let batch;
+      do { batch = await new Promise(res => reader.readEntries(res, () => res([]))); for (const e of batch) await walk(e, depth + 1); } while (batch.length);
+    }
+  };
+  for (const e of entries) await walk(e, 0);
+  out.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+  return out;
 }
 function sortedItems() {
   let a = library.slice(); if (libFilter !== 'all') a = a.filter(it => verdictOf(it) === libFilter);
@@ -2996,8 +3060,8 @@ let dragDepth = 0;
 window.addEventListener('dragenter', e => { if (e.dataTransfer && [...e.dataTransfer.types].includes('Files')) { dragDepth++; $('#drop').hidden = false; } });
 window.addEventListener('dragleave', () => { dragDepth = Math.max(0, dragDepth - 1); if (!dragDepth) $('#drop').hidden = true; });
 window.addEventListener('dragover', e => { if (e.dataTransfer && [...e.dataTransfer.types].includes('Files')) e.preventDefault(); });
-window.addEventListener('drop', e => { if (!e.dataTransfer || !e.dataTransfer.files.length) return; e.preventDefault(); dragDepth = 0; $('#drop').hidden = true; importFiles(e.dataTransfer.files); });
-window.addEventListener('paste', e => { const f = [...(e.clipboardData?.files || [])].filter(f => f.type.startsWith('image/') || isRawFile(f)); if (f.length) importFiles(f); });
+window.addEventListener('drop', e => { if (!e.dataTransfer || ![...e.dataTransfer.types].includes('Files')) return; e.preventDefault(); dragDepth = 0; $('#drop').hidden = true; filesFromDrop(e.dataTransfer).then(f => f.length ? importFiles(f) : toast('Nothing to import in that drop', 'warn')); });
+window.addEventListener('paste', e => { const t = e.target; if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA')) return; const f = [...(e.clipboardData?.files || [])]; if (f.length) { e.preventDefault(); importFiles(f); } });
 
 /* =====================================================================
    15. EXPORT PIPELINE — single photo or every keeper (one ZIP), Instagram sizes, native resolution

@@ -20,13 +20,28 @@ The editor opens with six sample photos in the **Library** strip at the bottom. 
 | **Canvas** (centre) | Your photo. Scroll to zoom, hold Space and drag to pan |
 | **Library** (under the canvas) | All imported photos with score and verdict, plus the batch buttons |
 | **Histogram & Develop** (right) | Profile and editing sliders |
-| **Layers** (bottom right) | Masked adjustments, paint and fill layers |
+| **Layers** (bottom right) | Masked adjustments, paint and fill layers. Click the **Layers** heading to fold it away and give the sliders more room |
 
 ## 3. Import photos
 
-- Drag one or many files onto the window, click **Import photos** / **Add photos**, press `Ctrl+O` (`⌘O` on Mac), or paste an image.
-- Supported: **JPEG, PNG, WebP** and camera **RAW** (CR2, CR3, NEF, ARW, DNG, RAF, ORF, RW2, PEF, SRW and others).
+You can bring photos in any of these ways:
+
+| How | Works in |
+|---|---|
+| Drag **photos or whole folders** onto the app window (subfolders included) | Windows app and browser |
+| Drag photos or folders onto **`LumenLayerStudio.exe`** or a desktop shortcut to it | Windows app |
+| Right-click a photo in Explorer → **Open with** → choose `LumenLayerStudio.exe` | Windows app |
+| Click **Import photos** / **Add photos**, or press `Ctrl+O` (`⌘O` on Mac) | Windows app and browser |
+| Paste an image (`Ctrl+V`) | Windows app and browser |
+
+- If the Windows app is already open, photos dropped on the EXE or its shortcut are added to the open window, not to a second copy.
+- Supported: **JPEG, PNG, WebP, TIFF, BMP, GIF, AVIF** and camera **RAW** (CR2, CR3, NEF, ARW, DNG, RAF, ORF, RW2, PEF, SRW and others).
+- **RAW+JPEG pairs** (when the camera saves both) are imported once, using the JPEG. It's the same picture that the RAW file stores inside it.
+- **HEIC** photos (the iPhone default) can't be opened. Export them as JPEG, or set the iPhone camera to *Settings → Camera → Formats → Most Compatible*.
+- Other files in a dropped folder, such as sidecars and videos, are skipped and counted.
 - The first photo opens immediately; the rest are scored in the background.
+
+Tip: make a desktop shortcut (right-click `LumenLayerStudio.exe` → **Send to → Desktop (create shortcut)**), then just drop each new shoot's folder onto it.
 
 ## 4. Sort good and bad photos (culling)
 

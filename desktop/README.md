@@ -9,6 +9,13 @@ When you run it:
 
 The port stays the same between runs, so saved presets, watermark and AI settings are kept.
 
+Photos or folders dropped onto the EXE (or a shortcut to it), or opened with it from Explorer, are passed in as command-line arguments. Folders are scanned up to 8 levels deep, for at most 5,000 photos. If the app is already running, the new copy sends the files to it and exits.
+
+**How the local server stays private:**
+- Any request whose `Host` is not `127.0.0.1` or `localhost` is rejected, which blocks DNS-rebinding attacks from websites.
+- Files can be handed over only by another copy of the launcher: the request must carry a custom header and no `Origin`, which a web page can't do.
+- A handed-over photo is served only under a random, unguessable ID.
+
 ## Build
 
 Needs only Go 1.24 or newer. There are no other dependencies or downloads.

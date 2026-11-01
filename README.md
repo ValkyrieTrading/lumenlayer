@@ -17,7 +17,7 @@ Lumen Layer Studio takes a shoot from import to finished files:
 ### Windows app (recommended)
 1. Download **[`dist/LumenLayerStudio.exe`](dist/LumenLayerStudio.exe)**. On that page click **Download raw file**. For Windows on ARM laptops, use `dist/LumenLayerStudio-arm64.exe`.
 2. Double-click it. The first time, Windows SmartScreen says *"Windows protected your PC"*, because the app is not code-signed: click **More info → Run anyway**.
-3. The app opens in its own window. Drag your photos onto it, or click **Import photos**.
+3. The app opens in its own window. Drag photos **or whole folders** onto it, or click **Import photos**. You can also drop a folder straight onto the EXE (or a desktop shortcut to it).
 
 There is nothing to install. It is one ~7 MB file that opens through Microsoft Edge (built into Windows 10/11) and closes when you close the window. To rebuild it from source, see [`desktop/README.md`](desktop/README.md).
 
@@ -57,7 +57,7 @@ The **Fix** presets rescue common problems:
 - grey snow and sand
 
 ### Manage a whole shoot
-- **Batch import:** JPEG, PNG, WebP and **RAW** (CR2, CR3, NEF, ARW, DNG, RAF, ORF, RW2, PEF, SRW and more).
+- **Batch import:** drag in photos or whole folders (subfolders included), or drop them onto the Windows EXE. Supports JPEG, PNG, WebP, TIFF and **RAW** (CR2, CR3, NEF, ARW, DNG, RAF, ORF, RW2, PEF, SRW and more). RAW+JPEG pairs are imported once.
 - **Automatic culling:** every photo is scored for focus, exposure, contrast and noise, then sorted into Keep, Review or Reject. You can override any verdict.
 - **Merge to HDR:** combines 2–7 bracketed exposures, with automatic alignment for hand-held shots.
 - **Copy edits to keepers** and **apply a preset to all keepers:** each photo keeps its own undo history.
