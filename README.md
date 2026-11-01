@@ -14,6 +14,14 @@ Lumen Layer Studio takes a shoot from import to finished files:
 
 ## Quick start
 
+### Windows app (recommended)
+1. Download **[`dist/LumenLayerStudio.exe`](dist/LumenLayerStudio.exe)**. On that page click **Download raw file**. For Windows on ARM laptops, use `dist/LumenLayerStudio-arm64.exe`.
+2. Double-click it. The first time, Windows SmartScreen says *"Windows protected your PC"*, because the app is not code-signed: click **More info → Run anyway**.
+3. The app opens in its own window. Drag your photos onto it, or click **Import photos**.
+
+There is nothing to install. It is one ~7 MB file that opens through Microsoft Edge (built into Windows 10/11) and closes when you close the window. To rebuild it from source, see [`desktop/README.md`](desktop/README.md).
+
+### Any computer (browser)
 1. On this page click **Code → Download ZIP**, then unzip it.
 2. Double-click **`index.html`** to open it in Chrome, Edge, Firefox or Safari.
 3. Drag your photos onto the window, or click **Import photos**.
@@ -87,6 +95,9 @@ The **Fix** presets rescue common problems:
 
 | File | Purpose |
 |---|---|
+| `dist/LumenLayerStudio.exe` | Windows app (x64): double-click to run |
+| `dist/LumenLayerStudio-arm64.exe` | Windows app for ARM laptops |
 | `index.html` | The whole application: open it in a browser |
+| `desktop/` | Source and build script for the Windows app |
 | `HOW-TO-USE.md` | Step-by-step guide, AI setup and keyboard shortcuts |
 | `docs/screenshot.png` | Screenshot used above |
